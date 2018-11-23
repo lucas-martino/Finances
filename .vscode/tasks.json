@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Product/Finances.WebApp/Finances.WebApp.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/Test/Finances.Test/Finances.Test.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
