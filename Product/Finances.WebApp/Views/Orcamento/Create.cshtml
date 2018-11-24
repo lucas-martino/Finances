@@ -1,0 +1,39 @@
+@model Finances.WebApp.Models.OrcamentoViewModel
+
+@{
+    ViewBag.Title = "Criar Orçamento";
+}
+
+<h2>Orçamento</h2>
+<h3>Criar</h3>
+<hr />
+
+<form asp-controller="Orcamento" asp-action="Create" method="post" class="form-horizontal">
+    <div asp-validaion-summary="ValidationSummary.All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="CategoriaID" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="CategoriaID" asp-items="Model.Categorias" class="form-control"></select> 
+            <span asp-validation-for="CategoriaID" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Valor" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Valor" class="form-control" />
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Salvar" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
