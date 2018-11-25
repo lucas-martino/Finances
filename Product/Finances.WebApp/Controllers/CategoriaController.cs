@@ -57,7 +57,6 @@ namespace Finances.WebApp.Controllers
             model.Nome = entidade.Nome;
             model.Cor = entidade.Cor;
 
-
             return View(model);
         }
 
