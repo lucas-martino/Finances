@@ -1,12 +1,10 @@
-﻿@model IEnumerable<Finances.WebApp.Models.OrcamentoViewModel>
+﻿@model IEnumerable<Finances.WebApp.Models.LancamentoViewModel>
 
 @{
-    ViewBag.Title = "Orçamentos";
+    ViewBag.Title = "Lançamentos Por Categoria";
 }
 
-<h2>Orçamentos</h2>
-
-<p><a asp-action="Create">Criar Novo</a></p>
+<h2>Lançamentos Por Categoria</h2>
 <br />
 
 <table class="table">
@@ -15,10 +13,16 @@
             @Html.DisplayNameFor(model => model.ID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Categoria)
+            @Html.DisplayNameFor(model => model.Data)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observacao)
         </th>
         <th></th>
     </tr>
@@ -30,10 +34,16 @@
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
+                @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td style="Color: @item.CategoriaCor">
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |

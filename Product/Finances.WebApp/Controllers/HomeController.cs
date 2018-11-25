@@ -12,39 +12,61 @@ namespace Finances.WebApp.Controllers
     {
         public IActionResult Index()
         {
+            return RedirectToAction(nameof(Demonstrativo));
+        }
+
+        public IActionResult Demonstrativo()
+        {
             DemostrativoViewModel model = new DemostrativoViewModel();
             model.ValorTotal = GetGastoTotal();
-            model.Itens = GetDemostrativosItens();
+            model.Itens = GetDemostrativosItens(model.ValorTotal);
+            model.Percentual = model.ValorTotal * 100 / Banco.Get().Orcamento.Valor;
+            if (Banco.Get().Orcamento.Valor < model.ValorTotal)
+                model.Cor = "Red";
+            else
+                model.Cor = "Green";
 
             return View(model);
         }
 
-        private IEnumerable<DemostrativoItemViewModel> GetDemostrativosItens()
+        private IEnumerable<DemostrativoItemViewModel> GetDemostrativosItens(decimal valorTotal)
         {
             IList<DemostrativoItemViewModel> lista = new List<DemostrativoItemViewModel>();
             DemostrativoItemViewModel item;
             decimal valor;
 
-            foreach (var orcamento in Banco.Get().Orcamentos)
+            foreach (var orcamento in Banco.Get().OrcamentosCategoria)
             {
                 item = new DemostrativoItemViewModel();
-                item.Categoria = Banco.Get().Categorias.FirstOrDefault(i => i.ID == orcamento.CategoriaID).Nome;
-                item.Orcamento = orcamento.Valor.ToString();
-                item.Valor = Banco.Get().Lancamentos.Where(i => i.CategoriaID == orcamento.CategoriaID).Sum(i => i.Valor).ToString();
+                Categoria categoria = Banco.Get().Categorias.FirstOrDefault(i => i.ID == orcamento.CategoriaID);
+                item.CategoriaID = orcamento.CategoriaID;
+                item.Categoria = categoria.Nome;
+                item.CategoriaCor = categoria.Cor;           
+                item.Valor = Banco.Get().Lancamentos.Where(i => i.CategoriaID == orcamento.CategoriaID).Sum(i => i.Valor);
+                item.Orcamento = String.Format("R${0}", (orcamento.Valor - item.Valor).ToString()); 
+                item.Percentual = item.Valor * 100 / valorTotal;
+                if (item.Valor > orcamento.Valor)
+                    item.Cor = "Red";
+                else
+                    item.Cor = "Green";
 
                 lista.Add(item);
             }
             foreach (var categoria in Banco.Get().Categorias)
             {
-                if (Banco.Get().Orcamentos.FirstOrDefault(i => i.CategoriaID == categoria.ID) == null)
+                if (Banco.Get().OrcamentosCategoria.FirstOrDefault(i => i.CategoriaID == categoria.ID) == null)
                 {
                     valor = Banco.Get().Lancamentos.Where(i => i.CategoriaID == categoria.ID).Sum(i => i.Valor);
                     if (valor > 0)
                     {
                         item = new DemostrativoItemViewModel();
+                        item.CategoriaID = categoria.ID;
                         item.Categoria = categoria.Nome;
+                        item.CategoriaCor = categoria.Cor;
                         item.Orcamento = "-";
-                        item.Valor = valor.ToString();
+                        item.Valor = valor;
+                        item.Cor = "Black";
+                        item.Percentual = item.Valor * 100 / valorTotal;
 
                         lista.Add(item);
                     }
@@ -54,9 +76,13 @@ namespace Finances.WebApp.Controllers
             if (valor > 0)
             {
                     item = new DemostrativoItemViewModel();
+                    item.CategoriaID = 0;
                     item.Categoria = "Não categorizado";
+                    item.Categoria = "Yellow";
                     item.Orcamento = "-";
-                    item.Valor = valor.ToString();
+                    item.Valor = valor;
+                    item.Cor = "Yellow";
+                    item.Percentual = item.Valor * 100 / valorTotal;
 
                     lista.Add(item);
             }

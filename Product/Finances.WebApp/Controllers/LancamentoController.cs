@@ -14,7 +14,12 @@ namespace Finances.WebApp.Controllers
         public IActionResult Index()
         {
             return View(ConvertEntityToModel(Banco.Get().Lancamentos));
-        }        
+        }     
+
+        public IActionResult LancamentoPorCategoria(int categoriaID)
+        {
+            return View(ConvertEntityToModel(Banco.Get().Lancamentos.Where(i => i.CategoriaID == categoriaID)));
+        }   
         
         public IActionResult Create()
         {
@@ -113,11 +118,13 @@ namespace Finances.WebApp.Controllers
         private static LancamentoViewModel ConvertEntityToModel(Lancamento entidade)
         {
             LancamentoViewModel model = new LancamentoViewModel();
+            Categoria categoria = Banco.Get().Categorias.FirstOrDefault(i => i.ID == entidade.CategoriaID);
             model.ID = entidade.ID;
             model.Data = entidade.Data;
             model.Valor = entidade.Valor;
             model.CategoriaID = entidade.CategoriaID;
-            model.Categoria = Banco.Get().Categorias.FirstOrDefault(i => i.ID == entidade.CategoriaID).Nome;
+            model.Categoria = categoria.Nome;
+            model.CategoriaCor = categoria.Cor;
             model.Observacao = entidade.Observacao;
 
             return model;

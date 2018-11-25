@@ -30,6 +30,10 @@ namespace Finances.WebApp.Controllers
                 Categoria categoria = new Categoria();
                 categoria.ID = Banco.Get().Categorias.Count() + 1;
                 categoria.Nome = model.Nome;
+                categoria.Cor = model.Cor;
+                if (String.IsNullOrWhiteSpace(model.Cor))
+                    categoria.Cor = "Black";
+
                 Banco.Get().Categorias.Add(categoria);
                 Banco.Salvar();
 
@@ -51,6 +55,8 @@ namespace Finances.WebApp.Controllers
             CategoriaViewModel model = new CategoriaViewModel();
             model.ID = entidade.ID;
             model.Nome = entidade.Nome;
+            model.Cor = entidade.Cor;
+
 
             return View(model);
         }
@@ -69,6 +75,9 @@ namespace Finances.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 entidade.Nome = model.Nome;
+                entidade.Cor = model.Cor;
+                if (String.IsNullOrWhiteSpace(entidade.Cor))
+                    entidade.Cor = "Black";
                 Banco.Salvar();
 
                 return RedirectToAction(nameof(Index));
@@ -97,6 +106,7 @@ namespace Finances.WebApp.Controllers
             CategoriaViewModel model = new CategoriaViewModel();
             model.ID = entidade.ID;
             model.Nome = entidade.Nome;
+            model.Cor = entidade.Cor;
 
             return model;
         }

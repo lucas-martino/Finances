@@ -54,7 +54,8 @@ namespace Finances.WebApp.Controllers
     {
         public IList<Lancamento> Lancamentos = new List<Lancamento>();
         public IList<Categoria> Categorias = new List<Categoria>();
-        public IList<Orcamento> Orcamentos = new List<Orcamento>();
+        public IList<OrcamentoCategoria> OrcamentosCategoria = new List<OrcamentoCategoria>();
+        public Orcamento Orcamento = new Orcamento();
     }
 
     public class Lancamento
@@ -70,12 +71,18 @@ namespace Finances.WebApp.Controllers
     {
         public long ID { get; set; }
         public string Nome { get; set; }
+        public string Cor { get; set; }
+    }
+
+    public class OrcamentoCategoria
+    {
+        public long ID { get; set; }
+        public long CategoriaID { get; set; }
+        public decimal Valor { get; set; }
     }
 
     public class Orcamento
     {
-        public long ID { get; set; }
-        public long CategoriaID { get; set; }
         public decimal Valor { get; set; }
     }
 }

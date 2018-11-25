@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Finances.WebApp.Models.OrcamentoCategoriaViewModel>
+
+@{
+    ViewBag.Title = "Orçamentos";
+}
+
+<h2>Orçamentos por Categoria</h2>
+
+<p><a asp-action="Create">Criar Novo</a></p>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="Color: @item.CategoriaCor">
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID" onclick="return confirm('Deseja apagar o orçamento para \'@item.Categoria\' ?');">Apagar</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<br />

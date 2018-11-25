@@ -26,13 +26,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Finances</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Finanças</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-controller="Lancamento" asp-action="Index">Lançamento</a></li>
                     <li><a asp-controller="Categoria" asp-action="Index">Categoria</a></li>
                     <li><a asp-controller="Orcamento" asp-action="Index">Orçamento</a></li>
+                    <li><a asp-controller="OrcamentoCategoria" asp-action="Index">Orçamento Categoria</a></li>
                 </ul>
             </div>
         </div>
@@ -44,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Finances</p>
+            <p>&copy; 2018 - Finances - 0.2</p>
         </footer>
     </div>
 
