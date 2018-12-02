@@ -1,11 +1,20 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Finances.WebApp.Models
 {
     public class OrcamentoViewModel
     {
+        public OrcamentoViewModel()
+        {
+            OrcamentosCategoria = new List<OrcamentoCategoriaViewModel>();
+        }
+        
+        public int ID { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         public decimal Valor { get; set; }
+
+        public IEnumerable<OrcamentoCategoriaViewModel> OrcamentosCategoria { get; set; }
     }
 }

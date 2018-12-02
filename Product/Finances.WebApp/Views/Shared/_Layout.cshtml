@@ -30,10 +30,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-controller="Lancamento" asp-action="Index">Lançamento</a></li>
-                    <li><a asp-controller="Categoria" asp-action="Index">Categoria</a></li>
-                    <li><a asp-controller="Orcamento" asp-action="Index">Orçamento</a></li>
-                    <li><a asp-controller="OrcamentoCategoria" asp-action="Index">Orçamento Categoria</a></li>
+                    <li><a asp-controller="Gasto" asp-action="Index">Gastos</a></li>
+                    <li><a asp-controller="Categoria" asp-action="Index">Categorias</a></li>
+                    <li><a asp-controller="Orcamento" asp-action="Index">Orçamentos</a></li>
+                     <li><a asp-controller="Usuario" asp-action="Logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -45,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Finances - @ViewData["Version"]</p>
+            <p> &copy; 2018 - Finances - 0.3 </p>
         </footer>
     </div>
 

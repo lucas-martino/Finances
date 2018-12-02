@@ -1,24 +1,29 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Finances.WebApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Finances.Service;
+using Finances.Domain.Entity;
+using Finances.WebApp.Models;
 
 namespace Finances.WebApp.Controllers
 {
-    public class CategoriaController : Controller
+    public class CategoriaController : FinancesController<CategoriaService>
     {        
+        public CategoriaController(CategoriaService categoriaService)
+            :base(categoriaService)
+        {            
+        }
+        
         public IActionResult Index()
         {
-            return View(ConvertEntityToModel(Banco.Get().Categorias.OrderBy(i => i.Nome)));
+            var model = ConvertEntityToModel(Service.GetCategoriasPorUsuario(UsuarioLogadoID));
+            return View(model);
         }        
         
         public IActionResult Create()
         {
-            return View(new CategoriaViewModel());
+            var model = ConvertEntityToModel(new Categoria());
+            return View(model);
         }
 
         [HttpPost]
@@ -28,14 +33,13 @@ namespace Finances.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Categoria categoria = new Categoria();
-                categoria.ID = Banco.Get().Categorias.Count() + 1;
                 categoria.Nome = model.Nome;
                 categoria.Cor = model.Cor;
-                if (String.IsNullOrWhiteSpace(model.Cor))
-                    categoria.Cor = "Black";
+                if (string.IsNullOrWhiteSpace(categoria.Cor))
+                    categoria.Cor = Categoria.DEFAULT_COR;
+                categoria.Usuario = GetUsuario();
 
-                Banco.Get().Categorias.Add(categoria);
-                Banco.Salvar();
+                Service.SalvarCategoria(categoria);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -43,21 +47,21 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
+        private Usuario GetUsuario()
+        {
+            return Service.UsuarioService.GetUsuario(UsuarioLogadoID);
+        }
+
         public IActionResult Edit(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Categoria entidade = Banco.Get().Categorias.FirstOrDefault(i => i.ID == id.Value);
+            Categoria entidade = Service.GetCategoriaPorID(id.Value);
             if (entidade == null)
                 return NotFound();
 
-            CategoriaViewModel model = new CategoriaViewModel();
-            model.ID = entidade.ID;
-            model.Nome = entidade.Nome;
-            model.Cor = entidade.Cor;
-
-            return View(model);
+            return View(ConvertEntityToModel(entidade));
         }
 
         [HttpPost]
@@ -67,7 +71,7 @@ namespace Finances.WebApp.Controllers
             if (id == null)
                 return NotFound();
 
-            Categoria entidade = Banco.Get().Categorias.FirstOrDefault(i => i.ID == id.Value);
+            Categoria entidade = Service.GetCategoriaPorID(id.Value);
             if (entidade == null)
                 return NotFound();
 
@@ -75,9 +79,10 @@ namespace Finances.WebApp.Controllers
             {
                 entidade.Nome = model.Nome;
                 entidade.Cor = model.Cor;
-                if (String.IsNullOrWhiteSpace(entidade.Cor))
-                    entidade.Cor = "Black";
-                Banco.Salvar();
+                if (string.IsNullOrWhiteSpace(entidade.Cor))
+                    entidade.Cor = Categoria.DEFAULT_COR;     
+                
+                Service.SalvarCategoria(entidade);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -85,22 +90,14 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-                return NotFound();
-
-            Categoria entidade = Banco.Get().Categorias.FirstOrDefault(i => i.ID == id.Value);
-            if (entidade == null)
-                return NotFound();
-
-            Banco.Get().Categorias.Remove(entidade);
-            Banco.Salvar();
+            Service.ApagarCategoria(id);
 
             return RedirectToAction(nameof(Index));
         }
 
-        private static CategoriaViewModel ConvertEntityToModel(Categoria entidade)
+        public static CategoriaViewModel ConvertEntityToModel(Categoria entidade)
         {
             CategoriaViewModel model = new CategoriaViewModel();
             model.ID = entidade.ID;

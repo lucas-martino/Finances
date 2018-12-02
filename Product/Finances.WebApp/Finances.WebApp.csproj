@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>0.2</Version>
+    <Version>0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finances\Finances.csproj" />
+    <ProjectReference Include="..\Finances.Domain.Repositoy.EF\Finances.Domain.Repositoy.EF.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,11 +6,8 @@ namespace Finances.WebApp.Models
 {
     public class CategoriaViewModel
     {
-        [Required]
-        public long ID { get; set; }
-        [Required]
+        public int ID { get; set; }
         public string Nome { get; set; }
-        [Required]
         public string Cor { get; set; }
     }
 }

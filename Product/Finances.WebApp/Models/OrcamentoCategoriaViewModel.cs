@@ -8,14 +8,18 @@ namespace Finances.WebApp.Models
 {
     public class OrcamentoCategoriaViewModel
     {
-        public long ID { get; set; }
+        public OrcamentoCategoriaViewModel()
+        {
+            Categoria = new CategoriaViewModel();
+        }
+        
+        public int ID { get; set; }
+        public int OrcamentoID { get; set; }
         [Required]
-        public long CategoriaID { get; set; }
+        public CategoriaViewModel Categoria { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         public decimal Valor { get; set; }
-        public string Categoria { get; set; }
-        public string CategoriaCor { get; set; }
         public IEnumerable<SelectListItem> Categorias { get; set;}
     }
 }

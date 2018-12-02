@@ -1,0 +1,53 @@
+﻿@model Finances.WebApp.Models.DemostrativoViewModel
+
+@{
+    ViewBag.Title = "Finanças";
+}
+
+<h2>Finanças</h2>
+
+<p><a asp-controller="Gasto" asp-action="Create">Lançar Novo Gasto</a></p>
+<br />
+
+<div class="form-group">
+    <label asp-for="ValorGastoTotal" class="col-md-2 control-label"></label>
+    <span style="Color: @Model.Cor">
+        @Html.DisplayFor(model => model.ValorGastoTotal)
+    </span>
+    &nbsp;<a asp-controller="Gasto" asp-action="Index">Ver</a>
+</div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Categoria
+        </th>
+        <th>
+            Gasto
+        </th>
+        <th>
+            Orçamento
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.OrcamentosCategoria)
+    {
+        <tr style="color: @item.Cor">
+            <td style="color: @item.Categoria.Cor">
+                <span style="color: @item.Cor"><b>*</b></span>
+                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorGasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orcamento)
+            </td>
+            <th><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID">Ver</a></th>
+        </tr>
+    }
+
+</table>
+<br />

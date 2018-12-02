@@ -8,28 +8,32 @@ namespace Finances.WebApp.Models
     {
         public DemostrativoViewModel()
         {
-            Itens = new List<DemostrativoItemViewModel>();
+            OrcamentosCategoria = new List<DemostrativoItemViewModel>();
         }
 
         [Display(Name = "Gasto Total")]
         [DataType(DataType.Currency)]
-        public decimal ValorTotal { get; set; }
+        public decimal ValorGastoTotal { get; set; }
         public string Cor { get; set; }
-        public decimal Percentual { get; set; }
-        public IEnumerable<DemostrativoItemViewModel> Itens { get; set; }
+        public bool PossuiNaoCategorizado { get; set; }
+        public IEnumerable<DemostrativoItemViewModel> OrcamentosCategoria { get; set; }
+        public DemostrativoItemViewModel NaoCategorizado { get; set; }
     }
 
     public class DemostrativoItemViewModel
     {
-        public long CategoriaID { get; set; }
-        public string Categoria { get; set; }
-        public string CategoriaCor { get;set; }
+        public DemostrativoItemViewModel()
+        {
+            Categoria = new CategoriaViewModel();
+        }
+        
+        public CategoriaViewModel Categoria { get; set; }
         [Display(Name = "Gasto")]        
         [DataType(DataType.Currency)]
-        public decimal Valor { get; set; }
+        public decimal ValorGasto { get; set; }
         [Display(Name = "Orçamento")]
-        public string Orcamento { get; set; }
-        public decimal Percentual { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal Orcamento { get; set; }
         public string Cor { get; set; }
     }
 }
