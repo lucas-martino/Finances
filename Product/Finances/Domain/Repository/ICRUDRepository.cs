@@ -1,13 +1,15 @@
 using Finances.Domain.Entity;
+using System;
 using System.Collections.Generic;
 
 namespace Finances.Domain.Repository
 {
-    public interface ICRUDRepository<TEntity> : IReadRepository<TEntity>
-        where TEntity : DomainEntity
+    public interface ICRUDRepository<TEntity, TKey> : IReadRepository<TEntity, TKey>
+        where TEntity : DomainEntity<TKey>
+        where TKey : IEquatable<TKey>
     {
-        int Save(TEntity entity);
+        TKey Save(TEntity entity);
         void Delete(TEntity entity);
-        void Delete(int id);
+        void Delete(TKey id);
     }
 }

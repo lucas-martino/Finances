@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository
 {
-    public abstract class ReadRepository<TEntity, TDbContext> : IReadRepository<TEntity>
-        where TEntity: DomainEntity
+    public abstract class ReadRepository<TEntity, TDbContext> : IReadRepository<TEntity, int>
+        where TEntity: DomainEntity<int>
         where TDbContext: DbContext
     {
         protected TDbContext Context { get; private set; }

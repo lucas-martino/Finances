@@ -1,6 +1,8 @@
+using FluentValidation;
+
 namespace Finances.Domain.Entity
 {
-    public class Usuario : DomainEntity
+    public class Usuario : FinancesDomainEntity
     {
         public string Nome { get; set; }
         public string Login { get; set; }

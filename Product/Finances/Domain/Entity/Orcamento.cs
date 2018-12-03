@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Finances.Domain.Entity
 {
-    public class Orcamento : DomainEntity
+    public class Orcamento : FinancesDomainEntity
     {
         public Orcamento()
         {

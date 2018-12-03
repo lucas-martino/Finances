@@ -3,7 +3,7 @@ using Finances.Domain.Entity;
 
 namespace Finances.Domain.Repository
 {
-    public interface IGastoRepository : ICRUDRepository<Gasto>
+    public interface IGastoRepository : IFinancesCRUDRepository<Gasto>
     {
         IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia);
         decimal GetGastoTotalPorVigencia(Vigencia vigencia);

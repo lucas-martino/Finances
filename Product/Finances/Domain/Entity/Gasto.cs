@@ -2,7 +2,7 @@ using System;
 
 namespace Finances.Domain.Entity
 {
-    public class Gasto : DomainEntity
+    public class Gasto : FinancesDomainEntity
     {
         public Vigencia Vigencia { get; set; }
         public DateTime Data { get; set; }

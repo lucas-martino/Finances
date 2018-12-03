@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository
 {
-    public abstract class CRUDRepository<TEntity, TDbContext> : ReadRepository<TEntity, TDbContext>, ICRUDRepository<TEntity>
-        where TEntity: DomainEntity
+    public abstract class CRUDRepository<TEntity, TDbContext> : ReadRepository<TEntity, TDbContext>, ICRUDRepository<TEntity, int>
+        where TEntity: DomainEntity<int>
         where TDbContext: DbContext
     {
         public CRUDRepository(TDbContext dbContext)

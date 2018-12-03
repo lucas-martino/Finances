@@ -1,6 +1,6 @@
 namespace Finances.Domain.Entity
 {
-    public class Categoria : DomainEntity
+    public class Categoria : FinancesDomainEntity
     {
         public const string DEFAULT_COR = "Black";
         public Categoria()
