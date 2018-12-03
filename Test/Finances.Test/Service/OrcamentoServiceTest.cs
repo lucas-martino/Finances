@@ -46,7 +46,7 @@ namespace Test.Finances.Service
         {
             //Given
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null);
+            var vigenciaService = new Mock<VigenciaService>(null, null, null);
             Usuario usuario = new Usuario() { ID = 1 };
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
             orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new Orcamento());

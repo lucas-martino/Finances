@@ -16,7 +16,7 @@ namespace Test.Finances.Service
             //Given
             Usuario usuario = new Usuario() { ID = 1 };
             var mockRepository = new Mock<ICategoriaRepository>();
-            var mockUsuarioService = new Mock<UsuarioService>();
+            var mockUsuarioService = new Mock<UsuarioService>(null);
             mockUsuarioService.Setup(us => us.GetUsuario(usuario.ID)).Returns(usuario);
             mockRepository.Setup(r => r.GetCategoriaPorUsuario(usuario)).Returns(new List<Categoria>());
             CategoriaService service = new CategoriaService(mockRepository.Object, mockUsuarioService.Object);
