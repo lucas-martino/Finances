@@ -8,10 +8,12 @@ using Finances.WebApp.Models;
 namespace Finances.WebApp.Controllers
 {
     public class CategoriaController : FinancesController<CategoriaService>
-    {        
-        public CategoriaController(CategoriaService categoriaService)
+    {
+        private UsuarioService UsuarioService;
+        public CategoriaController(CategoriaService categoriaService, UsuarioService usuarioService)
             :base(categoriaService)
-        {            
+        {
+            UsuarioService = usuarioService;
         }
         
         public IActionResult Index()
@@ -49,7 +51,7 @@ namespace Finances.WebApp.Controllers
 
         private Usuario GetUsuario()
         {
-            return Service.UsuarioService.GetUsuario(UsuarioLogadoID);
+            return UsuarioService.GetUsuario(UsuarioLogadoID);
         }
 
         public IActionResult Edit(int? id)

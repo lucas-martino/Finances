@@ -9,14 +9,13 @@ namespace Finances.Service
     public class CategoriaService : IApplicationService
     {
         private ICategoriaRepository CategoriaRepository;
+        private UsuarioService UsuarioService;
         
         public CategoriaService(ICategoriaRepository categoriaRepository, UsuarioService usuarioService)
         {
             CategoriaRepository = categoriaRepository;
             UsuarioService = usuarioService;
         }
-
-        public UsuarioService UsuarioService { get; private set; }
 
         public IEnumerable<Categoria> GetCategoriasPorUsuario(int usuarioID)
         {

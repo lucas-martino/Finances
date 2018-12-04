@@ -8,14 +8,11 @@ namespace Finances.Service
     {
         private IOrcamentoRepository OrcamentoRepository;
         private VigenciaService VigenciaService;
-        public OrcamentoService(IOrcamentoRepository orcamentoRepository, VigenciaService vigenciaService, CategoriaService categoriaService)
+        public OrcamentoService(IOrcamentoRepository orcamentoRepository, VigenciaService vigenciaService)
         {
             OrcamentoRepository = orcamentoRepository;
-            CategoriaService = categoriaService;
             VigenciaService = vigenciaService;
         }
-
-        public CategoriaService CategoriaService { get; private set; }
 
         public Orcamento GetOrcamentoPorID(int id)
         {

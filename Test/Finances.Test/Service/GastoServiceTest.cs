@@ -16,7 +16,7 @@ namespace Test.Finances.Service
             //Given
             Usuario usuario = new Usuario() { ID = 1 };
             var gastoRepository = new Mock<IGastoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null);
+            var vigenciaService = new Mock<VigenciaService>(null, null, null);
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
             gastoRepository.Setup(or => or.GetGastosPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new List<Gasto>());
             GastoService service = new GastoService(gastoRepository.Object, vigenciaService.Object, null);
@@ -35,7 +35,7 @@ namespace Test.Finances.Service
             int categoriaID = 1;
             Usuario usuario = new Usuario() { ID = 1};
             var gastoRepository = new Mock<IGastoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null);
+            var vigenciaService = new Mock<VigenciaService>(null, null, null);
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
             gastoRepository.Setup(or => or.GetGastosPorCategoriaEVigencia(categoriaID, It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new List<Gasto>());
             GastoService service = new GastoService(gastoRepository.Object, vigenciaService.Object, null);

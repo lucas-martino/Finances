@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Finances.Domain.Entity;
+using Finances.Domain.Repository;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Finances.WebApp
@@ -7,7 +9,6 @@ namespace Finances.WebApp
     {
         public static void Main(string[] args)
         {
-
             CreateWebHostBuilder(args).Build().Run();
         }
 

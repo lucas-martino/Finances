@@ -7,18 +7,15 @@ namespace Finances.Service
 {
     public class GastoService : IApplicationService
     {
-        private IGastoRepository GastoRepository;        
+        private IGastoRepository GastoRepository;
+        private VigenciaService VigenciaService;   
         
         public GastoService(IGastoRepository gastoRepository, VigenciaService vigenciaService, CategoriaService categoriaService)
         {
             GastoRepository = gastoRepository;
             VigenciaService = vigenciaService;
-            CategoriaService = categoriaService;
         }
 
-        public VigenciaService VigenciaService { get; private set; }
-
-        public CategoriaService CategoriaService { get; private set; }
         public IEnumerable<Gasto> GetGastosVigenciaAtual(int usuarioID)
         {
             return GetGastosPorVigencia(GetVigenciaAtual(usuarioID));

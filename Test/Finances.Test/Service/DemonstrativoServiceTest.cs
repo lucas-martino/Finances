@@ -14,7 +14,7 @@ namespace Test.Finances.Service
         {
             //Given
             var demonstrativoDomainService = new Mock<DemonstrativoDomainService>(null, null);
-            var vigenciaService = new Mock<VigenciaService>(null, null);
+            var vigenciaService = new Mock<VigenciaService>(null, null, null);
             Usuario usuario = new Usuario() { ID = 1 };
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID))
                 .Returns(new Vigencia() { Usuario = usuario });

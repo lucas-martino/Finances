@@ -15,8 +15,8 @@ namespace Test.Finances.Domain.Entity
             vigencia.Referencia = 201811;
 
             //Then
-            Assert.Equal(vigencia.Ano(), 2018);
-            Assert.Equal(vigencia.Mes(), 11);
+            Assert.Equal(2018, vigencia.Ano());
+            Assert.Equal(11, vigencia.Mes());
         }
     }
 }

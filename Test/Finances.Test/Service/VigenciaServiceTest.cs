@@ -18,7 +18,7 @@ namespace Test.Finances.Service
             Usuario usuario = new Usuario() { ID = 1 };
             var mockRepository = new Mock<IVigenciaRepository>();
             mockRepository.Setup(ur => ur.GetVigenciasPorUsuario(usuario)).Returns(new List<Vigencia>());
-            var mockUsuarioService = new Mock<UsuarioService>();
+            var mockUsuarioService = new Mock<UsuarioService>(null);
             mockUsuarioService.Setup(us => us.GetUsuario(usuario.ID)).Returns(usuario);
             VigenciaService service = new VigenciaService(mockRepository.Object, null, mockUsuarioService.Object);
 
@@ -36,7 +36,7 @@ namespace Test.Finances.Service
             Usuario usuario = new Usuario() { ID = 1 };
             var mockDomainService = new Mock<VigenciaDomainService>(null, null);
             mockDomainService.Setup(ur => ur.GetVigenciaAtualPorUsuario(usuario)).Returns(new Vigencia());
-            var mockUsuarioService = new Mock<UsuarioService>();
+            var mockUsuarioService = new Mock<UsuarioService>(null);
             mockUsuarioService.Setup(us => us.GetUsuario(usuario.ID)).Returns(usuario);
             VigenciaService service = new VigenciaService(null, mockDomainService.Object, mockUsuarioService.Object);
 

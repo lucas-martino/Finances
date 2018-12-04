@@ -11,9 +11,13 @@ namespace Finances.WebApp.Controllers
 {
     public class GastoController : FinancesController<GastoService>
     {
-        public GastoController(GastoService gastoService)
+        private VigenciaService VigenciaService;
+        private CategoriaService CategoriaService;
+        public GastoController(GastoService gastoService, VigenciaService vigenciaService, CategoriaService categoriaService)
             :base(gastoService)
-        {            
+        {
+            VigenciaService = vigenciaService;
+            CategoriaService = categoriaService;
         }
 
         public IActionResult Index()
@@ -61,7 +65,7 @@ namespace Finances.WebApp.Controllers
 
         private Vigencia GetVigenciaAtual()
         {
-            return Service.VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
+            return VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
         }
 
         public IActionResult Edit(int? id)
@@ -136,7 +140,7 @@ namespace Finances.WebApp.Controllers
 
         private IEnumerable<SelectListItem> GetCategorias()
         {
-            return CategoriaController.ConvertEntityToSelectListItem(Service.CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID));
+            return CategoriaController.ConvertEntityToSelectListItem(CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID));
         }
 
         private static string GenereteMinDate(DateTime data)
@@ -156,7 +160,7 @@ namespace Finances.WebApp.Controllers
 
         private Categoria GetCategoria(int categoriaID)
         {
-            return Service.CategoriaService.GetCategoriaPorID(categoriaID);
+            return CategoriaService.GetCategoriaPorID(categoriaID);
         }
 
         private void SalvarGasto(Gasto gasto)
