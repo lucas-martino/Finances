@@ -6,7 +6,7 @@ using Finances.Domain.Service;
 
 namespace Finances.Service
 {
-    public class VigenciaService : IApplicationService
+    public class VigenciaService : IFinancesApplicationService
     {
         private IVigenciaRepository VigenciaRepository;
         private VigenciaDomainService VigenciaDomainService;

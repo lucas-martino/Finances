@@ -4,7 +4,7 @@ using Finances.Domain.Repository;
 
 namespace Finances.Service
 {
-    public class OrcamentoService : IApplicationService
+    public class OrcamentoService : IFinancesApplicationService
     {
         private IOrcamentoRepository OrcamentoRepository;
         private VigenciaService VigenciaService;

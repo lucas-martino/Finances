@@ -1,5 +1,6 @@
-using System.Collections.Generic;
-using Finances.Domain.Entity;
+using Finances.Domain.Exception;
+using Framework.Domain.Entity;
+using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository
@@ -15,12 +16,24 @@ namespace Finances.Domain.Repository
 
         public virtual int Save(TEntity entity)
         {
+            ValidateEntity(entity);
+
             if (IsNewEntity(entity))
                 return Create(entity);
             else
             {
                 Update(entity);
                 return entity.ID;
+            }
+        }
+
+        private void ValidateEntity(TEntity entity)
+        {
+            if (entity != null)
+            {
+                var result = entity.Validate();
+                if (entity != null && !result.IsValid)
+                    throw new EntityInvalidException(result);
             }
         }
 

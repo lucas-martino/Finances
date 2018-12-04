@@ -3,7 +3,7 @@ using Finances.Domain.Service;
 
 namespace Finances.Service
 {
-    public class DemonstrativoService : IApplicationService
+    public class DemonstrativoService : IFinancesApplicationService
     {
         private DemonstrativoDomainService DemonstrativoDomainService;
         private VigenciaService VigenciaService;

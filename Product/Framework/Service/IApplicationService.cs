@@ -1,4 +1,4 @@
-namespace Finances.Service
+namespace Framework.Service
 {
     public interface IApplicationService
     {

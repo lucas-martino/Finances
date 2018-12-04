@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Finances.Domain.Entity;
+using Framework.Domain.Entity;
+using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository

@@ -1,9 +1,14 @@
-using FluentValidation;
+using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
     public class Usuario : FinancesDomainEntity
     {
+        public Usuario()
+        {
+            Validator = new UsuarioValidator();
+        }
+
         public string Nome { get; set; }
         private string login;
         public string Login

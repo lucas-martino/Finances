@@ -1,3 +1,4 @@
+using Framework.Domain.Exception;
 
 namespace Finances.Domain.Exception
 {

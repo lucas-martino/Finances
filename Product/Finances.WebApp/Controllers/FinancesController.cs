@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Finances.WebApp.Controllers
 {
     public class FinancesController<TService> : FinancesController
-    where TService: IApplicationService
+    where TService: IFinancesApplicationService
     {
         public FinancesController(TService service)
         {

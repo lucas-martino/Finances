@@ -1,3 +1,5 @@
+using Finances.Domain.Entity.Validator;
+
 namespace Finances.Domain.Entity
 {
     public class Categoria : FinancesDomainEntity
@@ -5,6 +7,7 @@ namespace Finances.Domain.Entity
         public const string DEFAULT_COR = "Black";
         public Categoria()
         {
+            Validator = new CategoriaValidator();
             Cor = DEFAULT_COR;
         }
 

@@ -5,7 +5,7 @@ using Finances.Domain.Repository;
 
 namespace Finances.Service
 {
-    public class GastoService : IApplicationService
+    public class GastoService : IFinancesApplicationService
     {
         private IGastoRepository GastoRepository;
         private VigenciaService VigenciaService;   

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Finances.Domain.Entity
+namespace Framework.Domain.Entity.Validator
 {
     public class ValidationResult
     {

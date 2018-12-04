@@ -6,7 +6,7 @@ using Finances.Domain.Service;
 
 namespace Finances.Service
 {
-    public class CategoriaService : IApplicationService
+    public class CategoriaService : IFinancesApplicationService
     {
         private ICategoriaRepository CategoriaRepository;
         private UsuarioService UsuarioService;

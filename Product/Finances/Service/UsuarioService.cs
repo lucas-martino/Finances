@@ -4,7 +4,7 @@ using Finances.Domain.Service;
 
 namespace Finances.Service
 {
-    public class UsuarioService : IApplicationService
+    public class UsuarioService : IFinancesApplicationService
     {
         private UsuarioDomainService UsuarioDomainService;
 

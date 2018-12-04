@@ -1,3 +1,5 @@
+using Framework.Domain.Entity;
+
 namespace Finances.Domain.Entity
 {
     public class DemonstrativoParcela : IValueObject

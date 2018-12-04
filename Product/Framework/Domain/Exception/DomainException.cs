@@ -1,5 +1,5 @@
 
-namespace Finances.Domain.Exception
+namespace Framework.Domain.Exception
 {
     public abstract class DomainException : System.Exception
     {

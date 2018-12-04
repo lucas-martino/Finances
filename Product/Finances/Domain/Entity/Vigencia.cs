@@ -1,7 +1,14 @@
+using Finances.Domain.Entity.Validator;
+
 namespace Finances.Domain.Entity
 {
     public class Vigencia : FinancesDomainEntity
     {
+        public Vigencia()
+        {
+            Validator = new VigenciaValidator();
+        }
+        
         public int Referencia { get; set; }
         public Usuario Usuario { get; set; }
 

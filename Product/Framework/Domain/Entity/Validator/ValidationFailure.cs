@@ -1,4 +1,4 @@
-namespace Finances.Domain.Entity
+namespace Framework.Domain.Entity.Validator
 {
     public class ValidationFailure
     {

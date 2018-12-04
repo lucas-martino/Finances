@@ -1,8 +1,8 @@
-using Finances.Domain.Entity;
+using Framework.Domain.Entity;
 using System;
 using System.Collections.Generic;
 
-namespace Finances.Domain.Repository
+namespace Framework.Domain.Repository
 {
     public interface IReadRepository<TEntiy, TKey>
         where TEntiy : DomainEntity<TKey>

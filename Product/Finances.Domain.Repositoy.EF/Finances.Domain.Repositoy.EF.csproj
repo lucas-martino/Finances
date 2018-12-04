@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finances\Finances.csproj" />
+    <ProjectReference Include="..\Framework\Framework.csproj" />
   </ItemGroup>
 
 </Project>
