@@ -11,9 +11,11 @@ namespace Finances.WebApp.Controllers
 {
     public class OrcamentoController : FinancesController<OrcamentoService>
     {
-        public OrcamentoController(OrcamentoService orcamentoService)
+        private CategoriaService CategoriaService;
+        public OrcamentoController(OrcamentoService orcamentoService, CategoriaService categoriaService)
             :base(orcamentoService)
-        {            
+        {
+            CategoriaService = categoriaService;
         }
 
         public IActionResult Index()
@@ -78,7 +80,7 @@ namespace Finances.WebApp.Controllers
 
         private Categoria GetCategoria(int categoriaID)
         {
-            return Service.CategoriaService.GetCategoriaPorID(categoriaID);
+            return CategoriaService.GetCategoriaPorID(categoriaID);
         }
 
         public IActionResult EditOrcamentoCategoria(int orcamentoCategoriaID)
@@ -145,7 +147,7 @@ namespace Finances.WebApp.Controllers
 
         private IEnumerable<SelectListItem> GetCategorias(Categoria categoria)
         {
-            IList<Categoria> lista = Service.CategoriaService.GetCategoriasDisponiveisOrcamentoPorUsuario(UsuarioLogadoID);
+            IList<Categoria> lista = CategoriaService.GetCategoriasDisponiveisOrcamentoPorUsuario(UsuarioLogadoID);
             if (categoria != null && lista.FirstOrDefault(C => C.ID == categoria.ID) == null)
                 lista.Add(categoria);
 

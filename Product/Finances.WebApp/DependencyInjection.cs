@@ -33,7 +33,7 @@ namespace Finances.WebApp
 
         private static void SetupRepository(IServiceCollection services)
         {
-            services.AddSingleton<FinancesContext, FinancesContext>();
+            services.AddSingleton<FinancesContext, FinancesContext>(i => new FinancesContext("server=localhost;database=Finances;user=finances;password=pwd;"));
             services.AddSingleton<ICategoriaRepository, CategoriaRepository>();
             services.AddSingleton<IGastoRepository, GastoRepository>();
             services.AddSingleton<IOrcamentoRepository, OrcamentoRepository>();

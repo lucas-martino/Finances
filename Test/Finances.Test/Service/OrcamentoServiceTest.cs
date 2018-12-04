@@ -16,7 +16,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             Vigencia vigencia = new Vigencia();
             orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(vigencia)).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
 
             //When
             Orcamento orcamento = service.GetOrcamentoPorVigencia(vigencia);
@@ -32,7 +32,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             int id = 1;
             orcamentoRepository.Setup(or => or.GetByID(id)).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
 
             //When
             Orcamento orcamento = service.GetOrcamentoPorID(id);
@@ -50,7 +50,7 @@ namespace Test.Finances.Service
             Usuario usuario = new Usuario() { ID = 1 };
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
             orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, vigenciaService.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, vigenciaService.Object);
 
             //When
             Orcamento orcamento = service.GetOrcamentoVigenciaAtual(usuario.ID);
@@ -67,7 +67,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             Orcamento orcamento = new Orcamento() { ID = 1 };
             orcamentoRepository.Setup(or => or.Save(orcamento)).Returns(orcamento.ID).Callback(() => salvou = true);
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
 
             //When
             long id = service.SalvarOrcamento(orcamento);
@@ -84,7 +84,7 @@ namespace Test.Finances.Service
             int id = 1;
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             orcamentoRepository.Setup(or => or.GetOrcamentoCategoriaByID(id)).Returns(new OrcamentoCategoria());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
 
             //When
             OrcamentoCategoria orcamento = service.GetOrcamentoCategoriaPorID(id);
@@ -101,7 +101,7 @@ namespace Test.Finances.Service
             bool apagou = false;
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             orcamentoRepository.Setup(or => or.DeleteOrcamentoCategoria(id)).Callback(() => apagou = true);
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
 
             //When
             service.ApagarOrcamentoCategoria(id);
