@@ -26,6 +26,16 @@ namespace Finances.Service
             return GetGastosPorCategoria(categoriaID, GetVigenciaAtual(usuarioID));
         }
 
+        public IEnumerable<Gasto> GetGastosNaoCategorizadoVigenciaAtual(int usuarioID)
+        {
+            return GetGastosNaoCategorizado(GetVigenciaAtual(usuarioID));
+        }
+
+        private IEnumerable<Gasto> GetGastosNaoCategorizado(Vigencia vigencia)
+        {
+            return GastoRepository.GetGastosNaoCategorizadoPorVigencia(vigencia);
+        }
+
         public IEnumerable<Gasto> GetGastosPorVigencia(int vigenciaID)
         {
             Vigencia vigencia = VigenciaService.GetVigenciaPorID(vigenciaID);

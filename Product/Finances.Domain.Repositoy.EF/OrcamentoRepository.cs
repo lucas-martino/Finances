@@ -22,6 +22,7 @@ namespace Finances.Domain.Repository
             Orcamento orcamento = GetList(o => o.Vigencia.ID == vigencia.ID).FirstOrDefault();
             if (orcamento != null)
                 orcamento.OrcamentosCategoria = _orcamentoCategoriaRepository.GetOrcamentoCategoriaPorOrcamento(orcamento);
+                
             return orcamento;
         }
 
@@ -40,6 +41,11 @@ namespace Finances.Domain.Repository
             return _orcamentoCategoriaRepository.Save(orcamentoCategoria);
         }
 
+        public void DeleteOrcamentoCategoriaPorCategoria(int categoriaID)
+        {
+            _orcamentoCategoriaRepository.DeleteOrcamentoCategoriaPorCategoria(categoriaID);
+        }
+
         private class OrcamentoCategoriaRepository : CRUDRepository<OrcamentoCategoria, FinancesContext>
         {
             public OrcamentoCategoriaRepository(FinancesContext dbContext) 
@@ -52,6 +58,11 @@ namespace Finances.Domain.Repository
             public IList<OrcamentoCategoria> GetOrcamentoCategoriaPorOrcamento(Orcamento orcamento)
             {
                 return GetList().Where(i => i.Orcamento.ID == orcamento.ID).Include(i => i.Categoria).ToList();
+            }
+
+            public void DeleteOrcamentoCategoriaPorCategoria(int categoriaID)
+            {
+                throw new NotImplementedException();
             }
         }
     }

@@ -8,5 +8,6 @@ namespace Finances.Domain.Repository
         OrcamentoCategoria GetOrcamentoCategoriaByID(int orcamentoCategoriaID);
         void DeleteOrcamentoCategoria(int orcamentoCategoriaID);
         int SaveOrcamentoCategoria(OrcamentoCategoria orcamentoCategoria);
+        void DeleteOrcamentoCategoriaPorCategoria(int categoriaID);
     }
 }

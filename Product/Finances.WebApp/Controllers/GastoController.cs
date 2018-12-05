@@ -22,15 +22,27 @@ namespace Finances.WebApp.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Title = "Gastos";
             var model = ConvertEntityToModel(Service.GetGastosVigenciaAtual(UsuarioLogadoID));
+
             return View(model);
         }     
 
         public IActionResult GastoPorCategoria(int categoriaID)
         {
+            ViewBag.Title = "Gastos Por Categoria";
             var model = ConvertEntityToModel(Service.GetGastosPorCategoriaVigenciaAtual(categoriaID, UsuarioLogadoID));
-            return View(model);
+
+            return View("Index", model);
         }   
+
+        public IActionResult GastoNaoCategorizado()
+        {
+            ViewBag.Title = "Gastos Não Categorizado";
+            var model = ConvertEntityToModel(Service.GetGastosNaoCategorizadoVigenciaAtual(UsuarioLogadoID));
+            
+            return View("Index", model);
+        } 
         
         public IActionResult Create()
         {
@@ -123,8 +135,9 @@ namespace Finances.WebApp.Controllers
             model.ID = entidade.ID;
             model.Data = entidade.Data;
             model.Valor = entidade.Valor;
-            model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);
             model.Observacao = entidade.Observacao;
+            if (entidade.Categoria != null)
+                model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);            
 
             return model;
         }
@@ -140,7 +153,10 @@ namespace Finances.WebApp.Controllers
 
         private IEnumerable<SelectListItem> GetCategorias()
         {
-            return CategoriaController.ConvertEntityToSelectListItem(CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID));
+            IList<SelectListItem> lista = CategoriaController.ConvertEntityToSelectListItem(CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID));
+            lista.Insert(0, new SelectListItem(" ", "0"));
+
+            return lista;
         }
 
         private static string GenereteMinDate(DateTime data)

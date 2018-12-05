@@ -1,5 +1,6 @@
 using System.Linq;
 using Finances.Domain.Entity;
+using Test.Finances.Factory;
 using Xunit;
 
 namespace Test.Finances.Domain.Entity
@@ -23,9 +24,8 @@ namespace Test.Finances.Domain.Entity
         public void LoginObrigatorio()
         {
             //Given
-            Usuario usuario = new Usuario();
-            usuario.Nome = "Nome";
-            usuario.Senha = "Senha";
+            Usuario usuario = GetUsuarioValido();
+            usuario.Login = "";
 
             //When
             var result = usuario.Validate();
@@ -33,6 +33,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Login"));
         }
 
@@ -40,9 +41,8 @@ namespace Test.Finances.Domain.Entity
         public void NomeObrigatorio()
         {
             //Given
-            Usuario usuario = new Usuario();
-            usuario.Login = "Login";
-            usuario.Senha = "Senha";
+            Usuario usuario = GetUsuarioValido();
+            usuario.Nome = "";
 
             //When
             var result = usuario.Validate();
@@ -50,6 +50,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Nome"));
         }
 
@@ -57,9 +58,8 @@ namespace Test.Finances.Domain.Entity
         public void SenhaObrigatorio()
         {
             //Given
-            Usuario usuario = new Usuario();
-            usuario.Login = "Login";
-            usuario.Nome = "Nome";
+            Usuario usuario = GetUsuarioValido();
+            usuario.Senha = "";
 
             //When
             var result = usuario.Validate();
@@ -67,7 +67,13 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Senha"));
+        }
+
+        private static Usuario GetUsuarioValido()
+        {
+            return UsuarioFactory.GetValid().Build();
         }
     }
 }

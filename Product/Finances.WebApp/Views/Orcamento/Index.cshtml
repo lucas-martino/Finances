@@ -17,14 +17,14 @@
             @Html.DisplayFor(model => Model.Valor)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@Model.ID">Editar</a>
+            <a asp-action="Edit" asp-route-id="@Model.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
         </td>
     </tr>
 </table>
 <br />
 
 <h3>Orçamentos por Categoria</h3>
-<p><a asp-action="CreateOrcamentoCategoria" asp-route-orcamentoID="@Model.ID">Criar Novo</a></p>
+<p><a asp-action="CreateOrcamentoCategoria" asp-route-orcamentoID="@Model.ID"><i class="glyphicon glyphicon-edit"></i> Criar Novo</a></p>
 <br />
 
 <table class="table">
@@ -48,8 +48,10 @@
                 @Html.DisplayFor(modelItem => item.Valor)
             </td>
             <td>
-                <a asp-action="EditOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID">Editar</a> |
-                <a asp-action="DeleteOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID" onclick="return confirm('Deseja apagar o orçamento para \'@item.Categoria\' ?');">Apagar</a>
+                <a asp-action="EditOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <a asp-action="DeleteOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID" 
+                onclick="return confirm('Deseja apagar o orçamento para \'@item.Categoria.Nome\' ?');" title="Apagar"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
     }

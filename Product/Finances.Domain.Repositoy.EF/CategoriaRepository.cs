@@ -15,6 +15,11 @@ namespace Finances.Domain.Repository
 
         protected override DbSet<Categoria> DbSet { get { return Context.Categorias; } }
 
+        public Categoria GetCategoriaPorNomeUsuario(string nome, Usuario usuario)
+        {
+            return GetList(g => g.Usuario.ID == usuario.ID && g.Nome.ToLower() == nome.ToLower()).FirstOrDefault();
+        }
+
         public virtual IEnumerable<Categoria> GetCategoriaPorUsuario(Usuario usuario)
         {
             return GetList(g => g.Usuario == usuario).OrderBy(g => g.Nome);

@@ -9,11 +9,13 @@ namespace Finances.Service
     public class CategoriaService : IFinancesApplicationService
     {
         private ICategoriaRepository CategoriaRepository;
+        private CategoriaDomainService CategoriaDomainService;
         private UsuarioService UsuarioService;
         
-        public CategoriaService(ICategoriaRepository categoriaRepository, UsuarioService usuarioService)
+        public CategoriaService(ICategoriaRepository categoriaRepository, CategoriaDomainService categoriaDomainService, UsuarioService usuarioService)
         {
             CategoriaRepository = categoriaRepository;
+            CategoriaDomainService  = categoriaDomainService;
             UsuarioService = usuarioService;
         }
 
@@ -30,12 +32,12 @@ namespace Finances.Service
 
         public long SalvarCategoria(Categoria categoria)
         {
-            return CategoriaRepository.Save(categoria);
+            return CategoriaDomainService.SaveCategoria(categoria);
         }
 
         public void ApagarCategoria(int id)
         {
-            CategoriaRepository.Delete(id);
+            CategoriaDomainService.DeleteCategoria(id);
         }
 
         public IList<Categoria> GetCategoriasDisponiveisOrcamentoPorUsuario(int usuarioID)

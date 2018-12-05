@@ -1,5 +1,6 @@
 using Finances.Domain.Exception;
 using Framework.Domain.Entity;
+using Framework.Domain.Exception;
 using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,25 +17,28 @@ namespace Finances.Domain.Repository
 
         public virtual int Save(TEntity entity)
         {
-            ValidateEntity(entity);
-
-            if (IsNewEntity(entity))
-                return Create(entity);
-            else
+            int id = 0;
+            if (entity != null)
             {
-                Update(entity);
-                return entity.ID;
+                ValidateEntity(entity);
+
+                if (entity.IsNewEntity())
+                    id = Create(entity);
+                else
+                {
+                    Update(entity);
+                    id = entity.ID;
+                }
             }
+
+            return id;
         }
 
         private void ValidateEntity(TEntity entity)
         {
-            if (entity != null)
-            {
-                var result = entity.Validate();
-                if (entity != null && !result.IsValid)
-                    throw new EntityInvalidException(result);
-            }
+            var result = entity.Validate();
+            if (entity != null && !result.IsValid)
+                throw new EntityInvalidException(entity, result);
         }
 
         public virtual void Delete(TEntity entity)
@@ -67,9 +71,6 @@ namespace Finances.Domain.Repository
             Commit();  
         }
 
-        private static bool IsNewEntity(TEntity entity)
-        {
-            return entity.ID <= 0;
-        }
+
     }
 }

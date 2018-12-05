@@ -1,5 +1,6 @@
 using System.Linq;
 using Finances.Domain.Entity;
+using Test.Finances.Factory;
 using Xunit;
 
 namespace Test.Finances.Domain.Entity
@@ -10,9 +11,8 @@ namespace Test.Finances.Domain.Entity
         public void UsuarioObrigatorio()
         {
             //Given
-            Categoria categoria = new Categoria();
-            categoria.Cor = "Cor";
-            categoria.Nome = "Nome";
+            Categoria categoria = GetCategoriaValida();
+            categoria.Usuario = null;
 
             //When
             var result = categoria.Validate();
@@ -20,6 +20,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Usuario"));
         }
 
@@ -27,9 +28,8 @@ namespace Test.Finances.Domain.Entity
         public void NomeObrigatorio()
         {
             //Given
-            Categoria categoria = new Categoria();
-            categoria.Usuario = GetUsuarioValido();
-            categoria.Cor = "Cor";
+            Categoria categoria = GetCategoriaValida();
+            categoria.Nome = "";
 
             //When
             var result = categoria.Validate();
@@ -37,6 +37,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Nome"));
         }
 
@@ -53,9 +54,7 @@ namespace Test.Finances.Domain.Entity
         public void CorObrigatorio()
         {
             //Given
-            Categoria categoria = new Categoria();
-            categoria.Usuario = GetUsuarioValido();
-            categoria.Nome = "Nome";
+            Categoria categoria = GetCategoriaValida();
             categoria.Cor = "";
 
             //When
@@ -64,12 +63,13 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Cor"));
         }
 
-        private static Usuario GetUsuarioValido()
+        private static Categoria GetCategoriaValida()
         {
-            return new Usuario() { ID = 1, Nome = "Nome", Login = "Login", Senha = "Senha" };
+            return CategoriaFactory.GetValid().Build();
         }
     }
 }

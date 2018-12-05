@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
@@ -6,6 +7,7 @@ namespace Finances.Domain.Entity
     {
         public Orcamento()
         {
+            Validator = new OrcamentoValidator();
             OrcamentosCategoria = new List<OrcamentoCategoria>();
         }
         

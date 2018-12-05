@@ -6,7 +6,7 @@
 
 <h2>Finanças</h2>
 
-<p><a asp-controller="Gasto" asp-action="Create">Lançar Novo Gasto</a></p>
+<p><a asp-controller="Gasto" asp-action="Create"><i class="glyphicon glyphicon-edit"></i> Lançar Novo Gasto</a></p>
 <br />
 
 <div class="form-group">
@@ -14,7 +14,7 @@
     <span style="Color: @Model.Cor">
         @Html.DisplayFor(model => model.ValorGastoTotal)
     </span>
-    &nbsp;<a asp-controller="Gasto" asp-action="Index">Ver</a>
+    &nbsp;<a asp-controller="Gasto" asp-action="Index" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a>
 </div>
 <br />
 <br />
@@ -36,7 +36,7 @@
     {
         <tr style="color: @item.Cor">
             <td style="color: @item.Categoria.Cor">
-                <span style="color: @item.Cor"><b>*</b></span>
+                <i class="glyphicon glyphicon-triangle-right" style="color: @item.Cor"></i>
                 @Html.DisplayFor(modelItem => item.Categoria.Nome)
             </td>
             <td>
@@ -45,7 +45,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Orcamento)
             </td>
-            <th><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID">Ver</a></th>
+            <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
+        </tr>
+    }
+    @if (Model.NaoCategorizado != null)
+    {
+        <tr style="color: @Model.NaoCategorizado.Cor">
+            <td>
+                <i class="glyphicon glyphicon-asterisk"></i>
+                <span style="color: Black">Não Categorizado</span>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NaoCategorizado.ValorGasto)
+            </td>
+            <td>
+            </td>
+            <td><a asp-controller="Gasto" asp-action="GastoNaoCategorizado" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
     }
 

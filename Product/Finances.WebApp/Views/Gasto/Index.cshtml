@@ -1,21 +1,14 @@
 ﻿@model IEnumerable<Finances.WebApp.Models.GastoViewModel>
 
-@{
-    ViewBag.Title = "Gastos";
-}
+<h2>@ViewBag.Title</h2>
 
-<h2>Gastos</h2>
-
-<p><a asp-action="Create">Lançar Gasto</a></p>
+<p><a asp-action="Create"><i class="glyphicon glyphicon-edit"></i> Lançar Gasto</a></p>
 <br />
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data)
+            Dia
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Valor)
@@ -33,10 +26,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
+                @Html.DisplayFor(modelItem => item.Data.Day)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
@@ -48,8 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Observacao)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID" onclick="return confirm('Deseja apagar o gasto \'@item.ID\' ?');">Apagar</a>
+                <a asp-action="Edit" asp-route-id="@item.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <a asp-action="Delete" asp-route-id="@item.ID" 
+                    onclick="return confirm('Deseja apagar o gasto do dia @item.Data.Day no valor R$@item.Valor ?');" title="Apagar"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
     }

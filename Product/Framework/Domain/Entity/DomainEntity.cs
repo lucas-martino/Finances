@@ -3,7 +3,7 @@ using Framework.Domain.Entity.Validator;
 
 namespace Framework.Domain.Entity
 {
-    public abstract class DomainEntity<TKey> : IEquatable<DomainEntity<TKey>>
+    public abstract class DomainEntity<TKey> : DomainEntity, IEquatable<DomainEntity<TKey>>
         where TKey : IEquatable<TKey>
     {
         public TKey ID { get; set; }
@@ -35,8 +35,11 @@ namespace Framework.Domain.Entity
             return 2018120400;
         }
 */
+    }
 
-        protected IDomainValidator<DomainEntity<TKey>, TKey> Validator { get; set; }
+    public abstract class DomainEntity
+    {
+        protected IDomainValidator<DomainEntity> Validator { get; set; }
         public bool IsValid()
         {
             ValidationResult result = Validate();
@@ -48,5 +51,7 @@ namespace Framework.Domain.Entity
         {
             return Validator.Validate(this);
         }
+
+        public abstract bool IsNewEntity();
     }
 }

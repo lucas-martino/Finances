@@ -3,10 +3,9 @@ using System.Linq.Expressions;
 
 namespace Framework.Domain.Entity.Validator
 {
-    public interface IDomainValidator<out TEntity, TKey>
-        where TEntity : DomainEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IDomainValidator<out TEntity>
+        where TEntity : DomainEntity
     {
-        ValidationResult Validate(DomainEntity<TKey> instance);
+        ValidationResult Validate(DomainEntity instance);
     }
 }

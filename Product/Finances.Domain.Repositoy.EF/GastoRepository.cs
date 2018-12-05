@@ -15,31 +15,42 @@ namespace Finances.Domain.Repository
 
         protected override DbSet<Gasto> DbSet { get { return Context.Gastos; } }
 
-        public virtual IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia)
+        public IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia)
         {
             return GetList(g => g.Vigencia.ID == vigencia.ID).OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
         }
 
-        public virtual decimal GetGastoTotalPorVigencia(Vigencia vigencia)
+        public decimal GetGastoTotalPorVigencia(Vigencia vigencia)
         {
             return GetList(g => g.Vigencia.ID == vigencia.ID).Sum(g => g.Valor);
         }
 
-        public virtual IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia)
+        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia)
         {
             return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria.ID == categoriaID).OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
         }
 
-        public virtual decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
+        public decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
         {
             return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria.ID == categoria.ID)
                 .Sum(g => g.Valor); 
         }
 
-        public virtual decimal GetGastoTotalVigenciaSemCategoria(Vigencia vigencia)
+        public decimal GetGastoTotalPorCategoria(int categoriaID)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria == null && g.Categoria.ID == 0)
+            return GetList(g => g.Categoria.ID == categoriaID)
                 .Sum(g => g.Valor); 
+        }
+
+        public decimal GetGastoTotalVigenciaSemCategoria(Vigencia vigencia)
+        {
+            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria == null)
+                .Sum(g => g.Valor); 
+        }
+
+        public IEnumerable<Gasto> GetGastosNaoCategorizadoPorVigencia(Vigencia vigencia)
+        {
+            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria == null).OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
         }
     }
 }

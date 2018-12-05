@@ -5,11 +5,10 @@ using FluentValidation;
 
 namespace Framework.Domain.Entity.Validator
 {
-    public abstract class DomainValidator<TEntity, TKey> : AbstractValidator<TEntity>, IDomainValidator<TEntity, TKey>
-        where TEntity : DomainEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public abstract class DomainValidator<TEntity> : AbstractValidator<TEntity>, IDomainValidator<TEntity>
+        where TEntity : DomainEntity
     {
-        public ValidationResult Validate(DomainEntity<TKey> instance)
+        public ValidationResult Validate(DomainEntity instance)
         {
             return Convert(base.Validate(instance as TEntity));
         }

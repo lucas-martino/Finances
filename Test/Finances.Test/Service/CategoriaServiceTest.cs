@@ -5,6 +5,8 @@ using Finances.Domain.Entity;
 using Finances.Domain.Repository;
 using Moq;
 using System.Collections.Generic;
+using Test.Finances.Factory;
+using Finances.Domain.Service;
 
 namespace Test.Finances.Service
 {
@@ -14,12 +16,12 @@ namespace Test.Finances.Service
         public void BuscarCategoriaPorUsuario()
         {
             //Given
-            Usuario usuario = new Usuario() { ID = 1 };
+            Usuario usuario = UsuarioFactory.GetValid().Build();
             var mockRepository = new Mock<ICategoriaRepository>();
             var mockUsuarioService = new Mock<UsuarioService>(null);
             mockUsuarioService.Setup(us => us.GetUsuario(usuario.ID)).Returns(usuario);
             mockRepository.Setup(r => r.GetCategoriaPorUsuario(usuario)).Returns(new List<Categoria>());
-            CategoriaService service = new CategoriaService(mockRepository.Object, mockUsuarioService.Object);
+            CategoriaService service = new CategoriaService(mockRepository.Object, null, mockUsuarioService.Object);
 
             //When
             var categorias = service.GetCategoriasPorUsuario(usuario.ID);
@@ -34,8 +36,8 @@ namespace Test.Finances.Service
             //Given
             int id = 1;
             var mockRepository = new Mock<ICategoriaRepository>();
-            mockRepository.Setup(r => r.GetByID(id)).Returns(new Categoria());
-            CategoriaService service = new CategoriaService(mockRepository.Object, null);
+            mockRepository.Setup(r => r.GetByID(id)).Returns(CategoriaFactory.Get().WithID(id).Build());
+            CategoriaService service = new CategoriaService(mockRepository.Object, null, null);
 
             //When
             var categoria = service.GetCategoriaPorID(id);
@@ -48,11 +50,11 @@ namespace Test.Finances.Service
         public void SalvarCategoria()
         {
             //Given
-            Categoria categoria = new Categoria() { ID = 1 };
+            Categoria categoria = CategoriaFactory.GetValid().Build();
             bool salvouObjeto = false;
-            var mockRepository = new Mock<ICategoriaRepository>();
-            mockRepository.Setup(r => r.Save(categoria)).Returns(categoria.ID).Callback(() => salvouObjeto = true);
-            CategoriaService service = new CategoriaService(mockRepository.Object, null);
+            var categoriaDomainService = new Mock<CategoriaDomainService>(null, null, null);
+            categoriaDomainService.Setup(r => r.SaveCategoria(categoria)).Returns(categoria.ID).Callback(() => salvouObjeto = true);
+            CategoriaService service = new CategoriaService(null, categoriaDomainService.Object, null);
 
             //When
             var id = service.SalvarCategoria(categoria);
@@ -68,9 +70,9 @@ namespace Test.Finances.Service
             //Given
             int id = 1;
             bool deletou = false;
-            var mockRepository = new Mock<ICategoriaRepository>();
-            mockRepository.Setup(r => r.Delete(id)).Callback(() => deletou = true);
-            CategoriaService service = new CategoriaService(mockRepository.Object, null);
+            var categoriaDomainService = new Mock<CategoriaDomainService>(null, null, null);
+            categoriaDomainService.Setup(r => r.DeleteCategoria(id)).Callback(() => deletou = true);
+            CategoriaService service = new CategoriaService(null, categoriaDomainService.Object, null);
 
             //When
             service.ApagarCategoria(id);

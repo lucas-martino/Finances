@@ -5,6 +5,7 @@ using Finances.Domain.Entity;
 using Finances.Domain.Repository;
 using Moq;
 using System.Collections.Generic;
+using Test.Finances.Factory;
 
 namespace Test.Finances.Service
 {
@@ -14,10 +15,11 @@ namespace Test.Finances.Service
         public void BuscarGastosVigenciaAtual()
         {
             //Given
-            Usuario usuario = new Usuario() { ID = 1 };
+            Usuario usuario = UsuarioFactory.GetValid().Build();
             var gastoRepository = new Mock<IGastoRepository>();
             var vigenciaService = new Mock<VigenciaService>(null, null, null);
-            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
+            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID))
+                .Returns(new Vigencia() { Usuario = usuario });
             gastoRepository.Setup(or => or.GetGastosPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new List<Gasto>());
             GastoService service = new GastoService(gastoRepository.Object, vigenciaService.Object, null);
 

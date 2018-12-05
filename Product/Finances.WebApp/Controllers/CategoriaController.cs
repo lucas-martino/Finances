@@ -127,7 +127,7 @@ namespace Finances.WebApp.Controllers
             return lista;
         }
 
-        public static IEnumerable<SelectListItem> ConvertEntityToSelectListItem(IEnumerable<Categoria> entidade)
+        public static IList<SelectListItem> ConvertEntityToSelectListItem(IEnumerable<Categoria> entidade)
         {
             IList<SelectListItem> lista = new List<SelectListItem>();
             foreach (Categoria categoria in entidade)

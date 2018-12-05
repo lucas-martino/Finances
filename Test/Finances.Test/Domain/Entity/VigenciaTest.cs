@@ -1,5 +1,6 @@
 using System.Linq;
 using Finances.Domain.Entity;
+using Test.Finances.Factory;
 using Xunit;
 
 namespace Test.Finances.Domain.Entity
@@ -24,8 +25,8 @@ namespace Test.Finances.Domain.Entity
         public void UsuarioObrigatorio()
         {
             //Given
-            Vigencia vigencia = new Vigencia();
-            vigencia.Referencia = 201811;
+            Vigencia vigencia = GetVigenciaValida();
+            vigencia.Usuario = null;
 
             //When
             var result = vigencia.Validate();
@@ -33,6 +34,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Usuario"));
         }
 
@@ -40,8 +42,8 @@ namespace Test.Finances.Domain.Entity
         public void ReferenciaObrigatoria()
         {
             //Given
-            Vigencia vigencia = new Vigencia();
-            vigencia.Usuario = new Usuario();
+            Vigencia vigencia = GetVigenciaValida();
+            vigencia.Referencia = 0;
 
             //When
             var result = vigencia.Validate();
@@ -49,7 +51,13 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
+            Assert.Equal(1, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Referencia"));
+        }
+
+        private static Vigencia GetVigenciaValida()
+        {
+            return VigenciaFactory.GetValid().Build();
         }
     }
 }

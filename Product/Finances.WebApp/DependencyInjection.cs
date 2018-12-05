@@ -29,6 +29,7 @@ namespace Finances.WebApp
             services.AddSingleton<DemonstrativoDomainService, DemonstrativoDomainService>();
             services.AddSingleton<UsuarioDomainService, UsuarioDomainService>();
             services.AddSingleton<VigenciaDomainService, VigenciaDomainService>();
+            services.AddSingleton<CategoriaDomainService, CategoriaDomainService>();
         }
 
         private static void SetupRepository(IServiceCollection services)
