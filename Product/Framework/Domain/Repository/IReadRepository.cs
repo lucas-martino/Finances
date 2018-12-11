@@ -1,14 +1,17 @@
 using Framework.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Framework.Domain.Repository
 {
-    public interface IReadRepository<TEntiy, TKey>
-        where TEntiy : DomainEntity<TKey>
+    public interface IReadRepository<TEntity, TKey>
+        where TEntity : DomainEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        TEntiy GetByID(TKey key);
-        IEnumerable<TEntiy> GetAll();
+        TEntity GetByID(TKey key);
+        Task<TEntity> GetByIDAsync(TKey id);
+        IEnumerable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> GetAllAsync();
     }
 }

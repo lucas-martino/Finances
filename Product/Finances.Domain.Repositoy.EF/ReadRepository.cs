@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Framework.Domain.Entity;
 using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +27,19 @@ namespace Finances.Domain.Repository
             return GetOne(i => i.ID == id);
         }
 
+        public async Task<TEntity> GetByIDAsync(int id)
+        {
+            return await GetOneAsync(i => i.ID == id);
+        }
+
         public IEnumerable<TEntity> GetAll()
         {
             return GetList().ToArray();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await GetList().ToArrayAsync();
         }
 
         protected IQueryable<TEntity> GetList()
@@ -39,6 +50,11 @@ namespace Finances.Domain.Repository
         protected TEntity GetOne(Expression<Func<TEntity, bool>> where)
         {
             return GetList(where).FirstOrDefault();
+        }
+
+        protected async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> where)
+        {
+            return await GetList(where).FirstOrDefaultAsync();
         }
 
         protected IQueryable<TEntity> GetList(Expression<Func<TEntity, bool>> where)
