@@ -4,7 +4,7 @@ namespace Finances.Domain.Entity
 {
     public class Categoria : FinancesDomainEntity
     {
-        public const string DEFAULT_COR = "Black";
+        public const string DEFAULT_COR = "Darkgray";
         public Categoria()
         {
             Validator = new CategoriaValidator();
@@ -13,6 +13,7 @@ namespace Finances.Domain.Entity
 
         public string Nome { get; set; }
         public string Cor { get; set; }
+        public string Icone { get; set; }
         public Usuario Usuario { get; set; }
     }
 }

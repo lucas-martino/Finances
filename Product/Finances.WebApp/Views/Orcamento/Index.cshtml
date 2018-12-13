@@ -41,8 +41,14 @@
     @foreach (var item in Model.OrcamentosCategoria)
     {
         <tr>
-            <td style="Color: @item.Categoria.Cor">
-                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+            <td>
+                <span class="badge badge-pill categoria" style="background-color: @item.Categoria.Cor">
+                    @if(!String.IsNullOrEmpty(item.Categoria.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Categoria.Icone"></i>@:&nbsp;
+                    }
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </span>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)

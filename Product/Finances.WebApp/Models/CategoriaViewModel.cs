@@ -9,5 +9,6 @@ namespace Finances.WebApp.Models
         public int ID { get; set; }
         public string Nome { get; set; }
         public string Cor { get; set; }
+        public string Icone { get; set; }
     }
 }

@@ -28,6 +28,14 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="Icone" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Icone" class="form-control" />
+            <span asp-validation-for="Icone" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Salvar" class="btn btn-default" />
         </div>

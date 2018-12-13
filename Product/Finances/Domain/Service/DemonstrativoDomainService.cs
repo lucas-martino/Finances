@@ -13,6 +13,7 @@ namespace Finances.Domain.Service
         private const string NAO_CATEGORIZADO = "Orange";
         private IGastoRepository GastoRepository { get; set; }
         private IOrcamentoRepository OrcamentoRepository { get; set; }
+        
         public DemonstrativoDomainService(IGastoRepository gastoRepository, IOrcamentoRepository orcamentoRepository)
         {
             GastoRepository = gastoRepository;

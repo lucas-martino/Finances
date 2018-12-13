@@ -37,6 +37,7 @@ namespace Finances.WebApp.Controllers
                 Categoria categoria = new Categoria();
                 categoria.Nome = model.Nome;
                 categoria.Cor = model.Cor;
+                categoria.Icone = model.Icone;
                 if (string.IsNullOrWhiteSpace(categoria.Cor))
                     categoria.Cor = Categoria.DEFAULT_COR;
                 categoria.Usuario = GetUsuario();
@@ -81,6 +82,7 @@ namespace Finances.WebApp.Controllers
             {
                 entidade.Nome = model.Nome;
                 entidade.Cor = model.Cor;
+                entidade.Icone = model.Icone;
                 if (string.IsNullOrWhiteSpace(entidade.Cor))
                     entidade.Cor = Categoria.DEFAULT_COR;     
                 
@@ -105,6 +107,7 @@ namespace Finances.WebApp.Controllers
             model.ID = entidade.ID;
             model.Nome = entidade.Nome;
             model.Cor = entidade.Cor;
+            model.Icone = entidade.Icone;
 
             return model;
         }

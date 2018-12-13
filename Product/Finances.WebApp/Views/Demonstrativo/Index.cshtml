@@ -35,9 +35,15 @@
     @foreach (var item in Model.OrcamentosCategoria)
     {
         <tr style="color: @item.Cor">
-            <td style="color: @item.Categoria.Cor">
+            <td>
                 <i class="glyphicon glyphicon-triangle-right" style="color: @item.Cor"></i>
-                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                <span class="badge badge-pill categoria" style="background-color: @item.Categoria.Cor;">
+                    @if(!String.IsNullOrEmpty(item.Categoria.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Categoria.Icone"></i>@:&nbsp;
+                    }
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </span>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ValorGasto)
@@ -53,7 +59,7 @@
         <tr style="color: @Model.NaoCategorizado.Cor">
             <td>
                 <i class="glyphicon glyphicon-asterisk"></i>
-                <span style="color: Black">Não Categorizado</span>
+                <span>Não Categorizado</span>
             </td>
             <td>
                 @Html.DisplayFor(model => model.NaoCategorizado.ValorGasto)

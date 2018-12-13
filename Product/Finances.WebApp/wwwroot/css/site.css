@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+.categoria {
+    display: inline-block;
+    width: 100px;
+    background: white;
+}

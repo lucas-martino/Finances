@@ -20,8 +20,15 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td style="Color: @item.Cor">
-                @Html.DisplayFor(modelItem => item.Nome)
+            <td>
+                
+                <span class="badge badge-pill categoria align-middle" style="background-color: @item.Cor">
+                    @if(!String.IsNullOrEmpty(item.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Icone"></i>@:&nbsp;
+                    }
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </span>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
