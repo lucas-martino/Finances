@@ -10,7 +10,7 @@ namespace Finances.Domain.Service
         private const string COR_PADRAO = "Black";
         private const string ORCAMENTO_POSITIVO = "Green";
         private const string ORCAMENTO_NEGATIVO = "Red";
-        private const string NAO_CATEGORIZADO = "Yellow";
+        private const string NAO_CATEGORIZADO = "Orange";
         private IGastoRepository GastoRepository { get; set; }
         private IOrcamentoRepository OrcamentoRepository { get; set; }
         public DemonstrativoDomainService(IGastoRepository gastoRepository, IOrcamentoRepository orcamentoRepository)
