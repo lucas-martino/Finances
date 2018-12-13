@@ -17,7 +17,7 @@ namespace Finances.WebApp.Controllers
         public IActionResult Index()
         {
             if (IsUsuarioLogado())
-                return RedirectToAction("Index", "Demonstrativo");
+                return RedirectToAction("Home", "Demonstrativo");
             else
                 return RedirectToAction("Login", "Usuario");                   
         }

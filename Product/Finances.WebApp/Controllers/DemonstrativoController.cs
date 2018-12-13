@@ -16,8 +16,23 @@ namespace Finances.WebApp.Controllers
 
         public IActionResult Index()
         {
+            var model = ConvertEntityToModel(Service.GetDemonstrativoVigenciaAtual(UsuarioLogadoID));
+            return View(model);
+        }
+
+        public IActionResult Home()
+        {
             var model = ConvertEntityToModel(Service.GetDemonstrativoParcialVigenciaAtual(UsuarioLogadoID));
             return View(model);
+        }
+
+        private static DemostrativoViewModel ConvertEntityToModel(Demonstrativo entidade)
+        {
+            DemostrativoViewModel model = ConvertEntityToModel((DemonstrativoParcial)entidade);
+            model.DemostrativoCategoria = ConvertEntityToModel(entidade.DemaisCategorias);
+            model.OrcamentoTotal = entidade.OrcamentoTotal;
+            
+            return model;
         }
 
         private static DemostrativoViewModel ConvertEntityToModel(DemonstrativoParcial entidade)
@@ -25,7 +40,7 @@ namespace Finances.WebApp.Controllers
             DemostrativoViewModel model = new DemostrativoViewModel();
             model.ValorGastoTotal = entidade.ValorGastoTotal;
             model.Cor = entidade.Cor;
-            model.OrcamentosCategoria = ConvertEntityToModel(entidade.Orcamentos);
+            model.DemostrativoOrcamentosCategoria = ConvertEntityToModel(entidade.Orcamentos);
             model.NaoCategorizado = ConvertEntityToModel(entidade.NaoCategorizado);
             model.PossuiNaoCategorizado = entidade.NaoCategorizado != null;
             

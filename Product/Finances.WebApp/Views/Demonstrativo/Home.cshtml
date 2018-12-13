@@ -1,0 +1,69 @@
+﻿@model Finances.WebApp.Models.DemostrativoViewModel
+
+@{
+    ViewBag.Title = "Finanças";
+}
+
+<h2>Finanças</h2>
+
+<p><a asp-controller="Gasto" asp-action="Create"><i class="glyphicon glyphicon-edit"></i> Lançar Novo Gasto</a></p>
+<br />
+
+<div class="form-group">
+    <label asp-for="ValorGastoTotal" class="col-md-2 control-label"></label>
+    <span style="Color: @Model.Cor">
+        @Html.DisplayFor(model => model.ValorGastoTotal)
+    </span>
+</div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Categoria
+        </th>
+        <th>
+            Gasto
+        </th>
+        <th>
+            Orçamento
+        </th>
+    </tr>
+
+    @foreach (var item in Model.DemostrativoOrcamentosCategoria)
+    {
+        <tr style="color: @item.Cor">
+            <td>
+                <i class="glyphicon glyphicon-triangle-right" style="color: @item.Cor"></i>
+                <span class="badge badge-pill categoria" style="background-color: @item.Categoria.Cor;">
+                    @if(!String.IsNullOrEmpty(item.Categoria.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Categoria.Icone"></i>@:&nbsp;
+                    }
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorGasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orcamento)
+            </td>
+        </tr>
+    }
+    @if (Model.NaoCategorizado != null)
+    {
+        <tr style="color: @Model.NaoCategorizado.Cor">
+            <td>
+                <i class="glyphicon glyphicon-asterisk"></i>
+                <span>Não Categorizado</span>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NaoCategorizado.ValorGasto)
+            </td>
+            <td></td>
+        </tr>
+    }
+
+</table>
+<br />

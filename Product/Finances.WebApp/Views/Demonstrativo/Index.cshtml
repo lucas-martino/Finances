@@ -1,22 +1,40 @@
 ﻿@model Finances.WebApp.Models.DemostrativoViewModel
 
 @{
-    ViewBag.Title = "Finanças";
+    ViewBag.Title = "Demonstrativo";
 }
 
-<h2>Finanças</h2>
-
-<p><a asp-controller="Gasto" asp-action="Create"><i class="glyphicon glyphicon-edit"></i> Lançar Novo Gasto</a></p>
-<br />
+<h2>Demonstrativo</h2>
 
 <div class="form-group">
-    <label asp-for="ValorGastoTotal" class="col-md-2 control-label"></label>
-    <span style="Color: @Model.Cor">
-        @Html.DisplayFor(model => model.ValorGastoTotal)
-    </span>
-    &nbsp;<a asp-controller="Gasto" asp-action="Index" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a>
+    <table class="table">
+    <tr>
+        <th>
+            Gasto Total
+        </th>
+        <th>
+            Orçamento
+        </th>
+        <th>
+            Percentual
+        </th>
+        <th></th>
+    </tr>
+    <tr style="Color: @Model.Cor">
+        <td>
+            <i class="glyphicon glyphicon-triangle-right"></i>
+            @Html.DisplayFor(model => model.ValorGastoTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.OrcamentoTotal)
+        </td>
+        <td></td>
+        <td>
+            <a asp-controller="Gasto" asp-action="Index" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a>
+        </td>
+    </tr>
+    </table>
 </div>
-<br />
 <br />
 <table class="table">
     <tr>
@@ -32,7 +50,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.OrcamentosCategoria)
+    @foreach (var item in Model.DemostrativoOrcamentosCategoria)
     {
         <tr style="color: @item.Cor">
             <td>
@@ -54,6 +72,26 @@
             <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
     }
+    @foreach (var item in Model.DemostrativoCategoria)
+    {
+        <tr style="color: @item.Cor">
+            <td>
+                &nbsp;&nbsp;&nbsp;
+                <span class="badge badge-pill categoria" style="background-color: @item.Categoria.Cor;">
+                    @if(!String.IsNullOrEmpty(item.Categoria.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Categoria.Icone"></i>@:&nbsp;
+                    }
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorGasto)
+            </td>
+            <td></td>
+            <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
+        </tr>
+    }
     @if (Model.NaoCategorizado != null)
     {
         <tr style="color: @Model.NaoCategorizado.Cor">
@@ -64,11 +102,9 @@
             <td>
                 @Html.DisplayFor(model => model.NaoCategorizado.ValorGasto)
             </td>
-            <td>
-            </td>
+            <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoNaoCategorizado" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
     }
-
 </table>
 <br />

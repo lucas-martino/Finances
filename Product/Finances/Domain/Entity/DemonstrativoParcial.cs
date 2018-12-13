@@ -10,7 +10,9 @@ namespace Finances.Domain.Entity
             Orcamentos = new List<DemonstrativoItem>();
         }
 
-        public decimal ValorGastoTotal { get; set; }        
+        public decimal ValorGastoTotal { get; set; }
+        public decimal PercentualOrcamento { get; set; }
+        public decimal OrcamentoTotal { get; set; }     
         public string Cor { get; set; }
 
         public IList<DemonstrativoItem> Orcamentos { get; set; }

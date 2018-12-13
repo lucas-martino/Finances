@@ -19,5 +19,11 @@ namespace Finances.Service
             Vigencia vigenciaAtual = VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
             return DemonstrativoDomainService.GenereteDemonstrativoParcial(vigenciaAtual);
         }
+
+        public Demonstrativo GetDemonstrativoVigenciaAtual(int usuarioID)
+        {
+            Vigencia vigenciaAtual = VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
+            return DemonstrativoDomainService.GenereteDemonstrativo(vigenciaAtual);
+        }
     }
 }

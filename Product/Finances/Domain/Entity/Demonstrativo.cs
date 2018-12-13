@@ -11,9 +11,7 @@ namespace Finances.Domain.Entity
             PercentualDistibuicao = new List<DemonstrativoParcela>();
         }
 
-        public decimal PercentualOrcamento { get; set; }
-        public decimal Orcamento { get; set; }
-        public IList<DemonstrativoItem> DemaisCategorias { get; private set; }
-        public IList<DemonstrativoParcela> PercentualDistibuicao { get; private set; }
+        public IList<DemonstrativoItem> DemaisCategorias { get; set; }
+        public IList<DemonstrativoParcela> PercentualDistibuicao { get; set; }
     }
 }

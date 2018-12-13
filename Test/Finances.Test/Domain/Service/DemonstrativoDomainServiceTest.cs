@@ -94,7 +94,7 @@ namespace Test.Finances.Domain.Service
             orcamentoRepository.Setup(r => r.GetOrcamentoPorVigencia(vigencia))
                 .Returns(orcamento);
 
-            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object);
+            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object, null);
         }
 
         private DemonstrativoDomainService GenereteDepedencia(Vigencia vigencia, decimal valorGastoTotal, decimal valorOrcamento, decimal valorNaoCategoizado)
@@ -110,7 +110,7 @@ namespace Test.Finances.Domain.Service
             orcamentoRepository.Setup(r => r.GetOrcamentoPorVigencia(vigencia))
                 .Returns(orcamento);
 
-            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object);
+            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object, null);
         }
 
         private DemonstrativoDomainService GenereteDepedenciaComOrcamentoCategoria(Vigencia vigencia, decimal valorGastoTotal, decimal valorOrcamento,
@@ -129,7 +129,7 @@ namespace Test.Finances.Domain.Service
             gastoRepository.Setup(r => r.GetGastoTotalPorCategoriaEVigencia(categoria, vigencia))
                 .Returns(valorGastoCategoria);
 
-            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object);
+            return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object, null);
         }
     }
 }

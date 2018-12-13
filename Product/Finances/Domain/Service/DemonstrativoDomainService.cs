@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Finances.Domain.Entity;
 using Finances.Domain.Repository;
@@ -13,18 +14,55 @@ namespace Finances.Domain.Service
         private const string NAO_CATEGORIZADO = "Orange";
         private IGastoRepository GastoRepository { get; set; }
         private IOrcamentoRepository OrcamentoRepository { get; set; }
+        private ICategoriaRepository CategoriaRepository { get; set; }
         
-        public DemonstrativoDomainService(IGastoRepository gastoRepository, IOrcamentoRepository orcamentoRepository)
+        public DemonstrativoDomainService(IGastoRepository gastoRepository, IOrcamentoRepository orcamentoRepository, ICategoriaRepository categoriaRepository)
         {
             GastoRepository = gastoRepository;
             OrcamentoRepository = orcamentoRepository;
+            CategoriaRepository = categoriaRepository;
+        }
+
+        public Demonstrativo GenereteDemonstrativo(Vigencia vigencia)
+        {
+            Demonstrativo demonstrativo = new Demonstrativo();
+            GenereteDemonstrativoParcial(demonstrativo, vigencia);
+            demonstrativo.DemaisCategorias = GenereteDemonstrativoDemaisCategorias(vigencia, demonstrativo.Orcamentos);
+
+            return demonstrativo;
+        }
+
+        private IList<DemonstrativoItem> GenereteDemonstrativoDemaisCategorias(Vigencia vigencia, IList<DemonstrativoItem> orcamentos)
+        {
+            IList<DemonstrativoItem> lista = new List<DemonstrativoItem>();
+
+            DemonstrativoItem item;
+            foreach (var categoria in CategoriaRepository.GetCategoriaPorUsuario(vigencia.Usuario))
+            {
+                if (orcamentos.FirstOrDefault(i => i.Categoria.ID == categoria.ID) == null)
+                {
+                    item = new DemonstrativoItem();
+                    item.Categoria = categoria;
+                    item.ValorGasto = GetGastoTotalPorCategoria(categoria, vigencia);
+                    item.Cor = COR_PADRAO;
+                    
+                    lista.Add(item);
+                }
+            }
+
+            return lista;
         }
 
         public virtual DemonstrativoParcial GenereteDemonstrativoParcial(Vigencia vigencia)
         {
-            DemonstrativoParcial demonstrativo = new DemonstrativoParcial();
+            return GenereteDemonstrativoParcial(new DemonstrativoParcial(), vigencia);
+        }
+
+        private DemonstrativoParcial GenereteDemonstrativoParcial(DemonstrativoParcial demonstrativo, Vigencia vigencia)
+        {
             Orcamento orcamento = GetOrcamento(vigencia);
             demonstrativo.ValorGastoTotal = GetGastoTotal(vigencia);
+            demonstrativo.OrcamentoTotal = orcamento.Valor - demonstrativo.ValorGastoTotal;
             demonstrativo.Cor = GetCor(orcamento.Valor, demonstrativo.ValorGastoTotal);
             demonstrativo.Orcamentos = GenereteDemonstrativoOrcamentoCategoria(orcamento);
             demonstrativo.NaoCategorizado = GenereteDemonstrativoNaoCategorizado(vigencia);
