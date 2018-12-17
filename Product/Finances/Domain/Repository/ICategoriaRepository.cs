@@ -6,6 +6,7 @@ namespace Finances.Domain.Repository
     public interface ICategoriaRepository : IFinancesCRUDRepository<Categoria>
     {
         IEnumerable<Categoria> GetCategoriaPorUsuario(Usuario usuario);
-        Categoria GetCategoriaPorNomeUsuario(string nome, Usuario usuario);
+        Categoria GetCategoriaPorNomeEUsuario(string nome, Usuario usuario);
+        IEnumerable<Categoria> GetCategoriaLevel1PorUsuario(Usuario usuario);
     }
 }

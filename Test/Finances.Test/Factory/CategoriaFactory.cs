@@ -28,6 +28,13 @@ namespace Test.Finances.Factory
             return this;
         }
 
+        public CategoriaFactory WithPai(Categoria pai)
+        {
+            Instance.Pai = pai;
+
+            return this;
+        }
+
         protected override void PopulateValid()
         {
             Instance.ID = 1;

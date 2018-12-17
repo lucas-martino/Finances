@@ -57,7 +57,10 @@ namespace Finances.Domain.Repository
 
             public IList<OrcamentoCategoria> GetOrcamentoCategoriaPorOrcamento(Orcamento orcamento)
             {
-                return GetList().Where(i => i.Orcamento.ID == orcamento.ID).Include(i => i.Categoria).ToList();
+                return GetList().Where(i => i.Orcamento.ID == orcamento.ID)
+                    .Include(i => i.Categoria).Include(i => i.Categoria.Pai)
+                    .OrderBy(c => c.Categoria.Pai != null ? string.Format("{0}{1}", c.Categoria.Pai.Nome, c.Categoria.Nome) : c.Categoria.Nome)
+                    .ToList();
             }
 
             public void DeleteOrcamentoCategoriaPorCategoria(int categoriaID)

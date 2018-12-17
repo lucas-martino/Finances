@@ -25,6 +25,12 @@ namespace Finances.Service
             return CategoriaRepository.GetCategoriaPorUsuario(usuario);
         }
 
+        public IEnumerable<Categoria> GetCategoriaQuePermiteFilhosPorUsuario(int usuarioID)
+        {
+            Usuario usuario = GetUsuario(usuarioID);
+            return CategoriaRepository.GetCategoriaLevel1PorUsuario(usuario);
+        }
+
         public Categoria GetCategoriaPorID(int id)
         {
             return CategoriaRepository.GetByID(id);

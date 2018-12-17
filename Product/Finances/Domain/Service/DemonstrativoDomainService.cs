@@ -32,6 +32,11 @@ namespace Finances.Domain.Service
             return demonstrativo;
         }
 
+        public virtual DemonstrativoParcial GenereteDemonstrativoParcial(Vigencia vigencia)
+        {
+            return GenereteDemonstrativoParcial(new DemonstrativoParcial(), vigencia);
+        }
+
         private IList<DemonstrativoItem> GenereteDemonstrativoDemaisCategorias(Vigencia vigencia, IList<DemonstrativoItem> orcamentos)
         {
             IList<DemonstrativoItem> lista = new List<DemonstrativoItem>();
@@ -51,11 +56,6 @@ namespace Finances.Domain.Service
             }
 
             return lista;
-        }
-
-        public virtual DemonstrativoParcial GenereteDemonstrativoParcial(Vigencia vigencia)
-        {
-            return GenereteDemonstrativoParcial(new DemonstrativoParcial(), vigencia);
         }
 
         private DemonstrativoParcial GenereteDemonstrativoParcial(DemonstrativoParcial demonstrativo, Vigencia vigencia)

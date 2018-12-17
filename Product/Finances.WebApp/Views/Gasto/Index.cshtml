@@ -33,6 +33,15 @@
                 @Html.DisplayFor(modelItem => item.Valor)
             </td>
             <td>
+                @if (item.Categoria.Pai != null)
+                {
+                    <span class="badge badge-pill" style="background-color: @item.Categoria.Pai.Cor">
+                    @if(!String.IsNullOrEmpty(item.Categoria.Pai.Icone))
+                    {
+                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>@:&nbsp;
+                    }
+                    </span>
+                }
                 <span class="badge badge-pill categoria" style="background-color: @item.Categoria.Cor;">
                     @if(!String.IsNullOrEmpty(item.Categoria.Icone))
                     {

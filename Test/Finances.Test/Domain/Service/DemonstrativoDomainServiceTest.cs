@@ -80,7 +80,7 @@ namespace Test.Finances.Domain.Service
             Assert.Equal("Green", demonstrativo.Cor);
             Assert.NotNull(demonstrativo.NaoCategorizado);
             Assert.Equal(valorNaoCategorizado, demonstrativo.NaoCategorizado.ValorGasto);
-            Assert.Equal("Yellow", demonstrativo.NaoCategorizado.Cor);
+            Assert.Equal("Orange", demonstrativo.NaoCategorizado.Cor);
         }
 
         private DemonstrativoDomainService GenereteDepedencia(Vigencia vigencia, decimal valorGastoTotal, decimal valorOrcamento)

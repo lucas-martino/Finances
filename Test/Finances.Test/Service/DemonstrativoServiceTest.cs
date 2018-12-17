@@ -14,7 +14,7 @@ namespace Test.Finances.Service
         public void BuscarDemonstrativoParcialVigenciaAtual()
         {
             //Given
-            var demonstrativoDomainService = new Mock<DemonstrativoDomainService>(null, null);
+            var demonstrativoDomainService = new Mock<DemonstrativoDomainService>(null, null, null);
             var vigenciaService = new Mock<VigenciaService>(null, null, null);
             Usuario usuario = UsuarioFactory.GetValid().Build();
             vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID))

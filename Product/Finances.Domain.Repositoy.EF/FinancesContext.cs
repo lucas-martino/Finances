@@ -25,6 +25,14 @@ namespace Finances.Domain.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>().Property(U => U.Nome).HasMaxLength(50);
+            modelBuilder.Entity<Usuario>().Property(u => u.Login).HasMaxLength(50);
+            modelBuilder.Entity<Usuario>().Property(u => u.Senha).HasMaxLength(256);
+
+            modelBuilder.Entity<Categoria>().Property(c => c.Nome).HasMaxLength(15);
+            modelBuilder.Entity<Categoria>().Property(c => c.Cor).HasMaxLength(50);
+            modelBuilder.Entity<Categoria>().Property(c => c.Icone).HasMaxLength(50);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -15,5 +15,10 @@ namespace Finances.Domain.Entity
         public string Cor { get; set; }
         public string Icone { get; set; }
         public Usuario Usuario { get; set; }
+        public Categoria Pai { get; set; }
+        public bool PermiteFilhos()
+        {
+            return Pai == null;
+        }
     }
 }

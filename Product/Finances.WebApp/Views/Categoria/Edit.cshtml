@@ -38,6 +38,14 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="Pai" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="Pai.ID" asp-items="Model.Categorias" class="form-control"></select> 
+            <span asp-validation-for="Pai" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Salvar" class="btn btn-default" />
         </div>

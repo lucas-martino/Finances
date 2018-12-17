@@ -33,7 +33,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
-            Assert.Equal(1, result.Errors.Count);
+            Assert.Equal(2, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Login"));
         }
 
@@ -67,7 +67,7 @@ namespace Test.Finances.Domain.Entity
             //Then
             Assert.NotNull(result);
             Assert.False(result.IsValid);
-            Assert.Equal(1, result.Errors.Count);
+            Assert.Equal(2, result.Errors.Count);
             Assert.NotNull(result.Errors.FirstOrDefault(i => i.PropertyName == "Senha"));
         }
 

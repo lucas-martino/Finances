@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,12 +20,15 @@ namespace Finances.WebApp.Controllers
         public IActionResult Index()
         {
             var model = ConvertEntityToModel(Service.GetCategoriasPorUsuario(UsuarioLogadoID));
+
             return View(model);
         }        
         
         public IActionResult Create()
         {
             var model = ConvertEntityToModel(new Categoria());
+            model.Categorias = GetCategoriasQuePermiteFilhos();
+
             return View(model);
         }
 
@@ -38,8 +42,10 @@ namespace Finances.WebApp.Controllers
                 categoria.Nome = model.Nome;
                 categoria.Cor = model.Cor;
                 categoria.Icone = model.Icone;
+                categoria.Pai = GetCategoria(model.Pai.ID);
                 if (string.IsNullOrWhiteSpace(categoria.Cor))
                     categoria.Cor = Categoria.DEFAULT_COR;
+
                 categoria.Usuario = GetUsuario();
 
                 Service.SalvarCategoria(categoria);
@@ -64,7 +70,10 @@ namespace Finances.WebApp.Controllers
             if (entidade == null)
                 return NotFound();
 
-            return View(ConvertEntityToModel(entidade));
+            var model = ConvertEntityToModel(entidade);
+            model.Categorias = GetCategoriasQuePermiteFilhos();
+            
+            return View(model);
         }
 
         [HttpPost]
@@ -83,6 +92,7 @@ namespace Finances.WebApp.Controllers
                 entidade.Nome = model.Nome;
                 entidade.Cor = model.Cor;
                 entidade.Icone = model.Icone;
+                entidade.Pai = GetCategoria(model.Pai.ID);
                 if (string.IsNullOrWhiteSpace(entidade.Cor))
                     entidade.Cor = Categoria.DEFAULT_COR;     
                 
@@ -108,6 +118,8 @@ namespace Finances.WebApp.Controllers
             model.Nome = entidade.Nome;
             model.Cor = entidade.Cor;
             model.Icone = entidade.Icone;
+            if (entidade.Pai != null)
+                model.Pai = ConvertEntityToModel(entidade.Pai);
 
             return model;
         }
@@ -116,7 +128,10 @@ namespace Finances.WebApp.Controllers
         {
             SelectListItem model = new SelectListItem();
             model.Value = entidade.ID.ToString();
-            model.Text = entidade.Nome;
+            if (entidade.Pai != null)
+                model.Text = string.Format("{0} - {1}", entidade.Pai.Nome, entidade.Nome);
+            else
+                model.Text = entidade.Nome;
 
             return model;
         }
@@ -136,7 +151,20 @@ namespace Finances.WebApp.Controllers
             foreach (Categoria categoria in entidade)
                 lista.Add(ConvertEntityToSelectListItem(categoria));
                 
+            return lista.OrderBy(i => i.Text).ToList();
+        }
+
+        private IEnumerable<SelectListItem> GetCategoriasQuePermiteFilhos()
+        {
+            IList<SelectListItem> lista = CategoriaController.ConvertEntityToSelectListItem(Service.GetCategoriaQuePermiteFilhosPorUsuario(UsuarioLogadoID));
+            lista.Insert(0, new SelectListItem(" ", "0"));
+
             return lista;
+        }
+
+        private Categoria GetCategoria(int categoriaID)
+        {
+            return Service.GetCategoriaPorID(categoriaID);
         }
     }
 }

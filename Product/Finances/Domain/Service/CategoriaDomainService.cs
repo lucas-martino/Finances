@@ -46,7 +46,7 @@ namespace Finances.Domain.Service
 
         private bool PossuiCategoriaMesmoNome(Categoria categoria)
         {
-            return CategoriaRepository.GetCategoriaPorNomeUsuario(categoria.Nome, categoria.Usuario) != null;
+            return CategoriaRepository.GetCategoriaPorNomeEUsuario(categoria.Nome, categoria.Usuario) != null;
         }
 
         private bool PossuiGastoVinculado(int categoriaID)
