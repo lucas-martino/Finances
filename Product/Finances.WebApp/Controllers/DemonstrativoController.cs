@@ -30,7 +30,7 @@ namespace Finances.WebApp.Controllers
         private static DemostrativoViewModel ConvertEntityToModel(Demonstrativo entidade)
         {
             DemostrativoViewModel model = ConvertEntityToModel((DemonstrativoParcial)entidade);
-            model.DemostrativoCategoria = ConvertEntityToModel(entidade.DemaisCategorias);
+            model.DemostrativoCategoria = ConvertEntityToModel(entidade.Categorias);
             model.OrcamentoTotal = entidade.OrcamentoTotal;
             
             return model;
@@ -48,18 +48,23 @@ namespace Finances.WebApp.Controllers
             return model;
         }
 
-        private static DemostrativoItemViewModel ConvertEntityToModel(DemonstrativoItem entidade)
+        private static DemostrativoItemViewModel ConvertEntityToModel(DemonstrativoItemOrcamento entidade)
         {
-            DemostrativoItemViewModel model = new DemostrativoItemViewModel();
-            model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);
-            model.Cor = entidade.Cor;
+            DemostrativoItemViewModel model = ConvertEntityToModel((DemonstrativoItemCategoria)entidade);
             model.Orcamento = entidade.OrcamentoRestante;
-            model.ValorGasto = entidade.ValorGasto;
 
             return model;
         }
 
-        private static DemostrativoItemViewModel ConvertEntityToModel(DemonstrativoNaoCategorizado entidade)
+        private static DemostrativoItemViewModel ConvertEntityToModel(DemonstrativoItemCategoria entidade)
+        {
+            DemostrativoItemViewModel model = ConvertEntityToModel((DemonstrativoItem)entidade);
+            model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);
+
+            return model;
+        }
+
+        private static DemostrativoItemViewModel ConvertEntityToModel(DemonstrativoItem entidade)
         {
             DemostrativoItemViewModel model = null;
             if (entidade != null)
@@ -67,12 +72,22 @@ namespace Finances.WebApp.Controllers
                 model = new DemostrativoItemViewModel();
                 model.Cor = entidade.Cor;
                 model.ValorGasto = entidade.ValorGasto;
+                model.Percentual = entidade.Percentual;
             }
 
             return model;
         }
 
-        private static IEnumerable<DemostrativoItemViewModel> ConvertEntityToModel(IEnumerable<DemonstrativoItem> entidade)
+        private static IEnumerable<DemostrativoItemViewModel> ConvertEntityToModel(IEnumerable<DemonstrativoItemCategoria> entidade)
+        {
+            IList<DemostrativoItemViewModel> lista = new List<DemostrativoItemViewModel>();
+            foreach (var item in entidade)
+                lista.Add(ConvertEntityToModel(item));
+                
+            return lista;
+        }
+
+        private static IEnumerable<DemostrativoItemViewModel> ConvertEntityToModel(IEnumerable<DemonstrativoItemOrcamento> entidade)
         {
             IList<DemostrativoItemViewModel> lista = new List<DemostrativoItemViewModel>();
             foreach (var item in entidade)

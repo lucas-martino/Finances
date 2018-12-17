@@ -7,7 +7,7 @@ namespace Finances.Domain.Entity
     {
         public DemonstrativoParcial()
         {
-            Orcamentos = new List<DemonstrativoItem>();
+            Orcamentos = new List<DemonstrativoItemOrcamento>();
         }
 
         public decimal ValorGastoTotal { get; set; }
@@ -15,7 +15,7 @@ namespace Finances.Domain.Entity
         public decimal OrcamentoTotal { get; set; }     
         public string Cor { get; set; }
 
-        public IList<DemonstrativoItem> Orcamentos { get; set; }
-        public DemonstrativoNaoCategorizado NaoCategorizado { get; set; }
+        public IList<DemonstrativoItemOrcamento> Orcamentos { get; set; }
+        public DemonstrativoItem NaoCategorizado { get; set; }
     }
 }

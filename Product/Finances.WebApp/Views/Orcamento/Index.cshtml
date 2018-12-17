@@ -10,12 +10,23 @@
 
 <table class="table">
     <tr>
-        <td>
-            Orçamento Geral
-        </td>
+        <th class="col-md-3">
+            Referência
+        </th>
+        <th class="col-md-2">
+            Valor
+        </th>
+        <th class="col-md-5"></th>
+        <th></th>
+    </tr> 
+    <tr>
+        <th>
+            12/2018
+        </th>
         <td>
             @Html.DisplayFor(model => Model.Valor)
         </td>
+        <td></td>
         <td>
             <a asp-action="Edit" asp-route-id="@Model.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
         </td>
@@ -29,13 +40,15 @@
 
 <table class="table">
     <tr>
-        <th>
+        <th class="col-md-3">
             Categoria
         </th>
-        <th>
+        <th class="col-md-2">
             Valor
         </th>
-        <th></th>
+        <th class="col-md-5"></th>
+        <th class="col-md-1"></th>
+        <th class="col-md-1"></th>
     </tr>
 
     @foreach (var item in Model.OrcamentosCategoria)
@@ -47,7 +60,7 @@
                     <span class="badge badge-pill" style="background-color: @item.Categoria.Pai.Cor">
                     @if(!String.IsNullOrEmpty(item.Categoria.Pai.Icone))
                     {
-                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>@:&nbsp;
+                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>
                     }
                     </span>
                 }
@@ -62,9 +75,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
             </td>
+            <td></td>
             <td>
                 <a asp-action="EditOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            </td>
+            <td>
                 <a asp-action="DeleteOrcamentoCategoria" asp-route-orcamentoCategoriaID="@item.ID" 
                 onclick="return confirm('Deseja apagar o orçamento para \'@item.Categoria.Nome\' ?');" title="Apagar"><i class="glyphicon glyphicon-remove"></i></a>
             </td>

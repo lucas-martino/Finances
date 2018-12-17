@@ -7,11 +7,9 @@ namespace Finances.Domain.Entity
     {
         public Demonstrativo()
         {
-            DemaisCategorias = new List<DemonstrativoItem>();
-            PercentualDistibuicao = new List<DemonstrativoParcela>();
+            Categorias = new List<DemonstrativoItemCategoria>();
         }
 
-        public IList<DemonstrativoItem> DemaisCategorias { get; set; }
-        public IList<DemonstrativoParcela> PercentualDistibuicao { get; set; }
+        public IList<DemonstrativoItemCategoria> Categorias { get; set; }
     }
 }

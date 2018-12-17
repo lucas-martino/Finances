@@ -16,6 +16,7 @@
         </th>
         <th>Pai</th>
         <th></th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -27,7 +28,7 @@
                     <span class="badge badge-pill" style="background-color: @item.Pai.Cor">
                     @if(!String.IsNullOrEmpty(item.Pai.Icone))
                     {
-                        <i class="glyphicon glyphicon-@item.Pai.Icone"></i>@:&nbsp;
+                        <i class="glyphicon glyphicon-@item.Pai.Icone"></i>
                     }
                     </span>
                 }
@@ -53,7 +54,8 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            </TD>
+            <TD>
                 <a asp-action="Delete" asp-route-id="@item.ID" onclick="return confirm('Deseja apagar a categoria \'@item.Nome\' ?');" title="Apagar"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>

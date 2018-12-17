@@ -9,18 +9,21 @@
 <div class="form-group">
     <table class="table">
     <tr>
-        <th>
+        <th class="col-md-3">
+            Referência
+        </th>
+        <th class="col-md-3">
             Gasto Total
         </th>
-        <th>
+        <th class="col-md-2">
             Orçamento
         </th>
-        <th>
-            Percentual
+        <th class="col-md-3"></th>
         </th>
         <th></th>
     </tr>
     <tr style="Color: @Model.Cor">
+        <th style="Color: Black">12/2018</th>
         <td>
             <i class="glyphicon glyphicon-triangle-right"></i>
             @Html.DisplayFor(model => model.ValorGastoTotal)
@@ -36,20 +39,24 @@
     </table>
 </div>
 <br />
+<h3>Orçamento</h3>
 <table class="table">
     <tr>
-        <th>
+        <th class="col-md-3">
             Categoria
         </th>
-        <th>
+        <th class="col-md-1">
+            Total
+        </th>
+        <th class="col-md-2">
             Gasto
         </th>
-        <th>
+        <th class="col-md-2">
             Orçamento
         </th>
+        <th class="col-md-3"></th>
         <th></th>
     </tr>
-
     @foreach (var item in Model.DemostrativoOrcamentosCategoria)
     {
         <tr style="color: @item.Cor">
@@ -60,7 +67,7 @@
                     <span class="badge badge-pill" style="background-color: @item.Categoria.Pai.Cor">
                     @if(!String.IsNullOrEmpty(item.Categoria.Pai.Icone))
                     {
-                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>@:&nbsp;
+                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>
                     }
                     </span>
                 }
@@ -72,26 +79,54 @@
                     @Html.DisplayFor(modelItem => item.Categoria.Nome)
                 </span>
             </td>
+            @if (item.Categoria.Pai != null)
+            {
+                <td></td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.ValorGasto)
             </td>
+            @if (item.Categoria.Pai == null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorGasto)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Orcamento)
             </td>
+            <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
     }
+</table>
+<br />
+<h3>Detalhamento</h3>
+<table class="table">
+<tr>
+    <th class="col-md-3">
+        Categoria
+    </th>
+    <th class="col-md-1">
+        Total
+    </th>
+    <th class="col-md-2">
+        Gasto
+    </th>
+    <th>Percentual</th>
+    <th class="col-md-2"></th>
+    <th></th>
+</tr>
     @foreach (var item in Model.DemostrativoCategoria)
     {
         <tr style="color: @item.Cor">
             <td>
-                &nbsp;&nbsp;&nbsp;
                 @if (item.Categoria.Pai != null)
                 {
                     <span class="badge badge-pill" style="background-color: @item.Categoria.Pai.Cor">
                     @if(!String.IsNullOrEmpty(item.Categoria.Pai.Icone))
                     {
-                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>@:&nbsp;
+                        <i class="glyphicon glyphicon-@item.Categoria.Pai.Icone"></i>
                     }
                     </span>
                 }
@@ -103,9 +138,20 @@
                     @Html.DisplayFor(modelItem => item.Categoria.Nome)
                 </span>
             </td>
+            @if (item.Categoria.Pai != null)
+            {
+                <td></td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.ValorGasto)
             </td>
+            @if (item.Categoria.Pai == null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorGasto)
+                </td>
+            }
+            <td>@Html.DisplayFor(modelItem => item.Percentual) %</td>
             <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
@@ -120,6 +166,8 @@
             <td>
                 @Html.DisplayFor(model => model.NaoCategorizado.ValorGasto)
             </td>
+            <td></td>
+            <td>@Html.DisplayFor(model => model.NaoCategorizado.Percentual) %</td>
             <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoNaoCategorizado" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>

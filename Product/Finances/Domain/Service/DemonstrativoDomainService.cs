@@ -27,7 +27,7 @@ namespace Finances.Domain.Service
         {
             Demonstrativo demonstrativo = new Demonstrativo();
             GenereteDemonstrativoParcial(demonstrativo, vigencia);
-            demonstrativo.DemaisCategorias = GenereteDemonstrativoDemaisCategorias(vigencia, demonstrativo.Orcamentos);
+            demonstrativo.Categorias = GenereteDemonstrativoCategorias(vigencia, demonstrativo.ValorGastoTotal);
 
             return demonstrativo;
         }
@@ -37,25 +37,28 @@ namespace Finances.Domain.Service
             return GenereteDemonstrativoParcial(new DemonstrativoParcial(), vigencia);
         }
 
-        private IList<DemonstrativoItem> GenereteDemonstrativoDemaisCategorias(Vigencia vigencia, IList<DemonstrativoItem> orcamentos)
+        private IList<DemonstrativoItemCategoria> GenereteDemonstrativoCategorias(Vigencia vigencia, decimal valorTotal)
         {
-            IList<DemonstrativoItem> lista = new List<DemonstrativoItem>();
+            IList<DemonstrativoItemCategoria> lista = new List<DemonstrativoItemCategoria>();
 
-            DemonstrativoItem item;
+            DemonstrativoItemCategoria item;
             foreach (var categoria in CategoriaRepository.GetCategoriaPorUsuario(vigencia.Usuario))
             {
-                if (orcamentos.FirstOrDefault(i => i.Categoria.ID == categoria.ID) == null)
-                {
-                    item = new DemonstrativoItem();
-                    item.Categoria = categoria;
-                    item.ValorGasto = GetGastoTotalPorCategoria(categoria, vigencia);
-                    item.Cor = COR_PADRAO;
-                    
-                    lista.Add(item);
-                }
+                item = new DemonstrativoItemCategoria();
+                item.Categoria = categoria;
+                item.ValorGasto = GetGastoTotalPorCategoria(categoria, vigencia);
+                item.Percentual = CalculePercentual(valorTotal, item.ValorGasto);
+                item.Cor = COR_PADRAO;
+
+                lista.Add(item);
             }
 
             return lista;
+        }
+
+        private static decimal CalculePercentual(decimal valorTotal, decimal valorGasto)
+        {
+            return (valorTotal > 0) ? valorGasto * 100 / valorTotal : 0;
         }
 
         private DemonstrativoParcial GenereteDemonstrativoParcial(DemonstrativoParcial demonstrativo, Vigencia vigencia)
@@ -65,19 +68,20 @@ namespace Finances.Domain.Service
             demonstrativo.OrcamentoTotal = orcamento.Valor - demonstrativo.ValorGastoTotal;
             demonstrativo.Cor = GetCor(orcamento.Valor, demonstrativo.ValorGastoTotal);
             demonstrativo.Orcamentos = GenereteDemonstrativoOrcamentoCategoria(orcamento);
-            demonstrativo.NaoCategorizado = GenereteDemonstrativoNaoCategorizado(vigencia);
+            demonstrativo.NaoCategorizado = GenereteDemonstrativoNaoCategorizado(vigencia, demonstrativo.ValorGastoTotal);
 
             return demonstrativo;
         }
 
-        private DemonstrativoNaoCategorizado GenereteDemonstrativoNaoCategorizado(Vigencia vigencia)
+        private DemonstrativoItem GenereteDemonstrativoNaoCategorizado(Vigencia vigencia, decimal valorTotal)
         {
-            DemonstrativoNaoCategorizado demonstrativoNaoCategorizado = null;
+            DemonstrativoItem demonstrativoNaoCategorizado = null;
             decimal valorGastoNaoCategorizado = GetGastoNaoCategorizado(vigencia);
             if (valorGastoNaoCategorizado > 0 )
             {
-                demonstrativoNaoCategorizado = new DemonstrativoNaoCategorizado();
+                demonstrativoNaoCategorizado = new DemonstrativoItem();
                 demonstrativoNaoCategorizado.ValorGasto = valorGastoNaoCategorizado;
+                demonstrativoNaoCategorizado.Percentual = CalculePercentual(valorTotal, demonstrativoNaoCategorizado.ValorGasto);
                 demonstrativoNaoCategorizado.Cor = NAO_CATEGORIZADO;
             }
             
@@ -89,14 +93,14 @@ namespace Finances.Domain.Service
             return GastoRepository.GetGastoTotalVigenciaSemCategoria(vigencia);
         }
 
-        private IList<DemonstrativoItem> GenereteDemonstrativoOrcamentoCategoria(Orcamento orcamento)
+        private IList<DemonstrativoItemOrcamento> GenereteDemonstrativoOrcamentoCategoria(Orcamento orcamento)
         {
-            IList<DemonstrativoItem> lista = new List<DemonstrativoItem>();
+            IList<DemonstrativoItemOrcamento> lista = new List<DemonstrativoItemOrcamento>();
 
-           DemonstrativoItem item;
+           DemonstrativoItemOrcamento item;
             foreach (var orcamentoCategoria in orcamento.OrcamentosCategoria)
             {
-                item = new DemonstrativoItem();
+                item = new DemonstrativoItemOrcamento();
                 item.Categoria = orcamentoCategoria.Categoria;
                 item.ValorGasto = GetGastoTotalPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
                 item.OrcamentoRestante = orcamentoCategoria.Valor - item.ValorGasto;
