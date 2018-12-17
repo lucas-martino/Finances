@@ -35,9 +35,15 @@ namespace Finances.Domain.Repository
                 .OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
         }
 
-        public decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
+        public decimal GetGastoTotalCompletoPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
         {
             return GetList(g => g.Vigencia.ID == vigencia.ID && (g.Categoria.ID == categoria.ID || g.Categoria.Pai.ID == categoria.ID))
+                .Sum(g => g.Valor); 
+        }
+
+        public decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
+        {
+            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria.ID == categoria.ID)
                 .Sum(g => g.Valor); 
         }
 

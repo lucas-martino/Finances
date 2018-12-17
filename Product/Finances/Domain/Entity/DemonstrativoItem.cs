@@ -2,6 +2,7 @@ namespace Finances.Domain.Entity
 {
     public class DemonstrativoItem
     {
+        public decimal ValorGastoCompleto { get; set; }
         public decimal ValorGasto { get; set; }
         public decimal Percentual { get; set; }
         public string Cor { get; set; }

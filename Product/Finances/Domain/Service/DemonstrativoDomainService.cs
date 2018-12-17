@@ -46,8 +46,9 @@ namespace Finances.Domain.Service
             {
                 item = new DemonstrativoItemCategoria();
                 item.Categoria = categoria;
+                item.ValorGastoCompleto = GetGastoTotalCompletoPorCategoria(categoria, vigencia);
                 item.ValorGasto = GetGastoTotalPorCategoria(categoria, vigencia);
-                item.Percentual = CalculePercentual(valorTotal, item.ValorGasto);
+                item.Percentual = CalculePercentual(valorTotal, item.ValorGastoCompleto);
                 item.Cor = COR_PADRAO;
 
                 lista.Add(item);
@@ -80,8 +81,8 @@ namespace Finances.Domain.Service
             if (valorGastoNaoCategorizado > 0 )
             {
                 demonstrativoNaoCategorizado = new DemonstrativoItem();
-                demonstrativoNaoCategorizado.ValorGasto = valorGastoNaoCategorizado;
-                demonstrativoNaoCategorizado.Percentual = CalculePercentual(valorTotal, demonstrativoNaoCategorizado.ValorGasto);
+                demonstrativoNaoCategorizado.ValorGastoCompleto = valorGastoNaoCategorizado;
+                demonstrativoNaoCategorizado.Percentual = CalculePercentual(valorTotal, demonstrativoNaoCategorizado.ValorGastoCompleto);
                 demonstrativoNaoCategorizado.Cor = NAO_CATEGORIZADO;
             }
             
@@ -102,8 +103,9 @@ namespace Finances.Domain.Service
             {
                 item = new DemonstrativoItemOrcamento();
                 item.Categoria = orcamentoCategoria.Categoria;
+                item.ValorGastoCompleto = GetGastoTotalCompletoPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
                 item.ValorGasto = GetGastoTotalPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
-                item.OrcamentoRestante = orcamentoCategoria.Valor - item.ValorGasto;
+                item.OrcamentoRestante = orcamentoCategoria.Valor - item.ValorGastoCompleto;
                 item.Cor = GetCor(orcamentoCategoria.Valor, item.ValorGasto);
                 
                 lista.Add(item);
@@ -115,6 +117,11 @@ namespace Finances.Domain.Service
         private decimal GetGastoTotalPorCategoria(Categoria categoria, Vigencia vigencia)
         {
             return GastoRepository.GetGastoTotalPorCategoriaEVigencia(categoria, vigencia);
+        }
+
+        private decimal GetGastoTotalCompletoPorCategoria(Categoria categoria, Vigencia vigencia)
+        {
+            return GastoRepository.GetGastoTotalCompletoPorCategoriaEVigencia(categoria, vigencia);
         }
 
         private static string GetCor(decimal orcamento, decimal gasto)

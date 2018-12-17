@@ -34,6 +34,8 @@ namespace Finances.WebApp.Models
         public CategoriaViewModel Categoria { get; set; }
         [Display(Name = "Gasto")]        
         [DataType(DataType.Currency)]
+        public decimal ValorGastoCompleto { get; set; }
+        [DataType(DataType.Currency)]
         public decimal ValorGasto { get; set; }
         [Display(Name = "Orçamento")]
         [DataType(DataType.Currency)]

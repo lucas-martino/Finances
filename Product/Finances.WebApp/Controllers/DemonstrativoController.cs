@@ -72,6 +72,7 @@ namespace Finances.WebApp.Controllers
                 model = new DemostrativoItemViewModel();
                 model.Cor = entidade.Cor;
                 model.ValorGasto = entidade.ValorGasto;
+                model.ValorGastoCompleto = entidade.ValorGastoCompleto;
                 model.Percentual = entidade.Percentual;
             }
 
