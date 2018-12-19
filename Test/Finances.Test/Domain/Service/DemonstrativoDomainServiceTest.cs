@@ -54,7 +54,7 @@ namespace Test.Finances.Domain.Service
             Assert.NotNull(demonstrativo);
             Assert.Equal(valorGastoTotal, demonstrativo.ValorGastoTotal);
             Assert.Equal(corEsperadaOrcamento, demonstrativo.Cor);
-            DemonstrativoItem item = demonstrativo.Orcamentos.FirstOrDefault();
+            DemonstrativoItemOrcamento item = demonstrativo.Orcamentos.FirstOrDefault();
             Assert.Equal(categoria.ID, item.Categoria.ID);
             Assert.Equal(valorGastoCategoria, item.ValorGasto);
             Assert.Equal(valorOrcamentoCategoria - valorGastoCategoria, item.OrcamentoRestante);
