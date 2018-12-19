@@ -17,7 +17,7 @@ namespace Finances.Domain.Repository
 
         public virtual IEnumerable<Vigencia> GetVigenciasPorUsuario(Usuario usuario)
         {
-            return GetList(v => v.Usuario.ID == usuario.ID);
+            return GetList(v => v.Usuario.ID == usuario.ID).OrderByDescending(v => v.Referencia);
         }
 
         public virtual Vigencia GetVigencia(Usuario usuario, int referencia)
