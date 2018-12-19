@@ -177,8 +177,8 @@
     }
     @if (Model.NaoCategorizado != null)
     {
-        <tr style="color: @Model.NaoCategorizado.Cor">
-            <td>
+        <tr>
+            <td style="color: @Model.NaoCategorizado.Cor">
                 <i class="glyphicon glyphicon-asterisk"></i>
                 <span>Não Categorizado</span>
             </td>
@@ -196,6 +196,7 @@
         </tr>
     }
 </table>
+<br />
 <canvas id="chartCategoria" width="340" height="340"></canvas>
 <script type="text/javascript">
     var data = [
