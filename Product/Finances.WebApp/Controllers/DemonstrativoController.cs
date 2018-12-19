@@ -10,20 +10,28 @@ namespace Finances.WebApp.Controllers
 {
     public class DemonstrativoController : FinancesController<DemonstrativoService>
     {
-        public DemonstrativoController(DemonstrativoService service) 
+        private VigenciaService VigenciaService;
+        public DemonstrativoController(DemonstrativoService service, VigenciaService vigenciaService) 
             : base(service)
         {
-        }
-
-        public IActionResult Index()
-        {
-            var model = ConvertEntityToModel(Service.GetDemonstrativoVigenciaAtual(UsuarioLogadoID));
-            return View(model);
+            VigenciaService = vigenciaService;
         }
 
         public IActionResult Home()
         {
-            var model = ConvertEntityToModel(Service.GetDemonstrativoParcialVigenciaAtual(UsuarioLogadoID));
+            Vigencia vigencia = VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
+            var model = ConvertEntityToModel(Service.GetDemonstrativoParcialPorVigencia(vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
+            
+            return View(model);
+        }
+
+        public IActionResult Index(int? vigenciaRefencia)
+        {
+            Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+            var model = ConvertEntityToModel(Service.GetDemonstrativoPorVigencia(vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
+
             return View(model);
         }
 
@@ -95,6 +103,14 @@ namespace Finances.WebApp.Controllers
                 lista.Add(ConvertEntityToModel(item));
                 
             return lista;
+        }
+
+        private Vigencia ResolveVigencia(int? vigenciaRefencia)
+        {
+            if (vigenciaRefencia.HasValue)
+                return VigenciaService.GetVigenciaPorUsuario(UsuarioLogadoID, vigenciaRefencia.Value);
+            else
+                return VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
         }
     }
 }

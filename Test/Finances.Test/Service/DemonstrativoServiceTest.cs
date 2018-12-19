@@ -11,23 +11,37 @@ namespace Test.Finances.Service
     public class DemonstrativoServiceTest
     {
         [Fact]
-        public void BuscarDemonstrativoParcialVigenciaAtual()
+        public void BuscarDemonstrativoParcialPorVigencia()
         {
             //Given
             var demonstrativoDomainService = new Mock<DemonstrativoDomainService>(null, null, null);
-            var vigenciaService = new Mock<VigenciaService>(null, null, null);
-            Usuario usuario = UsuarioFactory.GetValid().Build();
-            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID))
-                .Returns(VigenciaFactory.GetValid().WithUsuario(usuario).Build());
-            demonstrativoDomainService.Setup(ds => ds.GenereteDemonstrativoParcial(It.Is<Vigencia>(v => v.Usuario == usuario)))
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
+            demonstrativoDomainService.Setup(ds => ds.GenereteDemonstrativoParcial(vigencia))
                 .Returns(new DemonstrativoParcial());
-            DemonstrativoService service = new DemonstrativoService(demonstrativoDomainService.Object, vigenciaService.Object);
+            DemonstrativoService service = new DemonstrativoService(demonstrativoDomainService.Object);
 
             //When
-            DemonstrativoParcial demonstrativoParcial = service.GetDemonstrativoParcialVigenciaAtual(usuario.ID);
+            DemonstrativoParcial demonstrativoParcial = service.GetDemonstrativoParcialPorVigencia(vigencia);
 
             //Then
             Assert.NotNull(demonstrativoParcial);
+        }
+
+        [Fact]
+        public void BuscarDemonstrativoPorVigencia()
+        {
+            //Given
+            var demonstrativoDomainService = new Mock<DemonstrativoDomainService>(null, null, null);
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
+            demonstrativoDomainService.Setup(ds => ds.GenereteDemonstrativo(vigencia))
+                .Returns(new Demonstrativo());
+            DemonstrativoService service = new DemonstrativoService(demonstrativoDomainService.Object);
+
+            //When
+            Demonstrativo demonstrativo = service.GetDemonstrativoPorVigencia(vigencia);
+
+            //Then
+            Assert.NotNull(demonstrativo);
         }
     }
 }

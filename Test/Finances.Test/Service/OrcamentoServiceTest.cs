@@ -4,6 +4,7 @@ using Finances.Service;
 using Finances.Domain.Entity;
 using Finances.Domain.Repository;
 using Moq;
+using Test.Finances.Factory;
 
 namespace Test.Finances.Service
 {
@@ -16,7 +17,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             Vigencia vigencia = new Vigencia();
             orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(vigencia)).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
             Orcamento orcamento = service.GetOrcamentoPorVigencia(vigencia);
@@ -32,7 +33,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             int id = 1;
             orcamentoRepository.Setup(or => or.GetByID(id)).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
             Orcamento orcamento = service.GetOrcamentoPorID(id);
@@ -46,14 +47,12 @@ namespace Test.Finances.Service
         {
             //Given
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null, null);
-            Usuario usuario = new Usuario() { ID = 1 };
-            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
-            orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new Orcamento());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, vigenciaService.Object);
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
+            orcamentoRepository.Setup(or => or.GetOrcamentoPorVigencia(vigencia)).Returns(new Orcamento());
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
-            Orcamento orcamento = service.GetOrcamentoVigenciaAtual(usuario.ID);
+            Orcamento orcamento = service.GetOrcamentoPorVigencia(vigencia);
 
             //Then
             Assert.NotNull(orcamento);
@@ -67,7 +66,7 @@ namespace Test.Finances.Service
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             Orcamento orcamento = new Orcamento() { ID = 1 };
             orcamentoRepository.Setup(or => or.Save(orcamento)).Returns(orcamento.ID).Callback(() => salvou = true);
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
             long id = service.SalvarOrcamento(orcamento);
@@ -84,7 +83,7 @@ namespace Test.Finances.Service
             int id = 1;
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             orcamentoRepository.Setup(or => or.GetOrcamentoCategoriaByID(id)).Returns(new OrcamentoCategoria());
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
             OrcamentoCategoria orcamento = service.GetOrcamentoCategoriaPorID(id);
@@ -101,7 +100,7 @@ namespace Test.Finances.Service
             bool apagou = false;
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             orcamentoRepository.Setup(or => or.DeleteOrcamentoCategoria(id)).Callback(() => apagou = true);
-            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object, null);
+            OrcamentoService service = new OrcamentoService(orcamentoRepository.Object);
 
             //When
             service.ApagarOrcamentoCategoria(id);

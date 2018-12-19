@@ -20,26 +20,36 @@ namespace Finances.WebApp.Controllers
             CategoriaService = categoriaService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? vigenciaRefencia)
         {
             ViewBag.Title = "Gastos";
-            var model = ConvertEntityToModel(Service.GetGastosVigenciaAtual(UsuarioLogadoID));
+            Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+            GastoListaViewModel model = new GastoListaViewModel();
+            model.Gastos = ConvertEntityToModel(Service.GetGastosPorVigencia(vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
 
             return View(model);
         }     
 
-        public IActionResult GastoPorCategoria(int categoriaID)
+        public IActionResult GastoPorCategoria(int? vigenciaRefencia, int categoriaID)
         {
-            ViewBag.Title = "Gastos Por Categoria";
-            var model = ConvertEntityToModel(Service.GetGastosPorCategoriaVigenciaAtual(categoriaID, UsuarioLogadoID));
+            Categoria categoria = CategoriaService.GetCategoriaPorID(categoriaID);
+            ViewBag.Title = string.Format("Gastos Por Categoria: {0}{1}", ((categoria.Pai == null)? "" : string.Format("{0} - ", categoria.Pai.Nome)), categoria.Nome);
+            Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+            GastoListaViewModel model = new GastoListaViewModel();
+            model.Gastos = ConvertEntityToModel(Service.GetGastosPorCategoriaEVigencia(categoriaID, vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
 
             return View("Index", model);
         }   
 
-        public IActionResult GastoNaoCategorizado()
+        public IActionResult GastoNaoCategorizado(int? vigenciaRefencia)
         {
             ViewBag.Title = "Gastos Não Categorizado";
-            var model = ConvertEntityToModel(Service.GetGastosNaoCategorizadoVigenciaAtual(UsuarioLogadoID));
+            Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+            GastoListaViewModel model = new GastoListaViewModel();
+            model.Gastos = ConvertEntityToModel(Service.GetGastosNaoCategorizadoPorVigencia(vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
             
             return View("Index", model);
         } 
@@ -182,6 +192,19 @@ namespace Finances.WebApp.Controllers
         private void SalvarGasto(Gasto gasto)
         {
             Service.SalvarGasto(gasto);
+        }
+
+        private Vigencia ResolveVigencia(int? vigenciaRefencia)
+        {
+            if (vigenciaRefencia.HasValue)
+                return VigenciaService.GetVigenciaPorUsuario(UsuarioLogadoID, vigenciaRefencia.Value);
+            else
+                return VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
+        }
+
+        private string ResolveTitulo(string titulo, int? vigenciaRefencia)
+        {
+            return string.Format("{0}{1}", titulo, ((vigenciaRefencia.HasValue) ? string.Format(" - Vigência: {0}", vigenciaRefencia.Value.ToString())  : ""));
         }
     }
 }

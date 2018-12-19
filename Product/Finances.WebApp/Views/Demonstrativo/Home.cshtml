@@ -8,26 +8,48 @@
 
 <p><a asp-controller="Gasto" asp-action="Create"><i class="glyphicon glyphicon-edit"></i> Lançar Novo Gasto</a></p>
 <br />
-
 <div class="form-group">
-    <label asp-for="ValorGastoTotal" class="col-md-2 control-label"></label>
-    <span style="Color: @Model.Cor">
-        @Html.DisplayFor(model => model.ValorGastoTotal)
-    </span>
+    <table class="table">
+    <tr>
+        <th class="col-md-3">
+            Referência
+        </th>
+        <th class="col-md-2">
+            Gasto Total
+        </th>
+        <th class="col-md-2">
+            Orçamento
+        </th>
+        <th class="col-md-5"></th>
+    </tr>
+    <tr style="Color: @Model.Cor">
+        <th style="Color: Black">
+            @Html.DisplayFor(model => model.Vigencia.Nome)
+        </th>
+        <td>
+            <i class="glyphicon glyphicon-triangle-right"></i>
+            @Html.DisplayFor(model => model.ValorGastoTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.OrcamentoTotal)
+        </td>
+        <td></td>
+    </tr>
+    </table>
 </div>
-<br />
 <br />
 <table class="table">
     <tr>
-        <th>
+        <th class="col-md-3">
             Categoria
         </th>
-        <th>
+        <th class="col-md-2">
             Gasto
         </th>
-        <th>
+        <th class="col-md-2">
             Orçamento
         </th>
+        <th class="col-md-5"></th>
     </tr>
 
     @foreach (var item in Model.DemostrativoOrcamentosCategoria)
@@ -58,6 +80,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Orcamento)
             </td>
+            <td></td>
         </tr>
     }
     @if (Model.NaoCategorizado != null)
@@ -71,8 +94,8 @@
                 @Html.DisplayFor(model => model.NaoCategorizado.ValorGastoCompleto)
             </td>
             <td></td>
+            <td></td>
         </tr>
     }
-
 </table>
 <br />

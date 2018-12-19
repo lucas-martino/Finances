@@ -7,11 +7,9 @@ namespace Finances.Service
     public class OrcamentoService : IFinancesApplicationService
     {
         private IOrcamentoRepository OrcamentoRepository;
-        private VigenciaService VigenciaService;
-        public OrcamentoService(IOrcamentoRepository orcamentoRepository, VigenciaService vigenciaService)
+        public OrcamentoService(IOrcamentoRepository orcamentoRepository)
         {
             OrcamentoRepository = orcamentoRepository;
-            VigenciaService = vigenciaService;
         }
 
         public Orcamento GetOrcamentoPorID(int id)
@@ -22,12 +20,6 @@ namespace Finances.Service
         public Orcamento GetOrcamentoPorVigencia(Vigencia vigencia)
         {
             return OrcamentoRepository.GetOrcamentoPorVigencia(vigencia);
-        }
-
-        public Orcamento GetOrcamentoVigenciaAtual(int usuarioID)
-        {
-            Vigencia vigenciaAtual = VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
-            return GetOrcamentoPorVigencia(vigenciaAtual);
         }
 
         public long SalvarOrcamento(Orcamento orcamento)

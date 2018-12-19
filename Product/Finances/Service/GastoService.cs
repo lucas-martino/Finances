@@ -7,38 +7,25 @@ namespace Finances.Service
 {
     public class GastoService : IFinancesApplicationService
     {
-        private IGastoRepository GastoRepository;
-        private VigenciaService VigenciaService;   
+        private IGastoRepository GastoRepository; 
         
-        public GastoService(IGastoRepository gastoRepository, VigenciaService vigenciaService, CategoriaService categoriaService)
+        public GastoService(IGastoRepository gastoRepository)
         {
             GastoRepository = gastoRepository;
-            VigenciaService = vigenciaService;
         }
 
-        public IEnumerable<Gasto> GetGastosVigenciaAtual(int usuarioID)
+        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia)
         {
-            return GetGastosPorVigencia(GetVigenciaAtual(usuarioID));
+            return GastoRepository.GetGastosPorCategoriaEVigencia(categoriaID, vigencia);
         }
 
-        public IEnumerable<Gasto> GetGastosPorCategoriaVigenciaAtual(int categoriaID, int usuarioID)
-        {
-            return GetGastosPorCategoria(categoriaID, GetVigenciaAtual(usuarioID));
-        }
-
-        public IEnumerable<Gasto> GetGastosNaoCategorizadoVigenciaAtual(int usuarioID)
-        {
-            return GetGastosNaoCategorizado(GetVigenciaAtual(usuarioID));
-        }
-
-        private IEnumerable<Gasto> GetGastosNaoCategorizado(Vigencia vigencia)
+        public IEnumerable<Gasto> GetGastosNaoCategorizadoPorVigencia(Vigencia vigencia)
         {
             return GastoRepository.GetGastosNaoCategorizadoPorVigencia(vigencia);
         }
 
-        public IEnumerable<Gasto> GetGastosPorVigencia(int vigenciaID)
+        public IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia)
         {
-            Vigencia vigencia = VigenciaService.GetVigenciaPorID(vigenciaID);
             return GastoRepository.GetGastosPorVigencia(vigencia);
         }
 
@@ -55,21 +42,6 @@ namespace Finances.Service
         public void ApagarGasto(int id)
         {
             GastoRepository.Delete(id);
-        }
-
-        private IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia)
-        {
-            return GastoRepository.GetGastosPorVigencia(vigencia);
-        }
-
-        private IEnumerable<Gasto> GetGastosPorCategoria(int categoriaID, Vigencia vigencia)
-        {
-            return GastoRepository.GetGastosPorCategoriaEVigencia(categoriaID, vigencia);
-        }
-
-        private Vigencia GetVigenciaAtual(int usuarioID)
-        {
-            return VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
         }
     }
 }

@@ -28,6 +28,20 @@ namespace Test.Finances.Factory
             return this;
         }
 
+        public OrcamentoFactory WithValor(decimal valor)
+        {
+            Instance.Valor = valor;
+
+            return this;
+        }
+
+        public OrcamentoFactory WithVigencia(Vigencia vigencia)
+        {
+            Instance.Vigencia = vigencia;
+
+            return this;
+        }
+
         protected override void PopulateValid()
         {
             Instance.ID = 1;

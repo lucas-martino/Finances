@@ -12,15 +12,20 @@ namespace Finances.WebApp.Controllers
     public class OrcamentoController : FinancesController<OrcamentoService>
     {
         private CategoriaService CategoriaService;
-        public OrcamentoController(OrcamentoService orcamentoService, CategoriaService categoriaService)
+        private VigenciaService VigenciaService;
+        public OrcamentoController(OrcamentoService orcamentoService, CategoriaService categoriaService, VigenciaService vigenciaService)
             :base(orcamentoService)
         {
             CategoriaService = categoriaService;
+            VigenciaService = vigenciaService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? vigenciaRefencia)
         {
-            var model = ConvertEntityToModel(Service.GetOrcamentoVigenciaAtual(UsuarioLogadoID));
+            Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+            var model = ConvertEntityToModel(Service.GetOrcamentoPorVigencia(vigencia));
+            model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
+
             return View(model);
         }
 
@@ -178,6 +183,12 @@ namespace Finances.WebApp.Controllers
         {
             Service.SalvarOrcamento(orcamento);
         }
-
+        private Vigencia ResolveVigencia(int? vigenciaRefencia)
+        {
+            if (vigenciaRefencia.HasValue)
+                return VigenciaService.GetVigenciaPorUsuario(UsuarioLogadoID, vigenciaRefencia.Value);
+            else
+                return VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
+        }
     }
 }

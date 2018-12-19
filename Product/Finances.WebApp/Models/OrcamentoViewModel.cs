@@ -14,6 +14,7 @@ namespace Finances.WebApp.Models
         [Required]
         [DataType(DataType.Currency)]
         public decimal Valor { get; set; }
+        public VigenciaViewModel Vigencia { get; set; }
 
         public IEnumerable<OrcamentoCategoriaViewModel> OrcamentosCategoria { get; set; }
     }

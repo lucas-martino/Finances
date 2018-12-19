@@ -6,24 +6,20 @@ namespace Finances.Service
     public class DemonstrativoService : IFinancesApplicationService
     {
         private DemonstrativoDomainService DemonstrativoDomainService;
-        private VigenciaService VigenciaService;
 
-        public DemonstrativoService(DemonstrativoDomainService demonstrativoDomainService, VigenciaService vigenciaService)
+        public DemonstrativoService(DemonstrativoDomainService demonstrativoDomainService)
         {
             DemonstrativoDomainService = demonstrativoDomainService;
-            VigenciaService = vigenciaService;
         }
 
-        public DemonstrativoParcial GetDemonstrativoParcialVigenciaAtual(int usuarioID)
+        public DemonstrativoParcial GetDemonstrativoParcialPorVigencia(Vigencia vigencia)
         {
-            Vigencia vigenciaAtual = VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
-            return DemonstrativoDomainService.GenereteDemonstrativoParcial(vigenciaAtual);
+            return DemonstrativoDomainService.GenereteDemonstrativoParcial(vigencia);
         }
 
-        public Demonstrativo GetDemonstrativoVigenciaAtual(int usuarioID)
+        public Demonstrativo GetDemonstrativoPorVigencia(Vigencia vigencia)
         {
-            Vigencia vigenciaAtual = VigenciaService.GetVigenciaAtualPorUsuario(usuarioID);
-            return DemonstrativoDomainService.GenereteDemonstrativo(vigenciaAtual);
+            return DemonstrativoDomainService.GenereteDemonstrativo(vigencia);
         }
     }
 }

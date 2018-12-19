@@ -23,7 +23,7 @@ namespace Finances.Domain.Service
             CategoriaRepository = categoriaRepository;
         }
 
-        public Demonstrativo GenereteDemonstrativo(Vigencia vigencia)
+        public virtual Demonstrativo GenereteDemonstrativo(Vigencia vigencia)
         {
             Demonstrativo demonstrativo = new Demonstrativo();
             GenereteDemonstrativoParcial(demonstrativo, vigencia);
@@ -106,7 +106,7 @@ namespace Finances.Domain.Service
                 item.ValorGastoCompleto = GetGastoTotalCompletoPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
                 item.ValorGasto = GetGastoTotalPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
                 item.OrcamentoRestante = orcamentoCategoria.Valor - item.ValorGastoCompleto;
-                item.Cor = GetCor(orcamentoCategoria.Valor, item.ValorGasto);
+                item.Cor = GetCor(orcamentoCategoria.Valor, item.ValorGastoCompleto);
                 
                 lista.Add(item);
             }

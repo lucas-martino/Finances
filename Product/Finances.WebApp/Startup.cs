@@ -59,7 +59,13 @@ namespace Finances.WebApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
+                    name: "vigencia",
+                    template: "vigencia/{vigenciaRefencia}/{controller=Home}/{action=Index}/{id?}"
+                );                    
             });
         }
     }

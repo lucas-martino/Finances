@@ -1,0 +1,49 @@
+@model Finances.WebApp.Models.HistoricoViewModel
+
+@{
+    ViewBag.Title = "Histórico";
+}
+
+<h2>Histórico</h2>
+<br />
+<div class="form-group">
+    <table class="table">
+    <tr>
+        <th>
+            Vigência
+        </th>
+        <th>
+            Gastos
+        </th>
+        <th>
+            Demostrativo
+        </th>
+        <th>
+            Orçamento
+        </th>
+    </tr>
+    @foreach (var item in Model.Vigencias)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </th>
+            <td>
+                <a asp-controller="Gasto" asp-action="index" asp-route-vigenciaRefencia="@item.Referencia" title="Gastos">
+                    <i class="glyphicon glyphicon-usd"></i>
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Demonstrativo" asp-action="index" asp-route-vigenciaRefencia="@item.Referencia" title="Demostrativo">
+                    <i class="glyphicon glyphicon-stats"></i>
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Orcamento" asp-action="index" asp-route-vigenciaRefencia="@item.Referencia" title="Orcamento">
+                    <i class="glyphicon glyphicon-list"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+<br />

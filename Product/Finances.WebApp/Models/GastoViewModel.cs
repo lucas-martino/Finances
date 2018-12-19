@@ -28,4 +28,10 @@ namespace Finances.WebApp.Models
 
         public IEnumerable<SelectListItem> Categorias { get; set;}
     }
+
+    public class GastoListaViewModel
+    {
+        public VigenciaViewModel Vigencia { get; set; }
+        public IEnumerable<GastoViewModel> Gastos { get; set; }
+    }
 }

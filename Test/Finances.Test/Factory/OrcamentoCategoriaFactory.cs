@@ -28,6 +28,20 @@ namespace Test.Finances.Factory
             return this;
         }
 
+        public OrcamentoCategoriaFactory WithCategoria(Categoria categoria)
+        {
+            Instance.Categoria = categoria;
+
+            return this;
+        }
+
+        public OrcamentoCategoriaFactory WithValor(decimal valor)
+        {
+            Instance.Valor = valor;
+
+            return this;
+        }
+
         protected override void PopulateValid()
         {
             Instance.ID = 1;

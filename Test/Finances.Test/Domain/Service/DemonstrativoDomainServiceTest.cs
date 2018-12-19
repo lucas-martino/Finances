@@ -5,6 +5,7 @@ using Finances.Domain.Entity;
 using Finances.Domain.Repository;
 using Finances.Domain.Service;
 using Moq;
+using Test.Finances.Factory;
 using Xunit;
 
 namespace Test.Finances.Domain.Service
@@ -42,8 +43,8 @@ namespace Test.Finances.Domain.Service
             decimal valorGastoCategoria, decimal valorOrcamentoCategoria, string corEsperadaOrcamentoCategoria)
         {
             //Given
-            Vigencia vigencia = new Vigencia();
-            Categoria categoria = new Categoria() { ID = 1 };
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
+            Categoria categoria = CategoriaFactory.GetValid().Build();
             DemonstrativoDomainService service = GenereteDepedenciaComOrcamentoCategoria(vigencia, valorGastoTotal, valorOrcamento, 
                 categoria, valorGastoCategoria, valorOrcamentoCategoria);
 
@@ -56,7 +57,7 @@ namespace Test.Finances.Domain.Service
             Assert.Equal(corEsperadaOrcamento, demonstrativo.Cor);
             DemonstrativoItemOrcamento item = demonstrativo.Orcamentos.FirstOrDefault();
             Assert.Equal(categoria.ID, item.Categoria.ID);
-            Assert.Equal(valorGastoCategoria, item.ValorGasto);
+            Assert.Equal(valorGastoCategoria, item.ValorGastoCompleto);
             Assert.Equal(valorOrcamentoCategoria - valorGastoCategoria, item.OrcamentoRestante);
             Assert.Equal(corEsperadaOrcamentoCategoria, item.Cor); 
         }
@@ -65,7 +66,7 @@ namespace Test.Finances.Domain.Service
         public void DemonstrativoParcialComGastoNaoCategorizado()
         {
             //Given
-            Vigencia vigencia = new Vigencia();
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
             decimal valorGastoTotal = 1000;
             decimal valorOrcamento = 5000;
             decimal valorNaoCategorizado = 200;
@@ -79,7 +80,7 @@ namespace Test.Finances.Domain.Service
             Assert.Equal(valorGastoTotal, demonstrativo.ValorGastoTotal);
             Assert.Equal("Green", demonstrativo.Cor);
             Assert.NotNull(demonstrativo.NaoCategorizado);
-            Assert.Equal(valorNaoCategorizado, demonstrativo.NaoCategorizado.ValorGasto);
+            Assert.Equal(valorNaoCategorizado, demonstrativo.NaoCategorizado.ValorGastoCompleto);
             Assert.Equal("Orange", demonstrativo.NaoCategorizado.Cor);
         }
 
@@ -88,7 +89,7 @@ namespace Test.Finances.Domain.Service
             var gastoRepository = new Mock<IGastoRepository>();
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             
-            Orcamento orcamento = new Orcamento() { Valor = valorOrcamento, Vigencia = vigencia };
+            Orcamento orcamento = OrcamentoFactory.GetValid().WithValor(valorOrcamento).WithVigencia(vigencia).Build();
             gastoRepository.Setup(r => r.GetGastoTotalPorVigencia(vigencia))
                 .Returns(valorGastoTotal);
             orcamentoRepository.Setup(r => r.GetOrcamentoPorVigencia(vigencia))
@@ -102,7 +103,7 @@ namespace Test.Finances.Domain.Service
             var gastoRepository = new Mock<IGastoRepository>();
             var orcamentoRepository = new Mock<IOrcamentoRepository>();
             
-            Orcamento orcamento = new Orcamento() { Valor = valorOrcamento, Vigencia = vigencia };
+            Orcamento orcamento = OrcamentoFactory.GetValid().WithValor(valorOrcamento).WithVigencia(vigencia).Build();
             gastoRepository.Setup(r => r.GetGastoTotalPorVigencia(vigencia))            
                 .Returns(valorGastoTotal);
             gastoRepository.Setup(r => r.GetGastoTotalVigenciaSemCategoria(vigencia))
@@ -119,14 +120,14 @@ namespace Test.Finances.Domain.Service
             var gastoRepository = new Mock<IGastoRepository>();
             var orcamentoRepository = new Mock<IOrcamentoRepository>();            
             
-            Orcamento orcamento = new Orcamento() { Valor = valorOrcamento, Vigencia = vigencia };
-            OrcamentoCategoria orcamentoCategoria = new OrcamentoCategoria() { Categoria = categoria, Valor = valorOrcamentoCategoria };
+            Orcamento orcamento = OrcamentoFactory.GetValid().WithValor(valorOrcamento).WithVigencia(vigencia).Build();
+            OrcamentoCategoria orcamentoCategoria = OrcamentoCategoriaFactory.GetValid().WithCategoria(categoria).WithValor(valorOrcamentoCategoria).Build();
             orcamento.AddOrcamentoCategoria(orcamentoCategoria);
             orcamentoRepository.Setup(r => r.GetOrcamentoPorVigencia(vigencia))
                 .Returns(orcamento);
             gastoRepository.Setup(r => r.GetGastoTotalPorVigencia(vigencia))
                 .Returns(valorGastoTotal);
-            gastoRepository.Setup(r => r.GetGastoTotalPorCategoriaEVigencia(categoria, vigencia))
+            gastoRepository.Setup(r => r.GetGastoTotalCompletoPorCategoriaEVigencia(categoria, vigencia))
                 .Returns(valorGastoCategoria);
 
             return new DemonstrativoDomainService(gastoRepository.Object, orcamentoRepository.Object, null);

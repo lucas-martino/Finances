@@ -12,38 +12,33 @@ namespace Test.Finances.Service
     public class GastoServiceTest
     {
         [Fact]
-        public void BuscarGastosVigenciaAtual()
+        public void BuscarGastosVigenciaPorVigencia()
         {
             //Given
-            Usuario usuario = UsuarioFactory.GetValid().Build();
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
             var gastoRepository = new Mock<IGastoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null, null);
-            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID))
-                .Returns(new Vigencia() { Usuario = usuario });
-            gastoRepository.Setup(or => or.GetGastosPorVigencia(It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new List<Gasto>());
-            GastoService service = new GastoService(gastoRepository.Object, vigenciaService.Object, null);
+            gastoRepository.Setup(or => or.GetGastosPorVigencia(vigencia)).Returns(new List<Gasto>());
+            GastoService service = new GastoService(gastoRepository.Object);
 
             //When
-            var gastos = service.GetGastosVigenciaAtual(usuario.ID);
+            var gastos = service.GetGastosPorVigencia(vigencia);
 
             //Then
             Assert.NotNull(gastos);
         }
 
         [Fact]
-        public void BuscarGastosPorCategoriaVigenciaAtual()
+        public void BuscarGastosPorCategoriaPorVigencia()
         {
             //Given
             int categoriaID = 1;
-            Usuario usuario = new Usuario() { ID = 1};
+            Vigencia vigencia = VigenciaFactory.GetValid().Build();
             var gastoRepository = new Mock<IGastoRepository>();
-            var vigenciaService = new Mock<VigenciaService>(null, null, null);
-            vigenciaService.Setup(vs => vs.GetVigenciaAtualPorUsuario(usuario.ID)).Returns(new Vigencia() { Usuario = usuario });
-            gastoRepository.Setup(or => or.GetGastosPorCategoriaEVigencia(categoriaID, It.Is<Vigencia>(v => v.Usuario == usuario))).Returns(new List<Gasto>());
-            GastoService service = new GastoService(gastoRepository.Object, vigenciaService.Object, null);
+            gastoRepository.Setup(or => or.GetGastosPorCategoriaEVigencia(categoriaID, vigencia)).Returns(new List<Gasto>());
+            GastoService service = new GastoService(gastoRepository.Object);
 
             //When
-            var gastos = service.GetGastosPorCategoriaVigenciaAtual(categoriaID, usuario.ID);
+            var gastos = service.GetGastosPorCategoriaEVigencia(categoriaID, vigencia);
 
             //Then
             Assert.NotNull(gastos);
@@ -56,7 +51,7 @@ namespace Test.Finances.Service
             int id = 1;
             var gastoRepository = new Mock<IGastoRepository>();
             gastoRepository.Setup(or => or.GetByID(id)).Returns(new Gasto());
-            GastoService service = new GastoService(gastoRepository.Object, null, null);
+            GastoService service = new GastoService(gastoRepository.Object);
 
             //When
             var gasto = service.GetGastosPorID(id);
@@ -73,7 +68,7 @@ namespace Test.Finances.Service
             bool salvou = false;
             var gastoRepository = new Mock<IGastoRepository>();
             gastoRepository.Setup(or => or.Save(gasto)).Returns(gasto.ID).Callback(() => salvou = true);
-            GastoService service = new GastoService(gastoRepository.Object, null, null);
+            GastoService service = new GastoService(gastoRepository.Object);
 
             //When
             var id = service.SalvarGasto(gasto);
@@ -91,7 +86,7 @@ namespace Test.Finances.Service
             bool apagou = false;
             var gastoRepository = new Mock<IGastoRepository>();
             gastoRepository.Setup(or => or.Delete(id)).Callback(() => apagou = true);
-            GastoService service = new GastoService(gastoRepository.Object, null, null);
+            GastoService service = new GastoService(gastoRepository.Object);
 
             //When
             service.ApagarGasto(id);

@@ -5,7 +5,7 @@
 }
 
 <h2>Demonstrativo</h2>
-
+<br />  
 <div class="form-group">
     <table class="table">
     <tr>
@@ -23,7 +23,9 @@
         <th></th>
     </tr>
     <tr style="Color: @Model.Cor">
-        <th style="Color: Black">12/2018</th>
+        <th style="Color: Black">
+            @Html.DisplayFor(model => model.Vigencia.Nome)
+        </th>
         <td>
             <i class="glyphicon glyphicon-triangle-right"></i>
             @Html.DisplayFor(model => model.ValorGastoTotal)
@@ -33,7 +35,9 @@
         </td>
         <td></td>
         <td>
-            <a asp-controller="Gasto" asp-action="Index" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a>
+            <a asp-controller="Gasto" asp-action="Index" asp-route-vigenciaRefencia="@Model.Vigencia.Referencia" title="Visualizar">
+                <i class="glyphicon glyphicon-search"></i>
+            </a>
         </td>
     </tr>
     </table>
@@ -96,7 +100,11 @@
                 @Html.DisplayFor(modelItem => item.Orcamento)
             </td>
             <td></td>
-            <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
+            <td>
+                <a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" asp-route-vigenciaRefencia="@Model.Vigencia.Referencia" title="Visualizar">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </td>
         </tr>
     }
 </table>
@@ -160,7 +168,11 @@
             }
 
             <td></td>
-            <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
+            <td>
+                <a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" asp-route-vigenciaRefencia="@Model.Vigencia.Referencia" title="Visualizar">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </td>
         </tr>
     }
     @if (Model.NaoCategorizado != null)
@@ -176,7 +188,11 @@
             <td></td>
             <th>@Html.DisplayFor(model => model.NaoCategorizado.Percentual) %</th>
             <td></td>
-            <td><a asp-controller="Gasto" asp-action="GastoNaoCategorizado" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
+            <td>
+                <a asp-controller="Gasto" asp-action="GastoNaoCategorizado" asp-route-vigenciaRefencia="@Model.Vigencia.Referencia" title="Visualizar">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </td>
         </tr>
     }
 </table>
@@ -211,5 +227,4 @@
     var ctx = document.getElementById("chartCategoria").getContext("2d");
     var grafico = new Chart(ctx).Pie(data);
 </script>
-
 <br />

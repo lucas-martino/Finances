@@ -25,6 +25,12 @@ namespace Finances.Service
             return VigenciaRepository.GetVigenciasPorUsuario(usuario);
         }
 
+        public virtual Vigencia GetVigenciaPorUsuario(int usuarioID, int referencia)
+        {
+            Usuario usuario = GetUsuario(usuarioID);
+            return VigenciaRepository.GetVigencia(usuario, referencia);
+        }
+
         public virtual Vigencia GetVigenciaAtualPorUsuario(int usuarioID)
         {
             Usuario usuario = GetUsuario(usuarioID);

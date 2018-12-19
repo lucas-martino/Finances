@@ -22,25 +22,6 @@ namespace Finances.WebApp.Models
         public IEnumerable<DemostrativoItemViewModel> DemostrativoOrcamentosCategoria { get; set; }
         public IEnumerable<DemostrativoItemViewModel> DemostrativoCategoria { get; set; }
         public DemostrativoItemViewModel NaoCategorizado { get; set; }
-    }
-
-    public class DemostrativoItemViewModel
-    {
-        public DemostrativoItemViewModel()
-        {
-            Categoria = new CategoriaViewModel();
-        }
-        
-        public CategoriaViewModel Categoria { get; set; }
-        [Display(Name = "Gasto")]        
-        [DataType(DataType.Currency)]
-        public decimal ValorGastoCompleto { get; set; }
-        [DataType(DataType.Currency)]
-        public decimal ValorGasto { get; set; }
-        [Display(Name = "Orçamento")]
-        [DataType(DataType.Currency)]
-        public decimal Orcamento { get; set; }
-        public decimal Percentual { get; set; }
-        public string Cor { get; set; }
+        public VigenciaViewModel Vigencia { get; set; }
     }
 }
