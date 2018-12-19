@@ -173,4 +173,36 @@
         </tr>
     }
 </table>
+<canvas id="chartCategoria" width="340" height="340"></canvas>
+<script type="text/javascript">
+    var data = [
+      @foreach (var item in Model.DemostrativoCategoria)
+      {
+        @if (item.Categoria.Pai == null)
+        {
+            <text>
+            {
+                value: @item.ValorGastoCompleto,
+                color: '@item.Categoria.Cor',
+                label: '@item.Categoria.Nome'
+            },
+            </text>
+        }
+      }
+      @if (Model.NaoCategorizado != null)
+      {
+        <text>
+        {
+            value: @Model.NaoCategorizado.ValorGastoCompleto,
+            color: '@Model.NaoCategorizado.Cor',
+            label: 'Não Categorizado'
+        },
+        </text> 
+      }
+    ];
+
+    var ctx = document.getElementById("chartCategoria").getContext("2d");
+    var grafico = new Chart(ctx).Pie(data);
+</script>
+
 <br />
