@@ -184,7 +184,7 @@
             {
                 value: @item.ValorGastoCompleto,
                 color: '@item.Categoria.Cor',
-                label: '@item.Categoria.Nome'
+                label: '@Html.Raw(System.Web.HttpUtility.HtmlDecode(item.Categoria.Nome))'
             },
             </text>
         }
