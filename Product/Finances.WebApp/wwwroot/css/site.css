@@ -41,3 +41,8 @@ body {
     width: 100px;
     background: white;
 }
+
+.navbar-toggle.navbar-left {
+    float: left;
+    margin-left: 10px;
+  }
