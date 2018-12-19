@@ -39,7 +39,6 @@ namespace Finances.WebApp.Controllers
         {
             DemostrativoViewModel model = ConvertEntityToModel((DemonstrativoParcial)entidade);
             model.DemostrativoCategoria = ConvertEntityToModel(entidade.Categorias);
-            model.OrcamentoTotal = entidade.OrcamentoTotal;
             
             return model;
         }
@@ -48,6 +47,7 @@ namespace Finances.WebApp.Controllers
         {
             DemostrativoViewModel model = new DemostrativoViewModel();
             model.ValorGastoTotal = entidade.ValorGastoTotal;
+            model.OrcamentoTotal = entidade.OrcamentoTotal;
             model.Cor = entidade.Cor;
             model.DemostrativoOrcamentosCategoria = ConvertEntityToModel(entidade.Orcamentos);
             model.NaoCategorizado = ConvertEntityToModel(entidade.NaoCategorizado);
