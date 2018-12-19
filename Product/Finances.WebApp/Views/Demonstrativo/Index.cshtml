@@ -140,18 +140,25 @@
             </td>
             @if (item.Categoria.Pai == null)
             {
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorGastoCompleto)
-            </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.ValorGastoCompleto)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorGasto)
+                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Percentual) %
+                </th>
             }
             else
             {
                 <td></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorGasto)
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Percentual) %</td>
             }
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorGasto)
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.Percentual) %</td>
+
             <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoPorCategoria" asp-route-CategoriaID="@item.Categoria.ID" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
@@ -163,11 +170,11 @@
                 <i class="glyphicon glyphicon-asterisk"></i>
                 <span>Não Categorizado</span>
             </td>
-            <td>
+            <th>
                 @Html.DisplayFor(model => model.NaoCategorizado.ValorGastoCompleto)
-            </td>
+            </th>
             <td></td>
-            <td>@Html.DisplayFor(model => model.NaoCategorizado.Percentual) %</td>
+            <th>@Html.DisplayFor(model => model.NaoCategorizado.Percentual) %</th>
             <td></td>
             <td><a asp-controller="Gasto" asp-action="GastoNaoCategorizado" title="Visualizar"><i class="glyphicon glyphicon-search"></i></a></td>
         </tr>
