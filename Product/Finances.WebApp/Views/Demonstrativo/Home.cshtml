@@ -23,15 +23,17 @@
         <th class="col-md-5"></th>
     </tr>
     <tr style="Color: @Model.Cor">
-        <th style="Color: Black">
-            @Html.DisplayFor(model => model.Vigencia.Nome)
-        </th>
-        <td>
+        <th>
             <i class="glyphicon glyphicon-triangle-right"></i>
+            <span style="Color: Black">
+                @Html.DisplayFor(model => model.Vigencia.Nome)    
+            </span>            
+        </th>
+        <td>            
             @Html.DisplayFor(model => model.ValorGastoTotal)
         </td>
         <td>
-            @Html.DisplayFor(model => model.OrcamentoTotal)
+            @Html.DisplayFor(model => model.Orcamento)
         </td>
         <td></td>
     </tr>

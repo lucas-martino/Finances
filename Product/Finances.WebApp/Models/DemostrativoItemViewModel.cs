@@ -20,6 +20,8 @@ namespace Finances.WebApp.Models
         [Display(Name = "Orçamento")]
         [DataType(DataType.Currency)]
         public decimal Orcamento { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal Planejamento { get; set; }
         public decimal Percentual { get; set; }
         public string Cor { get; set; }
     }

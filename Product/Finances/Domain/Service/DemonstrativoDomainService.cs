@@ -47,7 +47,7 @@ namespace Finances.Domain.Service
                 item = new DemonstrativoItemCategoria();
                 item.Categoria = categoria;
                 item.ValorGastoCompleto = GetGastoTotalCompletoPorCategoria(categoria, vigencia);
-                item.ValorGasto = GetGastoTotalPorCategoria(categoria, vigencia);
+                item.ValorGastoIndividual = GetGastoTotalPorCategoria(categoria, vigencia);
                 item.Percentual = CalculePercentual(valorTotal, item.ValorGastoCompleto);
                 item.Cor = COR_PADRAO;
 
@@ -66,7 +66,8 @@ namespace Finances.Domain.Service
         {
             Orcamento orcamento = GetOrcamento(vigencia);
             demonstrativo.ValorGastoTotal = GetGastoTotal(vigencia);
-            demonstrativo.OrcamentoTotal = orcamento.Valor - demonstrativo.ValorGastoTotal;
+            demonstrativo.OrcamentoPlanejado = orcamento.Valor;
+            demonstrativo.OrcamentoRestante = orcamento.Valor - demonstrativo.ValorGastoTotal;
             demonstrativo.Cor = GetCor(orcamento.Valor, demonstrativo.ValorGastoTotal);
             demonstrativo.Orcamentos = GenereteDemonstrativoOrcamentoCategoria(orcamento);
             demonstrativo.NaoCategorizado = GenereteDemonstrativoNaoCategorizado(vigencia, demonstrativo.ValorGastoTotal);
@@ -104,7 +105,8 @@ namespace Finances.Domain.Service
                 item = new DemonstrativoItemOrcamento();
                 item.Categoria = orcamentoCategoria.Categoria;
                 item.ValorGastoCompleto = GetGastoTotalCompletoPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
-                item.ValorGasto = GetGastoTotalPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
+                item.ValorGastoIndividual = GetGastoTotalPorCategoria(orcamentoCategoria.Categoria, orcamento.Vigencia);
+                item.OrcamentoPlanejado = orcamentoCategoria.Valor;
                 item.OrcamentoRestante = orcamentoCategoria.Valor - item.ValorGastoCompleto;
                 item.Cor = GetCor(orcamentoCategoria.Valor, item.ValorGastoCompleto);
                 

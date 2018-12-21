@@ -16,7 +16,9 @@ namespace Finances.WebApp.Models
         [DataType(DataType.Currency)]
         public decimal ValorGastoTotal { get; set; }
         [DataType(DataType.Currency)]
-        public decimal OrcamentoTotal { get; set; }
+        public decimal Orcamento { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal Planejamento { get; set; }
         public string Cor { get; set; }
         public bool PossuiNaoCategorizado { get; set; }
         public IEnumerable<DemostrativoItemViewModel> DemostrativoOrcamentosCategoria { get; set; }

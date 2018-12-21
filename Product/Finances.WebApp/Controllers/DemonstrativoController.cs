@@ -47,7 +47,8 @@ namespace Finances.WebApp.Controllers
         {
             DemostrativoViewModel model = new DemostrativoViewModel();
             model.ValorGastoTotal = entidade.ValorGastoTotal;
-            model.OrcamentoTotal = entidade.OrcamentoTotal;
+            model.Orcamento = entidade.OrcamentoRestante;
+            model.Planejamento = entidade.OrcamentoPlanejado;
             model.Cor = entidade.Cor;
             model.DemostrativoOrcamentosCategoria = ConvertEntityToModel(entidade.Orcamentos);
             model.NaoCategorizado = ConvertEntityToModel(entidade.NaoCategorizado);
@@ -60,6 +61,7 @@ namespace Finances.WebApp.Controllers
         {
             DemostrativoItemViewModel model = ConvertEntityToModel((DemonstrativoItemCategoria)entidade);
             model.Orcamento = entidade.OrcamentoRestante;
+            model.Planejamento = entidade.OrcamentoPlanejado;
 
             return model;
         }
@@ -79,7 +81,7 @@ namespace Finances.WebApp.Controllers
             {
                 model = new DemostrativoItemViewModel();
                 model.Cor = entidade.Cor;
-                model.ValorGasto = entidade.ValorGasto;
+                model.ValorGasto = entidade.ValorGastoIndividual;
                 model.ValorGastoCompleto = entidade.ValorGastoCompleto;
                 model.Percentual = entidade.Percentual;
             }

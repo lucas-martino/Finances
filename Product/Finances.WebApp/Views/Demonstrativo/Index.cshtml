@@ -12,26 +12,34 @@
         <th class="col-md-3">
             Referência
         </th>
-        <th class="col-md-3">
+        <th class="col-md-2">
             Gasto Total
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Orçamento
         </th>
-        <th class="col-md-3"></th>
+        <th class="col-md-1">
+            Planejamento
+        </th>
+        <th class="col-md-4"></th>
         </th>
         <th></th>
     </tr>
     <tr style="Color: @Model.Cor">
-        <th style="Color: Black">
-            @Html.DisplayFor(model => model.Vigencia.Nome)
-        </th>
-        <td>
+        <th>
             <i class="glyphicon glyphicon-triangle-right"></i>
+            <span style="Color: Black">
+                @Html.DisplayFor(model => model.Vigencia.Nome)
+            </span>            
+        </th>
+        <td>            
             @Html.DisplayFor(model => model.ValorGastoTotal)
         </td>
         <td>
-            @Html.DisplayFor(model => model.OrcamentoTotal)
+            @Html.DisplayFor(model => model.Orcamento)
+        </td>
+        <td style="Color: Black">
+            @Html.DisplayFor(model => model.Planejamento)
         </td>
         <td></td>
         <td>
@@ -52,13 +60,16 @@
         <th class="col-md-1">
             Total
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Gasto
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Orçamento
         </th>
-        <th class="col-md-3"></th>
+        <th class="col-md-1">
+            Planejamento
+        </th>
+        <th class="col-md-4"></th>
         <th></th>
     </tr>
     @foreach (var item in Model.DemostrativoOrcamentosCategoria)
@@ -82,7 +93,7 @@
                     }
                     @Html.DisplayFor(modelItem => item.Categoria.Nome)
                 </span>
-            </td>
+            </td> 
             @if (item.Categoria.Pai == null)
             {
             <td>
@@ -98,6 +109,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Orcamento)
+            </td>
+            <td style="Color: Black">
+                @Html.DisplayFor(modelItem => item.Planejamento)
             </td>
             <td></td>
             <td>
