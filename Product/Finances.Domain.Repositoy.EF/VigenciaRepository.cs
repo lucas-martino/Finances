@@ -27,7 +27,7 @@ namespace Finances.Domain.Repository
 
         public virtual Vigencia GetVigenciaAnterior(Vigencia vigencia)
         {
-            return GetList(v => v.Referencia < vigencia.Referencia).OrderByDescending(v => v.Referencia).FirstOrDefault();
+            return GetList(v => v.Referencia < vigencia.Referencia && v.Usuario.ID == vigencia.Usuario.ID).OrderByDescending(v => v.Referencia).FirstOrDefault();
         }
     }
 }
