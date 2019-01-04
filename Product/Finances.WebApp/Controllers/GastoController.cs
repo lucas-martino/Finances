@@ -54,12 +54,23 @@ namespace Finances.WebApp.Controllers
             return View("Index", model);
         } 
         
-        public IActionResult Create()
+        public IActionResult Create(int? vigenciaRefencia)
         {
+            DateTime dia;
+            if (vigenciaRefencia.HasValue) {
+                Vigencia vigencia = ResolveVigencia(vigenciaRefencia);
+                if (vigencia.Ano() == DateTime.Today.Year && vigencia.Mes() == DateTime.Today.Month)
+                   dia = DateTime.Today;
+                else
+                    dia = new DateTime(vigencia.Ano(), vigencia.Mes(), 1);
+            }
+            else
+                dia = DateTime.Today;            
+
             GastoViewModel model = new GastoViewModel();
-            model.Data = DateTime.Today;
-            model.MinDate = GenereteMinDate(model.Data);
-            model.MaxDate = GenereteMaxDate(model.Data);;
+            model.Data = dia;
+            model.MinDate = GenereteMinDate(dia);
+            model.MaxDate = GenereteMaxDate(dia);
             model.Categorias = GetCategorias();
 
             return View(model);
