@@ -4,7 +4,7 @@ using System.Linq;
 using Finances.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finances.Domain.Repository
+namespace Finances.Domain.Repository.EF
 {
     public class VigenciaRepository : CRUDRepository<Vigencia, FinancesContext>, IVigenciaRepository
     {

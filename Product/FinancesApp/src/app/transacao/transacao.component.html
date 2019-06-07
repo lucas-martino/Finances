@@ -1,0 +1,51 @@
+
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!"><i class="material-icons">swap_vert</i>Transações</a></li>
+    <li><a href="#!"><i class="material-icons">trending_down</i>Debitos</a></li>
+    <li><a href="#!"><i class="material-icons">trending_up</i>Créditos</a></li>
+  </ul>
+<nav>
+    <div class="nav-wrapper blue">
+      <ul class="left">
+          <li><i class="material-icons hide-on-small-only">dns</i></li>
+          <li>
+            <a class="dropdown-trigger" data-target="dropdown1">
+              <i class="material-icons left hide-on-small-only">swap_vert</i>Transações<i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+      </ul>
+      <ul class="right">
+        <li><a href="#"><i class="material-icons">keyboard_arrow_left</i></a></li>
+        <li>Junho</li>
+        <li><a href="#"><i class="material-icons">keyboard_arrow_right</i></a></li>
+      </ul>
+    </div>
+</nav>
+
+<div *ngIf="!transacoes" class="progress" >
+    <div class="indeterminate"></div>
+</div>
+
+<ul class="collection" *ngFor="let item of transacoes">
+    <li class="collection-item avatar">
+      <i class="material-icons circle">{{ item.icone }}</i>
+      <span class="title truncate">{{ item.descricao }}</span>
+      <p>{{ item.categoria }}</p>
+      <div class="secondary-content">
+          <span [style.color]="(color(item.tipo))">${{ item.valor }}</span>
+          <a href="#"><i class="material-icons hide-on-small-only">delete</i></a>
+      </div>
+      
+    </li>
+  </ul>
+
+  <div class="fixed-action-btn">
+      <a class="btn-floating btn-large blue">
+        <i class="large material-icons">add</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating btn-large red"><i class="material-icons">trending_down</i></a></li>
+        <li><a class="btn-floating btn-large green"><i class="material-icons">trending_up</i></a></li>
+        <li><a class="btn-floating btn-large gray"><i class="material-icons">swap_vert</i></a></li>
+      </ul>
+    </div>

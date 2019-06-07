@@ -31,7 +31,7 @@ namespace Finances.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            DependencyInjection.Setup(services);
+            DependencyInjection.Setup(services, Configuration);
 
             services.AddSession();
 

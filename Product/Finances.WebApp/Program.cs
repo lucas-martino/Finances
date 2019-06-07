@@ -7,7 +7,7 @@ namespace Finances.WebApp
     {
         public static void Main(string[] args)
         {
-            using (var c = new Finances.Domain.Repository.FinancesContext("server=localhost;database=Finances;user=finances;password=pwd;"))
+            using (var c = new Finances.Domain.Repository.EF.FinancesContext("server=localhost;database=Finances;user=finances;password=pwd;"))
                 c.Database.EnsureCreated();
 
             CreateWebHostBuilder(args).Build().Run();

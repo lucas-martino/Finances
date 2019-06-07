@@ -1,11 +1,14 @@
 using System;
+using System.Runtime.Serialization;
 using Framework.Domain.Entity.Validator;
 
 namespace Framework.Domain.Entity
 {
+    [DataContract]
     public abstract class DomainEntity<TKey> : DomainEntity, IEquatable<DomainEntity<TKey>>
         where TKey : IEquatable<TKey>
     {
+        [DataMember]
         public TKey ID { get; set; }
         
 

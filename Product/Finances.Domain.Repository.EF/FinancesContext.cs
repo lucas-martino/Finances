@@ -1,7 +1,7 @@
 using Finances.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finances.Domain.Repository
+namespace Finances.Domain.Repository.EF
 {
     public class FinancesContext : DbContext
     {
@@ -17,6 +17,7 @@ namespace Finances.Domain.Repository
         public DbSet<OrcamentoCategoria> OrcamentosCategoria { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Vigencia> Vigencias { get; set; }
+        public DbSet<Transacao> Transacoes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
