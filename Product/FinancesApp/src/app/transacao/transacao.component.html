@@ -1,9 +1,9 @@
 
 <ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!"><i class="material-icons">swap_vert</i>Transações</a></li>
-    <li><a href="#!"><i class="material-icons">trending_down</i>Debitos</a></li>
-    <li><a href="#!"><i class="material-icons">trending_up</i>Créditos</a></li>
-  </ul>
+  <li><a href="#!"><i class="material-icons">swap_vert</i>Transações</a></li>
+  <li><a href="#!"><i class="material-icons">trending_down</i>Debitos</a></li>
+  <li><a href="#!"><i class="material-icons">trending_up</i>Créditos</a></li>
+</ul>
 <nav>
     <div class="nav-wrapper blue">
       <ul class="left">
@@ -15,9 +15,9 @@
           </li>
       </ul>
       <ul class="right">
-        <li><a href="#"><i class="material-icons">keyboard_arrow_left</i></a></li>
-        <li>Junho</li>
-        <li><a href="#"><i class="material-icons">keyboard_arrow_right</i></a></li>
+        <li><a (click)="anteriorVigencia()"><i class="material-icons">keyboard_arrow_left</i></a></li>
+        <li>{{ vigencia.descricao }}</li>
+        <li><a (click)="proximaVigencia()"><i class="material-icons">keyboard_arrow_right</i></a></li>
       </ul>
     </div>
 </nav>
@@ -26,26 +26,36 @@
     <div class="indeterminate"></div>
 </div>
 
-<ul class="collection" *ngFor="let item of transacoes">
-    <li class="collection-item avatar">
-      <i class="material-icons circle">{{ item.icone }}</i>
+<div *ngFor="let item of transacoes">
+  <span *ngIf="item.data != ''">{{ item.data }}</span>
+  <ul class="collection colecao">
+    <li class="collection-item avatar linha">
+      <i class="material-icons circle" [style.background-color]="item.categoria.background" [style.color]="item.categoria.cor">{{ item.categoria.icone }}</i>
       <span class="title truncate">{{ item.descricao }}</span>
-      <p>{{ item.categoria }}</p>
+      <p>{{ item.categoria.nome }}</p>
       <div class="secondary-content">
           <span [style.color]="(color(item.tipo))">${{ item.valor }}</span>
-          <a href="#"><i class="material-icons hide-on-small-only">delete</i></a>
+          <a href="#" class="hide-on-small-only"><i class="material-icons">delete</i></a>
       </div>
-      
     </li>
   </ul>
+</div>
 
-  <div class="fixed-action-btn">
-      <a class="btn-floating btn-large blue">
-        <i class="large material-icons">add</i>
-      </a>
-      <ul>
-        <li><a class="btn-floating btn-large red"><i class="material-icons">trending_down</i></a></li>
-        <li><a class="btn-floating btn-large green"><i class="material-icons">trending_up</i></a></li>
-        <li><a class="btn-floating btn-large gray"><i class="material-icons">swap_vert</i></a></li>
-      </ul>
-    </div>
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large blue">
+    <i class="large material-icons">add</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating btn-large red"><i class="material-icons">trending_down</i></a></li>
+    <li><a class="btn-floating btn-large green"><i class="material-icons">trending_up</i></a></li>
+    <li><a class="btn-floating btn-large gray"><i class="material-icons">swap_vert</i></a></li>
+  </ul>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.fixed-action-btn').floatingActionButton();
+
+    $(".dropdown-trigger").dropdown();
+  });
+</script>
