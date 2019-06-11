@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Finances.Domain.Entity.Validator
 {
-    public class GastoValidator : FinancesDomainValidator<Gasto>
+    public class GastoValidator : FinancesEntityValidator<Gasto>
     {
         public GastoValidator()
         {

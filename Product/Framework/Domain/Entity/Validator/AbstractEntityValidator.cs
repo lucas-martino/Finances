@@ -5,10 +5,15 @@ using FluentValidation;
 
 namespace Framework.Domain.Entity.Validator
 {
-    public abstract class DomainValidator<TEntity> : AbstractValidator<TEntity>, IDomainValidator<TEntity>
-        where TEntity : DomainEntity
+    public abstract class AbstractEntityValidator<TEntity> : AbstractValidator<TEntity>, IEntityValidator<TEntity>
+        where TEntity : AbastractEntity
     {
-        public ValidationResult Validate(DomainEntity instance)
+        public ValidationResult Validate(IEntity instance)
+        {
+            return Validate(instance as TEntity);
+        }
+
+        public new ValidationResult Validate(TEntity instance)
         {
             return Convert(base.Validate(instance as TEntity));
         }
@@ -22,7 +27,7 @@ namespace Framework.Domain.Entity.Validator
         {
             if (result is null)
                 return null;
-            else 
+            else
             {
                 IList<ValidationFailure> lista = new List<ValidationFailure>();
                 foreach (var item in result)

@@ -5,7 +5,7 @@ using Finances.Domain.Entity.Validator;
 namespace Finances.Domain.Entity
 {
     [DataContract]
-    public class Categoria : FinancesDomainEntity
+    public class Categoria : FinancesEntity
     {
         public const string DEFAULT_COR = "Darkgray";
         public Categoria()

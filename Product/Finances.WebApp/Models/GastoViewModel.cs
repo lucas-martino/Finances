@@ -12,8 +12,8 @@ namespace Finances.WebApp.Models
         {
             Categoria = new CategoriaViewModel();
         }
-        
-        public int ID { get; set; }
+
+        public ulong ID { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime Data { get; set; }

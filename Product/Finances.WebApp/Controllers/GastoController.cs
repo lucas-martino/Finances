@@ -29,9 +29,9 @@ namespace Finances.WebApp.Controllers
             model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
 
             return View(model);
-        }     
+        }
 
-        public IActionResult GastoPorCategoria(int? vigenciaRefencia, int categoriaID)
+        public IActionResult GastoPorCategoria(int? vigenciaRefencia, ulong categoriaID)
         {
             Categoria categoria = CategoriaService.GetCategoriaPorID(categoriaID);
             ViewBag.Title = string.Format("Gastos Por Categoria: {0}{1}", ((categoria.Pai == null)? "" : string.Format("{0} - ", categoria.Pai.Nome)), categoria.Nome);
@@ -41,7 +41,7 @@ namespace Finances.WebApp.Controllers
             model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
 
             return View("Index", model);
-        }   
+        }
 
         public IActionResult GastoNaoCategorizado(int? vigenciaRefencia)
         {
@@ -50,10 +50,10 @@ namespace Finances.WebApp.Controllers
             GastoListaViewModel model = new GastoListaViewModel();
             model.Gastos = ConvertEntityToModel(Service.GetGastosNaoCategorizadoPorVigencia(vigencia));
             model.Vigencia = VigenciaController.ConvertEntityToModel(vigencia);
-            
+
             return View("Index", model);
-        } 
-        
+        }
+
         public IActionResult Create(int? vigenciaRefencia)
         {
             DateTime dia;
@@ -65,7 +65,7 @@ namespace Finances.WebApp.Controllers
                     dia = new DateTime(vigencia.Ano(), vigencia.Mes(), 1);
             }
             else
-                dia = DateTime.Today;            
+                dia = DateTime.Today;
 
             GastoViewModel model = new GastoViewModel();
             model.Data = dia;
@@ -101,7 +101,7 @@ namespace Finances.WebApp.Controllers
             return VigenciaService.GetVigenciaAtualPorUsuario(UsuarioLogadoID);
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(ulong? id)
         {
             if (id == null)
                 return NotFound();
@@ -120,7 +120,7 @@ namespace Finances.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, [Bind] GastoViewModel model)
+        public IActionResult Edit(ulong? id, [Bind] GastoViewModel model)
         {
             if (id == null)
                 return NotFound();
@@ -139,11 +139,11 @@ namespace Finances.WebApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(model);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(ulong id)
         {
             Service.ApagarGasto(id);
 
@@ -153,12 +153,12 @@ namespace Finances.WebApp.Controllers
         private static GastoViewModel ConvertEntityToModel(Gasto entidade)
         {
             GastoViewModel model = new GastoViewModel();
-            model.ID = entidade.ID;
+            model.ID = entidade.Id;
             model.Data = entidade.Data;
             model.Valor = entidade.Valor;
             model.Observacao = entidade.Observacao;
             if (entidade.Categoria != null)
-                model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);            
+                model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);
 
             return model;
         }
@@ -168,7 +168,7 @@ namespace Finances.WebApp.Controllers
             IList<GastoViewModel> lista = new List<GastoViewModel>();
             foreach (Gasto gasto in entidade)
                 lista.Add(ConvertEntityToModel(gasto));
-                
+
             return lista;
         }
 
@@ -190,12 +190,12 @@ namespace Finances.WebApp.Controllers
             return new DateTime(data.Year, data.Month, DateTime.DaysInMonth(data.Year, data.Month)).ToString("yyyy-MM-dd");
         }
 
-        private Gasto GetGasto(int gastoID)
+        private Gasto GetGasto(ulong gastoID)
         {
             return Service.GetGastosPorID(gastoID);
         }
 
-        private Categoria GetCategoria(int categoriaID)
+        private Categoria GetCategoria(ulong categoriaID)
         {
             return CategoriaService.GetCategoriaPorID(categoriaID);
         }

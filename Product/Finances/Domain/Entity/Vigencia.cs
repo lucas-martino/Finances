@@ -3,7 +3,7 @@ using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
-    public class Vigencia : FinancesDomainEntity
+    public class Vigencia : FinancesEntity
     {
         public Vigencia()
         {
@@ -20,7 +20,7 @@ namespace Finances.Domain.Entity
         }
 
         private DateTime _inicio, _termino;
-        
+
         public int Referencia { get; set; }
         public Usuario Usuario { get; set; }
 

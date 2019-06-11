@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Finances.Domain.Entity
 {
     [DataContract]
-    public class Transacao : FinancesDomainEntity
+    public class Transacao : FinancesEntity
     {
         public Transacao(TipoTransacao tipo)
         {

@@ -2,7 +2,7 @@ using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
-    public class Usuario : FinancesDomainEntity
+    public class Usuario : FinancesEntity
     {
         public Usuario()
         {

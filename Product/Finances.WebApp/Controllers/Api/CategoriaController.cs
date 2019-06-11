@@ -10,7 +10,8 @@ namespace Finances.WebApp.Controllers.Api
     public class CategoriaController : Controller
     {
         private CategoriaService CategoriaService;
-        private int UsuarioLogadoID = 1;
+        private ulong UsuarioLogadoID = 1;
+
         public CategoriaController(CategoriaService categoriaService)
         {
             CategoriaService = categoriaService;
@@ -19,7 +20,7 @@ namespace Finances.WebApp.Controllers.Api
         [HttpGet("[action]")]
         public IEnumerable<Categoria> Index()
         {
-            return CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID);            
+            return CategoriaService.GetCategoriasPorUsuario(UsuarioLogadoID);
         }
     }
 }

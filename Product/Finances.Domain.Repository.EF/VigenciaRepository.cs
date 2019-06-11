@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository.EF
 {
-    public class VigenciaRepository : CRUDRepository<Vigencia, FinancesContext>, IVigenciaRepository
+    public class VigenciaRepository : FinancesCRUDRepository<Vigencia
+    >, IVigenciaRepository
     {
         public VigenciaRepository(FinancesContext dbContext)
          : base(dbContext)
@@ -17,17 +18,20 @@ namespace Finances.Domain.Repository.EF
 
         public virtual IEnumerable<Vigencia> GetVigenciasPorUsuario(Usuario usuario)
         {
-            return GetList(v => v.Usuario.ID == usuario.ID).OrderByDescending(v => v.Referencia);
+            return GetList(v => v.Usuario.Id == usuario.Id)
+                .OrderByDescending(v => v.Referencia);
         }
 
         public virtual Vigencia GetVigencia(Usuario usuario, int referencia)
         {
-            return GetOne(v => v.Usuario.ID == usuario.ID && v.Referencia == referencia);
+            return GetOne(v => v.Usuario.Id == usuario.Id && v.Referencia == referencia);
         }
 
         public virtual Vigencia GetVigenciaAnterior(Vigencia vigencia)
         {
-            return GetList(v => v.Referencia < vigencia.Referencia && v.Usuario.ID == vigencia.Usuario.ID).OrderByDescending(v => v.Referencia).FirstOrDefault();
+            return GetList(v => v.Referencia < vigencia.Referencia && v.Usuario.Id == vigencia.Usuario.Id)
+                .OrderByDescending(v => v.Referencia)
+                .FirstOrDefault();
         }
     }
 }

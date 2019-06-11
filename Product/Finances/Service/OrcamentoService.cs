@@ -12,7 +12,7 @@ namespace Finances.Service
             OrcamentoRepository = orcamentoRepository;
         }
 
-        public Orcamento GetOrcamentoPorID(int id)
+        public Orcamento GetOrcamentoPorID(ulong id)
         {
             return OrcamentoRepository.GetByID(id);
         }
@@ -22,22 +22,22 @@ namespace Finances.Service
             return OrcamentoRepository.GetOrcamentoPorVigencia(vigencia);
         }
 
-        public long SalvarOrcamento(Orcamento orcamento)
+        public ulong SalvarOrcamento(Orcamento orcamento)
         {
             return OrcamentoRepository.Save(orcamento);
         }
 
-        public OrcamentoCategoria GetOrcamentoCategoriaPorID(int orcamentoCategoriaID)
+        public OrcamentoCategoria GetOrcamentoCategoriaPorID(ulong orcamentoCategoriaID)
         {
             return OrcamentoRepository.GetOrcamentoCategoriaByID(orcamentoCategoriaID);
         }
 
-        public void ApagarOrcamentoCategoria(int orcamentoCategoriaID)
+        public void ApagarOrcamentoCategoria(ulong orcamentoCategoriaID)
         {
             OrcamentoRepository.DeleteOrcamentoCategoria(orcamentoCategoriaID);
         }
 
-        public int SalvarOrcamentoCategoria(OrcamentoCategoria orcamentoCategoria)
+        public ulong SalvarOrcamentoCategoria(OrcamentoCategoria orcamentoCategoria)
         {
             return OrcamentoRepository.SaveOrcamentoCategoria(orcamentoCategoria);
         }

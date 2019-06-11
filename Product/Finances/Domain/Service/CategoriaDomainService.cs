@@ -17,7 +17,7 @@ namespace Finances.Domain.Service
             OrcamentoRepository = orcamentoRepository;
         }
 
-        public virtual int SaveCategoria(Categoria categoria)
+        public virtual ulong SaveCategoria(Categoria categoria)
         {
             if (IsCreate(categoria) && PossuiCategoriaMesmoNome(categoria))
                 throw new NomeCategoriaDuplicadoException(categoria.Nome);
@@ -25,11 +25,11 @@ namespace Finances.Domain.Service
             return CategoriaRepository.Save(categoria);
         }
 
-        public virtual void DeleteCategoria(int categoriaID)
+        public virtual void DeleteCategoria(ulong categoriaID)
         {
             if (PossuiGastoVinculado(categoriaID))
                 throw new CategoriaComLancemntosException();
-                
+
             //DeleteDepenciasCategoria(categoriaID);
             CategoriaRepository.Delete(categoriaID);
         }
@@ -39,7 +39,7 @@ namespace Finances.Domain.Service
             return categoria != null && categoria.IsNewEntity();
         }
 
-        private void DeleteDepenciasCategoria(int categoriaID)
+        private void DeleteDepenciasCategoria(ulong categoriaID)
         {
             OrcamentoRepository.DeleteOrcamentoCategoriaPorCategoria(categoriaID);
         }
@@ -49,7 +49,7 @@ namespace Finances.Domain.Service
             return CategoriaRepository.GetCategoriaPorNomeEUsuario(categoria.Nome, categoria.Usuario) != null;
         }
 
-        private bool PossuiGastoVinculado(int categoriaID)
+        private bool PossuiGastoVinculado(ulong categoriaID)
         {
             return GastoRepository.GetGastoTotalPorCategoria(categoriaID) > 0;
         }

@@ -2,7 +2,7 @@ using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
-    public class OrcamentoCategoria : FinancesDomainEntity
+    public class OrcamentoCategoria : FinancesEntity
     {
         public OrcamentoCategoria()
         {

@@ -4,8 +4,8 @@ using Framework.Domain.Repository;
 
 namespace Finances.Domain.Repository
 {
-    public interface IFinancesCRUDRepository<TEntity> : ICRUDRepository<TEntity, int>
-        where TEntity : FinancesDomainEntity
+    public interface IFinancesCRUDRepository<TEntity> : ICRUDRepository<TEntity>
+        where TEntity : FinancesEntity
     {
 
     }

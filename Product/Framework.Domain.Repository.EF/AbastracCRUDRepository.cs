@@ -1,34 +1,34 @@
-using Finances.Domain.Exception;
+using System.Threading.Tasks;
 using Framework.Domain.Entity;
 using Framework.Domain.Exception;
 using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finances.Domain.Repository
+namespace Framework.Domain.Repository.EF
 {
-    public abstract class CRUDRepository<TEntity, TDbContext> : ReadRepository<TEntity, TDbContext>, ICRUDRepository<TEntity, int>
-        where TEntity: DomainEntity<int>
+    public abstract class AbastracCRUDRepository<TEntity, TDbContext> : AbstractReadRepository<TEntity, TDbContext>, ICRUDRepository<TEntity>
+        where TEntity: AbastractEntity
         where TDbContext: DbContext
     {
-        public CRUDRepository(TDbContext dbContext)
+        public AbastracCRUDRepository(TDbContext dbContext)
             : base(dbContext)
         {
-        }        
+        }
 
-        public virtual int Save(TEntity entity)
+        public virtual ulong Save(TEntity entity)
         {
-            int id = 0;
+            ulong id = 0;
             if (entity != null)
             {
                 ValidateEntity(entity);
 
                 if (entity.IsNewEntity())
-                    id = Create(entity);
+                    Create(entity);
                 else
-                {
                     Update(entity);
-                    id = entity.ID;
-                }
+
+                Commit();
+                id = entity.Id;
             }
 
             return id;
@@ -44,10 +44,10 @@ namespace Finances.Domain.Repository
         public virtual void Delete(TEntity entity)
         {
             DbSet.Remove(entity);
-            Commit();       
+            Commit();
         }
 
-        public virtual void Delete(int ID)
+        public virtual void Delete(ulong ID)
         {
             Delete(GetByID(ID));
         }
@@ -57,20 +57,19 @@ namespace Finances.Domain.Repository
             Context.SaveChanges();
         }
 
-        private int Create(TEntity entity)
-        {            
-            DbSet.Add(entity);
-            Commit();  
+        private void CommitAsync()
+        {
+            Context.SaveChangesAsync();
+        }
 
-            return entity.ID;
+        private void Create(TEntity entity)
+        {
+            DbSet.Add(entity);
         }
 
         private void Update(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
-            Commit();  
         }
-
-
     }
 }

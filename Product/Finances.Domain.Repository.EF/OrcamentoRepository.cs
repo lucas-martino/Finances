@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository.EF
 {
-    public class OrcamentoRepository : CRUDRepository<Orcamento, FinancesContext>, IOrcamentoRepository
+    public class OrcamentoRepository : FinancesCRUDRepository<Orcamento>, IOrcamentoRepository
     {
         private OrcamentoCategoriaRepository _orcamentoCategoriaRepository;
-        public OrcamentoRepository(FinancesContext dbContext) 
+        public OrcamentoRepository(FinancesContext dbContext)
             : base(dbContext)
         {
             _orcamentoCategoriaRepository = new OrcamentoCategoriaRepository(dbContext);
@@ -19,36 +19,36 @@ namespace Finances.Domain.Repository.EF
 
         public virtual Orcamento GetOrcamentoPorVigencia(Vigencia vigencia)
         {
-            Orcamento orcamento = GetList(o => o.Vigencia.ID == vigencia.ID).FirstOrDefault();
+            Orcamento orcamento = GetList(o => o.Vigencia.Id == vigencia.Id).FirstOrDefault();
             if (orcamento != null)
                 orcamento.OrcamentosCategoria = _orcamentoCategoriaRepository.GetOrcamentoCategoriaPorOrcamento(orcamento);
-                
+
             return orcamento;
         }
 
-        public virtual OrcamentoCategoria GetOrcamentoCategoriaByID(int orcamentoCategoriaID)
+        public virtual OrcamentoCategoria GetOrcamentoCategoriaByID(ulong orcamentoCategoriaID)
         {
             return _orcamentoCategoriaRepository.GetByID(orcamentoCategoriaID);
         }
 
-        public virtual void DeleteOrcamentoCategoria(int orcamentoCategoriaID)
+        public virtual void DeleteOrcamentoCategoria(ulong orcamentoCategoriaID)
         {
             _orcamentoCategoriaRepository.Delete(orcamentoCategoriaID);
         }
 
-        public int SaveOrcamentoCategoria(OrcamentoCategoria orcamentoCategoria)
+        public ulong SaveOrcamentoCategoria(OrcamentoCategoria orcamentoCategoria)
         {
             return _orcamentoCategoriaRepository.Save(orcamentoCategoria);
         }
 
-        public void DeleteOrcamentoCategoriaPorCategoria(int categoriaID)
+        public void DeleteOrcamentoCategoriaPorCategoria(ulong categoriaID)
         {
             _orcamentoCategoriaRepository.DeleteOrcamentoCategoriaPorCategoria(categoriaID);
         }
 
-        private class OrcamentoCategoriaRepository : CRUDRepository<OrcamentoCategoria, FinancesContext>
+        private class OrcamentoCategoriaRepository : FinancesCRUDRepository<OrcamentoCategoria>
         {
-            public OrcamentoCategoriaRepository(FinancesContext dbContext) 
+            public OrcamentoCategoriaRepository(FinancesContext dbContext)
                 : base(dbContext)
             {
             }
@@ -57,13 +57,13 @@ namespace Finances.Domain.Repository.EF
 
             public IList<OrcamentoCategoria> GetOrcamentoCategoriaPorOrcamento(Orcamento orcamento)
             {
-                return GetList().Where(i => i.Orcamento.ID == orcamento.ID)
+                return GetList().Where(i => i.Orcamento.Id == orcamento.Id)
                     .Include(i => i.Categoria).Include(i => i.Categoria.Pai)
                     .OrderBy(c => c.Categoria.Pai != null ? string.Format("{0}{1}", c.Categoria.Pai.Nome, c.Categoria.Nome) : c.Categoria.Nome)
                     .ToList();
             }
 
-            public void DeleteOrcamentoCategoriaPorCategoria(int categoriaID)
+            public void DeleteOrcamentoCategoriaPorCategoria(ulong categoriaID)
             {
                 throw new NotImplementedException();
             }

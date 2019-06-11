@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository.EF
 {
-    public class TransacaoRepository : CRUDRepository<Transacao, FinancesContext>, ITransacaoRepository
+    public class TransacaoRepository : FinancesCRUDRepository<Transacao>, ITransacaoRepository
     {
-        public TransacaoRepository(FinancesContext dbContext) 
+        public TransacaoRepository(FinancesContext dbContext)
             : base(dbContext)
         {
         }
@@ -30,7 +30,7 @@ namespace Finances.Domain.Repository.EF
 
         private IQueryable<Transacao> GetListPorVigenciaPorUsuario(Vigencia vigencia, Usuario usuario)
         {
-            return GetList(t => t.Usuario.ID == usuario.ID 
+            return GetList(t => t.Usuario.Id == usuario.Id
                 && t.Data >= vigencia.Inicio && t.Data <= vigencia.Termino)
                 .Include(t => t.Categoria).Include(c => c.Categoria.Pai);
         }

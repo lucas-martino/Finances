@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Finances.Domain.Entity.Validator
 {
-    public class UsuarioValidator : FinancesDomainValidator<Usuario>
+    public class UsuarioValidator : FinancesEntityValidator<Usuario>
     {
         public UsuarioValidator()
         {

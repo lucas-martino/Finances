@@ -13,8 +13,8 @@ namespace Finances.Domain.Service
         {
             UsuarioRepository = usuarioRepository;
         }
-        
-        public virtual Usuario GetUsuario(int usuarioID)
+
+        public virtual Usuario GetUsuario(ulong usuarioID)
         {
             Usuario usuario = UsuarioRepository.GetByID(usuarioID);
             if (UsuarioNaoLocalizado(usuario))

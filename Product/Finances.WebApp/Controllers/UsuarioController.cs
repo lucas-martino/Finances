@@ -13,7 +13,7 @@ namespace Finances.WebApp.Controllers
 {
     public class UsuarioController : FinancesController<UsuarioService>
     {
-        public UsuarioController(UsuarioService service) 
+        public UsuarioController(UsuarioService service)
             : base(service)
         {
         }
@@ -31,7 +31,7 @@ namespace Finances.WebApp.Controllers
                 Usuario usuario = Service.GetUsuario(model.Login, model.Senha);
                 if (usuario != null)
                 {
-                    UserLogin(usuario.ID);
+                    UserLogin(usuario.Id);
 
                     return RedirectToAction("Index", "Home");
                 }

@@ -3,14 +3,14 @@ using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
-    public class Orcamento : FinancesDomainEntity
+    public class Orcamento : FinancesEntity
     {
         public Orcamento()
         {
             Validator = new OrcamentoValidator();
             OrcamentosCategoria = new List<OrcamentoCategoria>();
         }
-        
+
         public Vigencia Vigencia { get; set; }
         public decimal Valor { get; set; }
 

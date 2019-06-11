@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository.EF
 {
-    public class UsuarioRepository : ReadRepository<Usuario, FinancesContext>, IUsuarioRepository
+    public class UsuarioRepository : FinancesCRUDRepository<Usuario>, IUsuarioRepository
     {
         public UsuarioRepository(FinancesContext dbContext)
          : base(dbContext)

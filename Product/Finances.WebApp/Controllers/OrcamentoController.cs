@@ -29,7 +29,7 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(ulong id)
         {
             var model = ConvertEntityToModel(GetOrcamento(id));
             return View(model);
@@ -37,7 +37,7 @@ namespace Finances.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] OrcamentoViewModel model)
+        public IActionResult Edit(ulong id, [Bind] OrcamentoViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult CreateOrcamentoCategoria(int orcamentoID)
+        public IActionResult CreateOrcamentoCategoria(ulong orcamentoID)
         {
             OrcamentoCategoriaViewModel model = new OrcamentoCategoriaViewModel();
             model.OrcamentoID = orcamentoID;
@@ -83,12 +83,12 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        private Categoria GetCategoria(int categoriaID)
+        private Categoria GetCategoria(ulong categoriaID)
         {
             return CategoriaService.GetCategoriaPorID(categoriaID);
         }
 
-        public IActionResult EditOrcamentoCategoria(int orcamentoCategoriaID)
+        public IActionResult EditOrcamentoCategoria(ulong orcamentoCategoriaID)
         {
             OrcamentoCategoria entidade = Service.GetOrcamentoCategoriaPorID(orcamentoCategoriaID);
             if (entidade == null)
@@ -120,7 +120,7 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult DeleteOrcamentoCategoria(int? orcamentoCategoriaID)
+        public IActionResult DeleteOrcamentoCategoria(ulong? orcamentoCategoriaID)
         {
             if (orcamentoCategoriaID == null)
                 return NotFound();
@@ -133,14 +133,14 @@ namespace Finances.WebApp.Controllers
         private static OrcamentoViewModel ConvertEntityToModel(Orcamento entidade)
         {
             OrcamentoViewModel model = new OrcamentoViewModel();
-            model.ID = entidade.ID;
+            model.ID = entidade.Id;
             model.Valor = entidade.Valor;
             model.OrcamentosCategoria = ConvertEntityToModel(entidade.OrcamentosCategoria);
 
             return model;
         }
 
-        private Orcamento GetOrcamento(int id)
+        private Orcamento GetOrcamento(ulong id)
         {
             return Service.GetOrcamentoPorID(id);
         }
@@ -153,7 +153,7 @@ namespace Finances.WebApp.Controllers
         private IEnumerable<SelectListItem> GetCategorias(Categoria categoria)
         {
             IList<Categoria> lista = CategoriaService.GetCategoriasDisponiveisOrcamentoPorUsuario(UsuarioLogadoID);
-            if (categoria != null && lista.FirstOrDefault(C => C.ID == categoria.ID) == null)
+            if (categoria != null && lista.FirstOrDefault(C => C.Id == categoria.Id) == null)
                 lista.Add(categoria);
 
             return CategoriaController.ConvertEntityToSelectListItem(lista);
@@ -162,9 +162,9 @@ namespace Finances.WebApp.Controllers
         private static OrcamentoCategoriaViewModel ConvertEntityToModel(OrcamentoCategoria entidade)
         {
             OrcamentoCategoriaViewModel model = new OrcamentoCategoriaViewModel();
-            model.ID = entidade.ID;
+            model.ID = entidade.Id;
             model.Valor = entidade.Valor;
-            model.OrcamentoID = entidade.Orcamento.ID;
+            model.OrcamentoID = entidade.Orcamento.Id;
             model.Categoria = CategoriaController.ConvertEntityToModel(entidade.Categoria);
 
             return model;
@@ -175,7 +175,7 @@ namespace Finances.WebApp.Controllers
             IList<OrcamentoCategoriaViewModel> lista = new List<OrcamentoCategoriaViewModel>();
             foreach (var orcamento in entidade)
                 lista.Add(ConvertEntityToModel(orcamento));
-                
+
             return lista;
         }
 

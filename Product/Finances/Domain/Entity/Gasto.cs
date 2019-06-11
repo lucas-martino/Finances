@@ -3,7 +3,7 @@ using Finances.Domain.Entity.Validator;
 
 namespace Finances.Domain.Entity
 {
-    public class Gasto : FinancesDomainEntity
+    public class Gasto : FinancesEntity
     {
         public Gasto()
         {

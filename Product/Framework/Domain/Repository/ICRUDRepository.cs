@@ -1,15 +1,15 @@
 using Framework.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Framework.Domain.Repository
 {
-    public interface ICRUDRepository<TEntity, TKey> : IReadRepository<TEntity, TKey>
-        where TEntity : DomainEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface ICRUDRepository<TEntity> : IReadRepository<TEntity>
+        where TEntity : IEntity
     {
-        TKey Save(TEntity entity);
+        ulong Save(TEntity entity);
         void Delete(TEntity entity);
-        void Delete(TKey id);
+        void Delete(ulong id);
     }
 }

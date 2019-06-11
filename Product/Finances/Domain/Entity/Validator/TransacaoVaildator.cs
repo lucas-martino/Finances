@@ -1,7 +1,7 @@
 namespace Finances.Domain.Entity.Validator
 {
-    public class TransacaoVaildator : FinancesDomainValidator<Transacao>
+    public class TransacaoVaildator : FinancesEntityValidator<Transacao>
     {
-        
+
     }
 }

@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace Framework.Domain.Repository
 {
-    public interface IReadRepository<TEntity, TKey>
-        where TEntity : DomainEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IReadRepository<TEntity>
+        where TEntity : IEntity
     {
-        TEntity GetByID(TKey key);
-        Task<TEntity> GetByIDAsync(TKey id);
+        TEntity GetByID(ulong key);
+        Task<TEntity> GetByIDAsync(ulong id);
         IEnumerable<TEntity> GetAll();
         Task<IEnumerable<TEntity>> GetAllAsync();
     }

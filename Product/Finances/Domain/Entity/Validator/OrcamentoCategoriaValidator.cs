@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Finances.Domain.Entity.Validator
 {
-    public class OrcamentoCategoriaValidator : FinancesDomainValidator<OrcamentoCategoria>
+    public class OrcamentoCategoriaValidator : FinancesEntityValidator<OrcamentoCategoria>
     {
         public OrcamentoCategoriaValidator()
         {

@@ -11,20 +11,20 @@ namespace Finances.WebApp.Controllers.Api
     public class TransacaoController : Controller
     {
         private TransacaoService TransacaoService;
-        private int UsuarioLogadoID = 1;
+        private ulong UsuarioLogadoID = 1;
         public TransacaoController(TransacaoService transacaoService)
         {
             TransacaoService = transacaoService;
         }
 
         [HttpGet("{id}")]
-        public object Get(int id)
+        public object Get(ulong id)
         {
             Transacao transacao = TransacaoService.GetTransacaoById(id);
             if (transacao == null)
                 return NotFound();
 
-            if (transacao.Usuario.ID != UsuarioLogadoID)
+            if (transacao.Usuario.Id != UsuarioLogadoID)
                 return NotPermit();
 
             return transacao;
@@ -38,19 +38,19 @@ namespace Finances.WebApp.Controllers.Api
         [HttpGet("vigencia/{vigencia}")]
         public IEnumerable<Transacao> GetTransacaoes(int vigencia)
         {
-            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);            
+            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);
         }
 
         [HttpGet("vigencia/{vigencia}/debitos")]
         public IEnumerable<Transacao> GetDebitos(int vigencia)
         {
-            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);            
+            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);
         }
 
         [HttpGet("vigencia/{vigencia}/creditos")]
         public IEnumerable<Transacao> GetCreditos(int vigencia)
         {
-            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);            
+            return TransacaoService.GetTransacoesDebitoPorVigenciaPorUsuario(vigencia, UsuarioLogadoID);
         }
     }
 }

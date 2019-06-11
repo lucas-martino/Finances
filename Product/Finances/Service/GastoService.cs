@@ -7,14 +7,14 @@ namespace Finances.Service
 {
     public class GastoService : IFinancesApplicationService
     {
-        private IGastoRepository GastoRepository; 
-        
+        private IGastoRepository GastoRepository;
+
         public GastoService(IGastoRepository gastoRepository)
         {
             GastoRepository = gastoRepository;
         }
 
-        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia)
+        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(ulong categoriaID, Vigencia vigencia)
         {
             return GastoRepository.GetGastosPorCategoriaEVigencia(categoriaID, vigencia);
         }
@@ -29,17 +29,17 @@ namespace Finances.Service
             return GastoRepository.GetGastosPorVigencia(vigencia);
         }
 
-        public long SalvarGasto(Gasto entidade)
+        public ulong SalvarGasto(Gasto entidade)
         {
             return GastoRepository.Save(entidade);
         }
 
-        public Gasto GetGastosPorID(int id)
+        public Gasto GetGastosPorID(ulong id)
         {
             return GastoRepository.GetByID(id);
         }
 
-        public void ApagarGasto(int id)
+        public void ApagarGasto(ulong id)
         {
             GastoRepository.Delete(id);
         }

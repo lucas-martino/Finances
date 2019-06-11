@@ -18,7 +18,7 @@ namespace Finances.Service
             return UsuarioDomainService.GetUsuario(login, senha);
         }
 
-        public virtual Usuario GetUsuario(int usuarioID)
+        public virtual Usuario GetUsuario(ulong usuarioID)
         {
             return UsuarioDomainService.GetUsuario(usuarioID);
         }

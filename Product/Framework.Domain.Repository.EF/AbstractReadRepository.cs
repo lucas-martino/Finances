@@ -7,29 +7,29 @@ using Framework.Domain.Entity;
 using Framework.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finances.Domain.Repository
+namespace Framework.Domain.Repository.EF
 {
-    public abstract class ReadRepository<TEntity, TDbContext> : IReadRepository<TEntity, int>
-        where TEntity: DomainEntity<int>
+    public abstract class AbstractReadRepository<TEntity, TDbContext> : IReadRepository<TEntity>
+        where TEntity: AbastractEntity
         where TDbContext: DbContext
     {
         protected TDbContext Context { get; private set; }
-        
-        public ReadRepository(TDbContext dbContext)
+
+        public AbstractReadRepository(TDbContext dbContext)
         {
             Context = dbContext;
         }
 
-        protected abstract DbSet<TEntity> DbSet { get; }       
-  
-        public TEntity GetByID(int id)
+        protected abstract DbSet<TEntity> DbSet { get; }
+
+        public TEntity GetByID(ulong id)
         {
-            return GetOne(i => i.ID == id);
+            return GetOne(i => i.Id == id);
         }
 
-        public async Task<TEntity> GetByIDAsync(int id)
+        public async Task<TEntity> GetByIDAsync(ulong id)
         {
-            return await GetOneAsync(i => i.ID == id);
+            return await GetOneAsync(i => i.Id == id);
         }
 
         public IEnumerable<TEntity> GetAll()
@@ -60,6 +60,6 @@ namespace Finances.Domain.Repository
         protected IQueryable<TEntity> GetList(Expression<Func<TEntity, bool>> where)
         {
             return GetList().Where(where);
-        }        
+        }
     }
 }

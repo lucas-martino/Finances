@@ -13,7 +13,7 @@ namespace Finances.WebApp.Controllers
             Service = service;
         }
 
-        public TService Service { get; private set; }        
+        public TService Service { get; private set; }
     }
 
     public class FinancesController : Controller
@@ -23,21 +23,21 @@ namespace Finances.WebApp.Controllers
             return UsuarioLogadoID > 0;
         }
 
-        public int UsuarioLogadoID
+        public ulong UsuarioLogadoID
         {
             get
             {
-                int? id = HttpContext.Session.GetInt32("UsuarioLogadoID"); 
+                ulong? id = (ulong)HttpContext.Session.GetInt32("UsuarioLogadoID");
                 if (id.HasValue)
                     return id.Value;
 
-                return 0; 
+                return 0;
             }
         }
 
-        public void UserLogin(int usuarioID)
+        public void UserLogin(ulong usuarioID)
         {
-            HttpContext.Session.SetInt32("UsuarioLogadoID", usuarioID);
+            HttpContext.Session.SetInt32("UsuarioLogadoID", (int)usuarioID);
         }
 
         public void UserLogout()

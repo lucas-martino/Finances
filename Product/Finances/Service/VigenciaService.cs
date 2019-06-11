@@ -19,30 +19,30 @@ namespace Finances.Service
             UsuarioService = usuarioService;
         }
 
-        public IEnumerable<Vigencia> GetVigenciasPorUsuario(int usuarioID)
+        public IEnumerable<Vigencia> GetVigenciasPorUsuario(ulong usuarioID)
         {
             Usuario usuario = GetUsuario(usuarioID);
             return VigenciaRepository.GetVigenciasPorUsuario(usuario);
         }
 
-        public virtual Vigencia GetVigenciaPorUsuario(int usuarioID, int referencia)
+        public virtual Vigencia GetVigenciaPorUsuario(ulong usuarioID, int referencia)
         {
             Usuario usuario = GetUsuario(usuarioID);
             return VigenciaRepository.GetVigencia(usuario, referencia);
         }
 
-        public virtual Vigencia GetVigenciaAtualPorUsuario(int usuarioID)
+        public virtual Vigencia GetVigenciaAtualPorUsuario(ulong usuarioID)
         {
             Usuario usuario = GetUsuario(usuarioID);
             return VigenciaDomainService.GetVigenciaAtualPorUsuario(usuario);
         }
 
-        public Vigencia GetVigenciaPorID(int vigenciaID)
+        public Vigencia GetVigenciaPorID(ulong vigenciaID)
         {
             return VigenciaRepository.GetByID(vigenciaID);
         }
 
-        private Usuario GetUsuario(int usuarioID)
+        private Usuario GetUsuario(ulong usuarioID)
         {
             return UsuarioService.GetUsuario(usuarioID);
         }

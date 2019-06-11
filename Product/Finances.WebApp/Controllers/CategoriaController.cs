@@ -16,14 +16,14 @@ namespace Finances.WebApp.Controllers
         {
             UsuarioService = usuarioService;
         }
-        
+
         public IActionResult Index()
         {
             var model = ConvertEntityToModel(Service.GetCategoriasPorUsuario(UsuarioLogadoID));
 
             return View(model);
-        }        
-        
+        }
+
         public IActionResult Create()
         {
             var model = ConvertEntityToModel(new Categoria());
@@ -61,7 +61,7 @@ namespace Finances.WebApp.Controllers
             return UsuarioService.GetUsuario(UsuarioLogadoID);
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(ulong? id)
         {
             if (id == null)
                 return NotFound();
@@ -72,13 +72,13 @@ namespace Finances.WebApp.Controllers
 
             var model = ConvertEntityToModel(entidade);
             model.Categorias = GetCategoriasQuePermiteFilhos();
-            
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, [Bind] CategoriaViewModel model)
+        public IActionResult Edit(ulong? id, [Bind] CategoriaViewModel model)
         {
             if (id == null)
                 return NotFound();
@@ -94,8 +94,8 @@ namespace Finances.WebApp.Controllers
                 entidade.Icone = model.Icone;
                 entidade.Pai = GetCategoria(model.Pai.ID);
                 if (string.IsNullOrWhiteSpace(entidade.Cor))
-                    entidade.Cor = Categoria.DEFAULT_COR;     
-                
+                    entidade.Cor = Categoria.DEFAULT_COR;
+
                 Service.SalvarCategoria(entidade);
 
                 return RedirectToAction(nameof(Index));
@@ -104,7 +104,7 @@ namespace Finances.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(ulong id)
         {
             Service.ApagarCategoria(id);
 
@@ -114,7 +114,7 @@ namespace Finances.WebApp.Controllers
         public static CategoriaViewModel ConvertEntityToModel(Categoria entidade)
         {
             CategoriaViewModel model = new CategoriaViewModel();
-            model.ID = entidade.ID;
+            model.ID = entidade.Id;
             model.Nome = entidade.Nome;
             model.Cor = entidade.Cor;
             model.Icone = entidade.Icone;
@@ -127,7 +127,7 @@ namespace Finances.WebApp.Controllers
         private static SelectListItem ConvertEntityToSelectListItem(Categoria entidade)
         {
             SelectListItem model = new SelectListItem();
-            model.Value = entidade.ID.ToString();
+            model.Value = entidade.Id.ToString();
             if (entidade.Pai != null)
                 model.Text = string.Format("{0} - {1}", entidade.Pai.Nome, entidade.Nome);
             else
@@ -141,7 +141,7 @@ namespace Finances.WebApp.Controllers
             IList<CategoriaViewModel> lista = new List<CategoriaViewModel>();
             foreach (Categoria categoria in entidade)
                 lista.Add(ConvertEntityToModel(categoria));
-                
+
             return lista;
         }
 
@@ -150,7 +150,7 @@ namespace Finances.WebApp.Controllers
             IList<SelectListItem> lista = new List<SelectListItem>();
             foreach (Categoria categoria in entidade)
                 lista.Add(ConvertEntityToSelectListItem(categoria));
-                
+
             return lista.OrderBy(i => i.Text).ToList();
         }
 
@@ -162,7 +162,7 @@ namespace Finances.WebApp.Controllers
             return lista;
         }
 
-        private Categoria GetCategoria(int categoriaID)
+        private Categoria GetCategoria(ulong categoriaID)
         {
             return Service.GetCategoriaPorID(categoriaID);
         }

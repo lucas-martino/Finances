@@ -12,9 +12,9 @@ namespace Finances.WebApp.Models
         {
             Categoria = new CategoriaViewModel();
         }
-        
-        public int ID { get; set; }
-        public int OrcamentoID { get; set; }
+
+        public ulong ID { get; set; }
+        public ulong OrcamentoID { get; set; }
         [Required]
         public CategoriaViewModel Categoria { get; set; }
         [Required]

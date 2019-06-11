@@ -4,14 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
+   <ItemGroup>
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Finances\Finances.csproj" />
     <ProjectReference Include="..\Framework\Framework.csproj" />
-    <ProjectReference Include="..\Framework.Domain.Repository.EF\Framework.Domain.Repository.EF.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ namespace Finances.WebApp.Models
 {
     public class CategoriaViewModel
     {
-        public int ID { get; set; }
+        public ulong ID { get; set; }
         public string Nome { get; set; }
         public string Cor { get; set; }
         public string Icone { get; set; }

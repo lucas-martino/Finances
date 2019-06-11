@@ -8,13 +8,13 @@ namespace Framework.Domain.Exception
     public class EntityInvalidException : DomainException
     {
         private ValidationResult ValidationResult;
-        public EntityInvalidException(DomainEntity entity, ValidationResult validationResult)
+        public EntityInvalidException(IEntity entity, ValidationResult validationResult)
             :base(GenereteMessage(entity, validationResult))
         {
             ValidationResult = validationResult;
         }
 
-        private static string GenereteMessage(DomainEntity entity, ValidationResult validationResult)
+        private static string GenereteMessage(IEntity entity, ValidationResult validationResult)
         {
             StringBuilder errorMessage = new StringBuilder();
 

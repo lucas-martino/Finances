@@ -9,8 +9,8 @@ namespace Finances.WebApp.Models
         {
             OrcamentosCategoria = new List<OrcamentoCategoriaViewModel>();
         }
-        
-        public int ID { get; set; }
+
+        public ulong ID { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         public decimal Valor { get; set; }

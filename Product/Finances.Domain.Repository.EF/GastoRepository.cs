@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finances.Domain.Repository.EF
 {
-    public class GastoRepository : CRUDRepository<Gasto, FinancesContext>, IGastoRepository
+    public class GastoRepository : FinancesCRUDRepository<Gasto>, IGastoRepository
     {
-        public GastoRepository(FinancesContext dbContext) 
+        public GastoRepository(FinancesContext dbContext)
             : base(dbContext)
         {
         }
@@ -17,52 +17,52 @@ namespace Finances.Domain.Repository.EF
 
         public IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID)
+            return GetList(g => g.Vigencia.Id == vigencia.Id)
                 .Include(c => c.Categoria).Include(c => c.Categoria.Pai)
-                .OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
+                .OrderByDescending(g => g.Data).ThenByDescending(g => g.Id);
         }
 
         public decimal GetGastoTotalPorVigencia(Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID)
+            return GetList(g => g.Vigencia.Id == vigencia.Id)
                 .Sum(g => g.Valor);
         }
 
-        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia)
+        public IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(ulong categoriaID, Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && (g.Categoria.ID == categoriaID || g.Categoria.Pai.ID == categoriaID))
+            return GetList(g => g.Vigencia.Id == vigencia.Id && (g.Categoria.Id == categoriaID || g.Categoria.Pai.Id == categoriaID))
                 .Include(c => c.Categoria).Include(c => c.Categoria.Pai)
-                .OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
+                .OrderByDescending(g => g.Data).ThenByDescending(g => g.Id);
         }
 
         public decimal GetGastoTotalCompletoPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && (g.Categoria.ID == categoria.ID || g.Categoria.Pai.ID == categoria.ID))
-                .Sum(g => g.Valor); 
+            return GetList(g => g.Vigencia.Id == vigencia.Id && (g.Categoria.Id == categoria.Id || g.Categoria.Pai.Id == categoria.Id))
+                .Sum(g => g.Valor);
         }
 
         public decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria.ID == categoria.ID)
-                .Sum(g => g.Valor); 
+            return GetList(g => g.Vigencia.Id == vigencia.Id && g.Categoria.Id == categoria.Id)
+                .Sum(g => g.Valor);
         }
 
-        public decimal GetGastoTotalPorCategoria(int categoriaID)
+        public decimal GetGastoTotalPorCategoria(ulong categoriaID)
         {
-            return GetList(g => g.Categoria.ID == categoriaID || g.Categoria.Pai.ID == categoriaID)
-                .Sum(g => g.Valor); 
+            return GetList(g => g.Categoria.Id == categoriaID || g.Categoria.Pai.Id == categoriaID)
+                .Sum(g => g.Valor);
         }
 
         public decimal GetGastoTotalVigenciaSemCategoria(Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria == null)
-                .Sum(g => g.Valor); 
+            return GetList(g => g.Vigencia.Id == vigencia.Id && g.Categoria == null)
+                .Sum(g => g.Valor);
         }
 
         public IEnumerable<Gasto> GetGastosNaoCategorizadoPorVigencia(Vigencia vigencia)
         {
-            return GetList(g => g.Vigencia.ID == vigencia.ID && g.Categoria == null)
-                .OrderByDescending(g => g.Data).ThenByDescending(g => g.ID);
+            return GetList(g => g.Vigencia.Id == vigencia.Id && g.Categoria == null)
+                .OrderByDescending(g => g.Data).ThenByDescending(g => g.Id);
         }
     }
 }

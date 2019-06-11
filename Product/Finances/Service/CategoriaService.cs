@@ -11,7 +11,7 @@ namespace Finances.Service
         private ICategoriaRepository CategoriaRepository;
         private CategoriaDomainService CategoriaDomainService;
         private UsuarioService UsuarioService;
-        
+
         public CategoriaService(ICategoriaRepository categoriaRepository, CategoriaDomainService categoriaDomainService, UsuarioService usuarioService)
         {
             CategoriaRepository = categoriaRepository;
@@ -19,39 +19,39 @@ namespace Finances.Service
             UsuarioService = usuarioService;
         }
 
-        public IEnumerable<Categoria> GetCategoriasPorUsuario(int usuarioID)
+        public IEnumerable<Categoria> GetCategoriasPorUsuario(ulong usuarioID)
         {
             Usuario usuario = GetUsuario(usuarioID);
             return CategoriaRepository.GetCategoriaPorUsuario(usuario);
         }
 
-        public IEnumerable<Categoria> GetCategoriaQuePermiteFilhosPorUsuario(int usuarioID)
+        public IEnumerable<Categoria> GetCategoriaQuePermiteFilhosPorUsuario(ulong usuarioID)
         {
             Usuario usuario = GetUsuario(usuarioID);
             return CategoriaRepository.GetCategoriaLevel1PorUsuario(usuario);
         }
 
-        public Categoria GetCategoriaPorID(int id)
+        public Categoria GetCategoriaPorID(ulong id)
         {
             return CategoriaRepository.GetByID(id);
         }
 
-        public long SalvarCategoria(Categoria categoria)
+        public ulong SalvarCategoria(Categoria categoria)
         {
             return CategoriaDomainService.SaveCategoria(categoria);
         }
 
-        public void ApagarCategoria(int id)
+        public void ApagarCategoria(ulong id)
         {
             CategoriaDomainService.DeleteCategoria(id);
         }
 
-        public IList<Categoria> GetCategoriasDisponiveisOrcamentoPorUsuario(int usuarioID)
+        public IList<Categoria> GetCategoriasDisponiveisOrcamentoPorUsuario(ulong usuarioID)
         {
             return new List<Categoria>(GetCategoriasPorUsuario(usuarioID));
         }
 
-        private Usuario GetUsuario(int usuarioID)
+        private Usuario GetUsuario(ulong usuarioID)
         {
             return UsuarioService.GetUsuario(usuarioID);
         }

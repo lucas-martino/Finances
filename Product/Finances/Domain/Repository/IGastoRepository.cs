@@ -7,9 +7,9 @@ namespace Finances.Domain.Repository
     {
         IEnumerable<Gasto> GetGastosPorVigencia(Vigencia vigencia);
         decimal GetGastoTotalPorVigencia(Vigencia vigencia);
-        IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(int categoriaID, Vigencia vigencia);
+        IEnumerable<Gasto> GetGastosPorCategoriaEVigencia(ulong categoriaID, Vigencia vigencia);
         decimal GetGastoTotalPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia);
-        decimal GetGastoTotalPorCategoria(int categoriaID);
+        decimal GetGastoTotalPorCategoria(ulong categoriaID);
         decimal GetGastoTotalVigenciaSemCategoria(Vigencia vigencia);
         IEnumerable<Gasto> GetGastosNaoCategorizadoPorVigencia(Vigencia vigencia);
         decimal GetGastoTotalCompletoPorCategoriaEVigencia(Categoria categoria, Vigencia vigencia);
