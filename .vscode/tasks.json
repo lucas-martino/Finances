@@ -28,6 +28,20 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "publish release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Product/Finances.WebApp/Finances.WebApp.csproj",
+                "--configuration", 
+                "Release",
+                "--output",
+                "${workspaceFolder}/Product/Finances.WebApp/publish"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

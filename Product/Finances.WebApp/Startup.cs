@@ -17,6 +17,17 @@ namespace Finances.WebApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            // using (var c = new Finances.Domain.Repository.FinancesContext(configuration.GetConnectionString("Finances")))
+            // {
+            //     c.Database.EnsureCreated();
+            //     if (c.Usuarios.FirstOrDefault() == null)
+            //     {
+            //         c.Usuarios.Add(new Domain.Entity.Usuario() { Nome = "Usuario", Login = "usuario", Senha = "senha" });
+            //         c.SaveChanges();
+
+            //     }
+            // }                
         }
 
         public IConfiguration Configuration { get; }
@@ -31,7 +42,7 @@ namespace Finances.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            DependencyInjection.Setup(services);
+            DependencyInjection.Setup(services, Configuration);
 
             services.AddSession();
 

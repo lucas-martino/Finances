@@ -1,17 +1,18 @@
 using Finances.Domain.Repository;
 using Finances.Domain.Service;
 using Finances.Service;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finances.WebApp
 {
     public class DependencyInjection
     {
-        public static void Setup(IServiceCollection services)
+        public static void Setup(IServiceCollection services, IConfiguration configuration)
         {
             SetupServices(services);
             SetupDomainServices(services);
-            SetupRepository(services);
+            SetupRepository(services, configuration);
         }
 
         private static void SetupServices(IServiceCollection services)
@@ -32,9 +33,9 @@ namespace Finances.WebApp
             services.AddSingleton<CategoriaDomainService, CategoriaDomainService>();
         }
 
-        private static void SetupRepository(IServiceCollection services)
+        private static void SetupRepository(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<FinancesContext, FinancesContext>(i => new FinancesContext("server=localhost;database=Finances;user=finances;password=pwd;"));
+            services.AddSingleton<FinancesContext, FinancesContext>(i => new FinancesContext(configuration.GetConnectionString("Finances")));
             services.AddSingleton<ICategoriaRepository, CategoriaRepository>();
             services.AddSingleton<IGastoRepository, GastoRepository>();
             services.AddSingleton<IOrcamentoRepository, OrcamentoRepository>();
