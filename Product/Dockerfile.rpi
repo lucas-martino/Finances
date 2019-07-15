@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2.301-alpine3.9 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.301-stretch-arm32v7 AS build
 WORKDIR /app
 
 COPY Framework/. ./Framework/
@@ -10,11 +10,9 @@ COPY Finances.WebApp/. ./Finances.WebApp/
 WORKDIR /app/Finances.WebApp
 RUN dotnet publish -c Release -o out
 
-# Base image is Alpine with latest stale Node installed. 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2.6-alpine3.9 as runtime
-# set working directory for subsequent commands
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2.6-stretch-slim-arm32v7 AS runtime
 WORKDIR /app
-# leverage build cache by copying npm package files first
 COPY --from=build /app/Finances.WebApp/out ./
+
 ENTRYPOINT ["dotnet", "Finances.WebApp.dll"]
 
