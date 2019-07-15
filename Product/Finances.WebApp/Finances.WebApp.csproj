@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finances\Finances.csproj" />
-    <ProjectReference Include="..\Finances.Domain.Repositoy.EF\Finances.Domain.Repositoy.EF.csproj" />
+    <ProjectReference Include="..\Finances.Domain.Repository.EF\Finances.Domain.Repository.EF.csproj" />
   </ItemGroup>
 
 </Project>
